@@ -1,0 +1,25 @@
+Provider_Name =:= Huaming
+Provider_Mail =:= h@salk.edu
+Institution =:= 
+Institution_Link =:= 
+Institution_Logo =:= 
+Organism =:= Arabidopsis thaliana
+Organism_Options =:= Arabidopsis thaliana
+Genome_URL =:= /aj2/genomes/chromosome.php
+Genome_Options =:= /aj2/genomes/chromosome.php
+Bookmarks_URL =:= common_bookmarks.php
+Bookmarks_URL_Options =:= common_bookmarks.php
+Analysis_URL =:= analysis.php
+Analysis_URL_Options =:= analysis.php
+Assembly =:= 1
+Position =:= 1
+Bases =:= 20
+Pixels =:= 1
+Yaxis =:= 20
+Baseline =:= 0
+Priority =:= Public
+Suffix_File =:= Test Suffix
+Suffix_File_Options =:= 
+SuffixSubmit =:= Submit
+Author =:= Huaming
+Email =:= h@salk.edu

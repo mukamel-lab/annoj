@@ -1,0 +1,39 @@
+<?PHP
+require_once '../includes/common.php';
+
+header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Headers: X-Requested-With');
+
+if ($action=='syndicate')
+{
+	$genome = array(
+		'institution' => array(
+			'name' => 'chrl',
+			'url' => '',
+			'logo' => ''
+		),
+		'engineer' => array(
+			'name' => 'chrL',
+			'email' => '',
+		),
+		'service' => array(
+			'title' => 'chrl',
+			'version' => '1',
+			'description' => 'asdf',
+		),
+		'genome' => array(
+			'assemblies' => array(
+				array( 'id' => 'chrL.fasta', 'size' => 48503 ),
+			)
+		)
+	);
+	respond($genome);
+}
+
+$genome_dir = '/cndd/ckeown/scratch_aj2/chr/';
+$ibase = 1;
+
+include_once '../includes/common_genome.php';
+
+error('Invalid action requested: '.$action);
+?>

@@ -1,0 +1,25 @@
+Provider_Name =:= Junhao Li
+Provider_Mail =:= jul307@ucsd.edu
+Institution =:= UCSD
+Institution_Link =:= 
+Institution_Logo =:= 
+Organism =:= Mus musculus
+Organism_Options =:= Mus musculus
+Genome_URL =:= /aj2/genomes/mm10.php
+Genome_Options =:= /aj2/genomes/mm10.php
+Bookmarks_URL =:= common_bookmarks.php
+Bookmarks_URL_Options =:= common_bookmarks.php
+Analysis_URL =:= analysis.php
+Analysis_URL_Options =:= analysis.php
+Assembly =:= 1
+Position =:= 1
+Bases =:= 20
+Pixels =:= 1
+Yaxis =:= 20
+Baseline =:= 0
+Priority =:= Public
+Suffix_File =:= mm10_suffix
+Suffix_File_Options =:= 
+SuffixSubmit =:= Submit
+Author =:= Junhao Li
+Email =:= jul307@ucsd.edu

@@ -1,0 +1,11 @@
+#Name	Track
+Gene Models	ModelsTrack
+Single Reads	ReadsTrack
+mRNA/PairedEnd	PairedEndTrack
+Small RNA	SmallReadsTrack
+Methylation	MethTrack
+Mask/Class	MaskTrack
+Alignment	AlignsTrack
+Intensity	IntensityTrack
+Microarray	MicroarrayTrack
+SNPs	SNPsTrack

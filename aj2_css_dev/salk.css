@@ -1,0 +1,31 @@
+.salk_dna   { background-image:url('../img/salk/dna.png')   !important; width:37px!important; }
+.salk_mrna  { background-image:url('../img/salk/mrna.png')  !important; width:37px!important; }
+.salk_smrna { background-image:url('../img/salk/smrna.png') !important; width:37px!important; }
+.salk_meth  { background-image:url('../img/salk/meth.png')  !important; width:37px!important; }
+.salk_chip  { background-image:url('../img/salk/chip.png')  !important; width:37px!important; }
+.salk_bed   { background-image:url('../img/salk/bed.png')  !important; width:37px!important; }
+.salk_simple { background-image:url('../img/salk/simple.png')  !important; width:16px!important; }
+.salk_mysql { background-image:url('../img/salk/mysql.png')  !important; width:16px!important; }
+.salk_proxy { background-image:url('../img/salk/proxy.png')  !important; width:16px!important; }
+.salk_server { background-image:url('../img/salk/server.png')  !important; width:16px!important; }
+.salk_data  { background-image:url('../img/salk/data.png')  !important; width:16px!important; }
+.salk_page  { background-image:url('../img/salk/page.png')  !important; width:16px!important; }
+.salk_track { background-image:url('../img/salk/track.png')  !important; width:16px!important; }
+.salk_flag  { background-image:url('../img/salk/flag.png')  !important; width:24px!important; }
+.salk_conf  { background-image:url('../img/salk/config.png')  !important; width:24px!important; }
+.salk_dmr   { background-image:url('../img/salk/dmr.png')   !important; width:37px!important; }
+.salk_snp   { background-image:url('../img/salk/snp.png')   !important; width:37px!important; }
+
+.salk_star  { background-image:url('../img/salk/star.png')  !important; width:89px!important; }
+
+.transposon_fragment { background: url('../img/models/bar.gif') repeat-x;  }
+.transposable_element { background: url('../img/models/grey.gif') repeat-x; }
+
+.annoj { background-image:url('../img/Anno-J.jpg'); width:150px; height:138px; margin-left:auto; margin-right:auto; }
+.jbuilder { background-image:url('../tools/save.png'); width:120px; height:120px; margin-left:auto; margin-right:auto; }
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0; 
+}

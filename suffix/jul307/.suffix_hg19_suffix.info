@@ -1,0 +1,25 @@
+Provider_Name =:= Junhao Li
+Provider_Mail =:= jul307@ucsd.edu
+Institution =:= UCSD
+Institution_Link =:= 
+Institution_Logo =:= 
+Organism =:= Homo sapiens
+Organism_Options =:= Homo sapiens
+Genome_URL =:= /aj2/genomes/hg19.php
+Genome_Options =:= 
+Bookmarks_URL =:= common_bookmarks.php
+Bookmarks_URL_Options =:= 
+Analysis_URL =:= analysis.php
+Analysis_URL_Options =:= 
+Assembly =:= 1
+Position =:= 1
+Bases =:= 20
+Pixels =:= 1
+Yaxis =:= 20
+Baseline =:= 0
+Priority =:= Public
+Suffix_File =:= hg19_suffix
+Suffix_File_Options =:= 
+SuffixSubmit =:= Submit
+Author =:= Junhao Li
+Email =:= jul307@ucsd.edu

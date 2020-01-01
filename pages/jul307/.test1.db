@@ -1,0 +1,31 @@
+Keys =:= Track_Name =,= Track_Type =,= Track_Path =,= Track_URL =,= Icon =,= Height =,= Scale =,= boxHeight =,= boxWidthMin =,= Single =,= Control =,= alignControl =,= NoArrows =,= NoLabels =,= showWalks =,= active =,= group =,= Server =,= Table_List =,= Title_List =,= Info_List =,= Options_List =,= Include =,= Append_Assembly =,= iBase =,= Reads =,= Policy =,= Class =,= Color =,= Data_Type
+Track =:= Gene Models (gencodevM9.php) =,= ModelsTrack =,= Annotation Models =,= /aj2/models/gencodevM9.php =,= silk_bricks =,= 100 =,= 1 =,=  =,=  =,=  =,= true =,=  =,=  =,=  =,=  =,= 1 =,= 1 =,=  =,= /cndd/junhao/gencode =,= Gencode vM9 =,= Gencode vM9 =,=  =,= simple_models.php =,=  =,=  =,= 0 =,=  =,=  =,=  =,= 
+Genome_URL =:= /aj2/genomes/mm10.php
+Bookmarks_URL =:= common_bookmarks.php
+Analysis_URL =:= analysis.php
+Author =:= Junhao Li
+Email =:= jul307@ucsd.edu
+Page_Title =:= test1
+Notes =:= 
+Citation =:= 
+Assembly =:= 1
+Position =:= 1
+Bases =:= 20
+Pixels =:= 1
+Yaxis =:= 20
+Max =:= 
+Min =:= 
+Multi =:= 1
+Baseline =:= 0
+Display =:= 0
+Activate =:= 0
+GlobalScale =:= 2
+HiC_d =:= 
+Priority =:= Public
+Provider_Name =:= Junhao Li
+Provider_Mail =:= jul307@ucsd.edu
+Institution =:= UCSD
+Institution_Link =:= 
+Institution_Logo =:= 
+Organism =:= Mus musculus
+jBuilder =:= 4.0

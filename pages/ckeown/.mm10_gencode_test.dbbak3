@@ -1,0 +1,32 @@
+Keys =:= Track_Name =,= Track_Type =,= Track_Path =,= Track_URL =,= Icon =,= Height =,= Scale =,= boxHeight =,= boxWidthMin =,= Single =,= Control =,= alignControl =,= NoArrows =,= NoLabels =,= showWalks =,= active =,= group =,= Server =,= Table_List =,= Title_List =,= Info_List =,= Options_List =,= Include =,= Append_Assembly =,= iBase =,= Reads =,= Policy =,= Class =,= Color =,= Data_Type
+Track =:= tmp.out2 =,= MethTrack =,= tracks =,= /aj2/tracks/ckeown/mm10_gencode_test/tracks/tmp.out2.php =,= salk_meth =,=  =,=  =,=  =,=  =,=  =,=  =,=  =,=  =,=  =,=  =,= 2 =,= 1 =,=  =,= /cndd/ckeown/scratch_aj2///tmp.out2 =,= tmp.out2 =,= tmp.out2 =,=  =,= simple_wgta.php =,=  =,=  =,= 0 =,=  =,=  =,=  =,= 
+Track =:= Gene Models (Gencode 7) =,= ModelsTrack =,= Annotation Models =,= /aj2/models/gencode7.php =,= silk_bricks =,= 100 =,= 1 =,=  =,=  =,=  =,= true =,=  =,=  =,=  =,=  =,= 1 =,= 2 =,=  =,= /cndd/projects/Public_Datasets/references/mm10/aj2/gencode =,= Gencode 7 =,= Gencode 7 =,=  =,= simple_models.php =,=  =,=  =,= 0 =,=  =,=  =,=  =,= 
+Genome_URL =:= /aj2/genomes/mm10.php
+Bookmarks_URL =:= common_bookmarks.php
+Analysis_URL =:= analysis.php
+Author =:= Chris Keown
+Email =:= christopher.keown@gmail.com
+Page_Title =:= mm10 gencode7 test
+Notes =:= 
+Citation =:= 
+Assembly =:= 1
+Position =:= 1
+Bases =:= 20
+Pixels =:= 1
+Yaxis =:= 20
+Max =:= 
+Min =:= 
+Multi =:= 1
+Baseline =:= 0
+Display =:= 0
+Activate =:= 0
+GlobalScale =:= 2
+HiC_d =:= 
+Priority =:= Public
+Provider_Name =:= Chris Keown
+Provider_Mail =:= christopher.keown@gmail.com
+Institution =:= UCSD
+Institution_Link =:= http://brainome.ucsd.edu/
+Institution_Logo =:= 
+Organism =:= Mus musculus
+jBuilder =:= 4.0

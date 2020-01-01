@@ -1,0 +1,1 @@
+/cndd/ckeown/scratch_aj2/chr/chrL.fasta

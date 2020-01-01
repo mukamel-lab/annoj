@@ -1,0 +1,18 @@
+#Include_name	Include_URL
+MySQL Single reads	common_reads.php
+MySQL PairedEnd reads	common_pe.php
+MySQL Gene model	common_models.php
+MySQL Meth CG/CHG/CHH	common_wgta.php
+MySQL Small RNA	common_smrna.php
+MySQL Custom reads	custom_reads.php
+MySQL Custom model	custom_models.php
+Simple Single reads	simple_reads.php
+Simple PairedEnd reads	simple_pe.php
+Simple Small RNA	simple_smrna.php
+Simple Meth CG/CHG/CHH	simple_wgta.php
+Simple Gene Model	simple_models.php
+Simple Mask	simple_mask.php
+Simple Aligns	simple_aligns.php
+Simple Intensity	simple_intensity.php
+Simple Microarray	simple_microarray.php
+Simple SNPs	simple_snps.php

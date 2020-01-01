@@ -1,0 +1,10 @@
+Cache_Path : /home/aj2_caches
+Proxy_Path : /home/aj2_proxy_caches
+Server : localhost
+MyUser : anonymous
+MyCode : AB
+User_ID : ckeown
+User_Name : Chris Keown
+User_Mail : ckeown@ucsd.edu
+Group : admin,brain
+Priority : 7770

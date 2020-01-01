@@ -1,0 +1,47 @@
+Keys =:= Track_Name =,= Track_Type =,= Track_Path =,= Track_URL =,= Icon =,= Height =,= Scale =,= boxHeight =,= boxWidthMin =,= Single =,= Control =,= alignControl =,= NoArrows =,= NoLabels =,= showWalks =,= active =,= group =,= Server =,= Table_List =,= Title_List =,= Info_List =,= Options_List =,= Include =,= Append_Assembly =,= iBase =,= Reads =,= Policy =,= Class =,= Color =,= Data_Type
+Track =:= Gene Models (hg19_Gencode_v19.php) =,= ModelsTrack =,= Annotation Models =,= /aj2/models/hg19_Gencode_v19.php =,= silk_bricks =,= 100 =,= 1 =,=  =,=  =,=  =,= true =,=  =,=  =,=  =,=  =,= 1 =,= 1 =,=  =,= /home/aj2_data/gene_models/hg19_Gencode_v19 =,= hg19_Gencode_v19 =,= hg19_Gencode_v19 =,=  =,= simple_models.php =,=  =,=  =,= 0 =,=  =,=  =,=  =,= 
+Track =:= Down Syndrome - 31-08 =,= MethTrack =,= Esteller_TransPsych2016 =,= /aj2/tracks/ckeown/Esteller_TransPsych2016/Esteller_TransPsych2016/31-08.php =,= salk_meth =,=  =,= .15 =,=  =,=  =,=  =,=  =,=  =,=  =,=  =,=  =,= 4 =,= 2 =,=  =,= /home/aj2_data/data//hg19/Esteller_TransPsych2016/31-08 =,= 31-08 =,= 31-08 =,=  =,= simple_wgta.php =,=  =,=  =,= 0 =,=  =,= CG CHG CHH =,=  =,= 
+Track =:= Control Gray matter - G145 =,= MethTrack =,= Esteller_TransPsych2016 =,= /aj2/tracks/ckeown/Esteller_TransPsych2016/Esteller_TransPsych2016/G145.php =,= salk_meth =,=  =,= .15 =,=  =,=  =,=  =,=  =,=  =,=  =,=  =,=  =,= 2 =,= 2 =,=  =,= /home/aj2_data/data//hg19/Esteller_TransPsych2016/G145 =,= G145 =,= G145 =,=  =,= simple_wgta.php =,=  =,=  =,= 0 =,=  =,= CG CHG CHH =,=  =,= 
+Track =:= Control white matter - W145 =,= MethTrack =,= Esteller_TransPsych2016 =,= /aj2/tracks/ckeown/Esteller_TransPsych2016/Esteller_TransPsych2016/W145.php =,= salk_meth =,=  =,= .15 =,=  =,=  =,=  =,=  =,=  =,=  =,=  =,=  =,= 3 =,= 2 =,=  =,= /home/aj2_data/data//hg19/Esteller_TransPsych2016/W145 =,= W145 =,= W145 =,=  =,= simple_wgta.php =,=  =,=  =,= 0 =,=  =,=  =,=  =,= 
+Track =:= Alzheimers - A09 =,= MethTrack =,= Esteller_TransPsych2016 =,= /aj2/tracks/ckeown/Esteller_TransPsych2016/Esteller_TransPsych2016/A09.php =,= salk_meth =,=  =,= .15 =,=  =,=  =,=  =,=  =,=  =,=  =,=  =,=  =,= 5 =,= 2 =,=  =,= /home/aj2_data/data//hg19/Esteller_TransPsych2016/A09 =,= A09 =,= A09 =,=  =,= simple_wgta.php =,=  =,=  =,= 0 =,=  =,=  =,=  =,= 
+Track =:= Parkinsons - BK1027 =,= MethTrack =,= Esteller_TransPsych2016 =,= /aj2/tracks/ckeown/Esteller_TransPsych2016/Esteller_TransPsych2016/BK1027.php =,= salk_meth =,=  =,= .15 =,=  =,=  =,=  =,=  =,=  =,=  =,=  =,=  =,= 6 =,= 2 =,=  =,= /home/aj2_data/data//hg19/Esteller_TransPsych2016/BK1027 =,= BK1027 =,= BK1027 =,=  =,= simple_wgta.php =,=  =,=  =,= 0 =,=  =,=  =,=  =,= 
+Track =:= data =,= MaskTrack =,= Esteller_TransPsych2016 =,= /aj2/tracks/emukamel/Esteller_TransPsych2016b/Esteller_TransPsych2016/data.php =,= salk_bed =,=  =,=  =,=  =,=  =,=  =,=  =,=  =,=  =,=  =,=  =,= 0 =,= 2 =,=  =,= /cndd/emukamel/aj2_data//data =,= data =,= data =,=  =,= simple_mask.php =,=  =,=  =,= 0 =,=  =,=  =,=  =,= 
+Track =:= data =,= IntensityTrack =,= Esteller_TransPsych2016 =,= /aj2/tracks/emukamel/Esteller_TransPsych2016b/Esteller_TransPsych2016/data.php =,= silk_bricks =,=  =,=  =,=  =,=  =,=  =,=  =,=  =,=  =,=  =,=  =,= 0 =,= 2 =,=  =,= /cndd/emukamel/aj2_data//data =,= data =,= data =,=  =,= simple_intensity.php =,=  =,=  =,= 0 =,=  =,=  =,=  =,= 
+Track =:= ListerMukamel_hg19_DMRs =,= MaskTrack =,= DMRs_SimpleDB =,= /aj2/tracks/emukamel/Esteller_TransPsych2016b/ListerMukamel_DMRs1.php =,= salk_bed =,=  =,=  =,=  =,=  =,=  =,=  =,=  =,=  =,=  =,=  =,= 7 =,= 3 =,=  =,= /cndd/emukamel/aj2_data//ListerMukamel_DMRs1 =,= DMRs =,= ListerMukamel_DMRs1 =,=  =,= simple_mask.php =,=  =,=  =,= 0 =,=  =,=  =,= red =,= 
+Track =:= CGDMRs_hs_NeuNpos_hypo_mCG_hg19 =,= ReadsTrack =,= DMRs =,= /aj2/tracks/emukamel/Esteller_TransPsych2016b/DMRs/CGDMRs_hs_NeuNpos_hypo_mCG_hg19.php =,= salk_dmr =,=  =,=  =,=  =,=  =,=  =,=  =,=  =,=  =,=  =,=  =,= 8 =,= 4 =,= localhost =,= ListerMukamel.CGDMRs_hs_NeuNpos_hypo_mCG_hg19 =,= CGDMRs_hs_NeuNpos_hypo_mCG_hg19 =,= CGDMRs_hs_NeuNpos_hypo_mCG_hg19 =,=  =,= common_reads.php =,=  =,=  =,=  =,=  =,=  =,=  =,= 
+Track =:= CGDMRs_hs_NeuNneg_hypo_mCG_hg19 =,= MaskTrack =,= DMRs =,= /aj2/tracks/emukamel/Esteller_TransPsych2016b/DMRs/CGDMRs_hs_NeuNneg_hypo_mCG_hg19.php =,= salk_dmr =,=  =,=  =,=  =,=  =,=  =,=  =,=  =,=  =,=  =,=  =,= 9 =,= 4 =,= localhost =,= ListerMukamel.CGDMRs_hs_NeuNneg_hypo_mCG_hg19 =,= CGDMRs_hs_NeuNneg_hypo_mCG_hg19 =,= CGDMRs_hs_NeuNneg_hypo_mCG_hg19 =,=  =,= common_reads.php =,=  =,=  =,=  =,=  =,=  =,=  =,= 
+Track =:= hs_brain_25yo_1 =,= MethTrack =,= TestMeth =,= /aj2/tracks/emukamel/Esteller_TransPsych2016b/TestMeth/hs_brain_25yo_1.php =,= salk_meth =,=  =,=  =,=  =,=  =,=  =,=  =,=  =,=  =,=  =,=  =,= 0 =,= 5 =,= localhost =,= ListerMukamel.hs_brain_25yo_ =,= hs_brain_25yo =,= hs_brain_25yo =,=  =,= common_wgta.php =,= true =,=  =,=  =,=  =,=  =,=  =,= 
+Track =:= mc_hs_UMB_579_53yo_fc_NeuN_neg_1 =,= MethTrack =,= DNA methylation - ListerMukamel2013 =,= /aj2/tracks/emukamel/Esteller_TransPsych2016b/DNA_methylation_-_ListerMukamel2013/mc_hs_UMB_579_53yo_fc_NeuN_neg.php =,= salk_meth =,=  =,= 0.15 =,=  =,=  =,=  =,=  =,=  =,=  =,=  =,=  =,= 12 =,= 6 =,= localhost =,= ListerMukamel.mc_hs_UMB_579_53yo_fc_NeuN_neg_ =,= mc_hs_UMB_579_53yo_fc_NeuN_neg =,= mc_hs_UMB_579_53yo_fc_NeuN_neg =,=  =,= common_wgta.php =,= true =,=  =,=  =,=  =,= CG CHG CHH =,=  =,= 
+Track =:= mc_hs_UMB_579_53yo_fc_NeuN_pos_1 =,= MethTrack =,= DNA methylation - ListerMukamel2013 =,= /aj2/tracks/emukamel/Esteller_TransPsych2016b/DNA_methylation_-_ListerMukamel2013/mc_hs_UMB_579_53yo_fc_NeuN_pos.php =,= salk_meth =,=  =,= .15 =,=  =,=  =,=  =,=  =,=  =,=  =,=  =,=  =,= 14 =,= 6 =,= localhost =,= ListerMukamel.mc_hs_UMB_579_53yo_fc_NeuN_pos_ =,= mc_hs_UMB_579_53yo_fc_NeuN_pos =,= mc_hs_UMB_579_53yo_fc_NeuN_pos =,=  =,= common_wgta.php =,= true =,=  =,=  =,=  =,= CG CWC CWD =,=  =,= 
+Track =:= mc_hs_UMB_797_55yo_fc_NeuN_neg_1 =,= MethTrack =,= DNA methylation - ListerMukamel2013 =,= /aj2/tracks/emukamel/Esteller_TransPsych2016b/DNA_methylation_-_ListerMukamel2013/mc_hs_UMB_797_55yo_fc_NeuN_neg_1.php =,= salk_meth =,=  =,= .15 =,=  =,=  =,=  =,=  =,=  =,=  =,=  =,=  =,= 13 =,= 6 =,= localhost =,= ListerMukamel.mc_hs_UMB_797_55yo_fc_NeuN_neg_ =,= mc_hs_UMB_797_55yo_fc_NeuN_neg =,= mc_hs_UMB_797_55yo_fc_NeuN_neg =,=  =,= common_wgta.php =,= true =,=  =,=  =,=  =,= CG CWC CWD =,=  =,= 
+Track =:= mc_hs_UMB_797_55yo_fc_NeuN_pos_1 =,= MethTrack =,= DNA methylation - ListerMukamel2013 =,= /aj2/tracks/emukamel/Esteller_TransPsych2016b/DNA_methylation_-_ListerMukamel2013/mc_hs_UMB_797_55yo_fc_NeuN_pos_1.php =,= salk_meth =,=  =,= .15 =,=  =,=  =,=  =,=  =,=  =,=  =,=  =,=  =,= 15 =,= 6 =,= localhost =,= ListerMukamel.mc_hs_UMB_797_55yo_fc_NeuN_pos_ =,= mc_hs_UMB_797_55yo_fc_NeuN_pos =,= mc_hs_UMB_797_55yo_fc_NeuN_pos =,=  =,= common_wgta.php =,= true =,=  =,=  =,=  =,= CG CWC CWD =,=  =,= 
+Track =:= mc_hs_UMB_797_55yo_fc_tissue_1 =,= MethTrack =,= DNA methylation - ListerMukamel2013 =,= /aj2/tracks/emukamel/Esteller_TransPsych2016b/DNA_methylation_-_ListerMukamel2013/mc_hs_UMB_797_55yo_fc_tissue_1.php =,= salk_meth =,=  =,= .15 =,=  =,=  =,=  =,=  =,=  =,=  =,=  =,=  =,= 11 =,= 6 =,= localhost =,= ListerMukamel.mc_hs_UMB_797_55yo_fc_tissue_ =,= mc_hs_UMB_797_55yo_fc_tissue =,= mc_hs_UMB_797_55yo_fc_tissue =,=  =,= common_wgta.php =,= true =,=  =,=  =,=  =,= CG CWC CWD =,=  =,= 
+Track =:= mc_hs_fetal_brain_1 =,= MethTrack =,= DNA methylation - ListerMukamel2013 =,= /aj2/tracks/emukamel/Esteller_TransPsych2016b/DNA_methylation_-_ListerMukamel2013/mc_hs_fetal_brain_1.php =,= salk_meth =,=  =,= .15 =,=  =,=  =,=  =,=  =,=  =,=  =,=  =,=  =,= 10 =,= 6 =,= localhost =,= ListerMukamel.mc_hs_fetal_brain_ =,= mc_hs_fetal_brain =,= mc_hs_fetal_brain =,=  =,= common_wgta.php =,= true =,=  =,=  =,=  =,= CG CWC CWD =,=  =,= 
+Genome_URL =:= /aj2/genomes/hg19.php
+Bookmarks_URL =:= /aj2/includes/common_bookmarks.php
+Author =:= Eran Mukamel
+Email =:= emukamel@ucsd.edu
+Page_Title =:= Esteller_HumanNeurodegenerative
+Notes =:= 
+Citation =:= 
+Assembly =:= 5
+Position =:= 88013975
+Bases =:= 200
+Pixels =:= 1
+Yaxis =:= 20
+Max =:= 
+Min =:= 
+Multi =:= 1
+Baseline =:= 0
+Display =:= 0
+Activate =:= 0
+GlobalScale =:= 2
+HiC_d =:= 
+Priority =:= Public
+Provider_Name =:= Eran Mukamel
+Provider_Mail =:= emukamel@ucsd.edu
+Institution =:= University of California San Diego
+Institution_Link =:= brainome.ucsd.edu
+Institution_Logo =:= 
+Organism =:= Homo sapiens
+jBuilder =:= 4.0

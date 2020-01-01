@@ -1,0 +1,37 @@
+Keys =:= Track_Name =,= Track_Type =,= Track_Path =,= Track_URL =,= Icon =,= Height =,= Scale =,= boxHeight =,= boxWidthMin =,= Single =,= Control =,= alignControl =,= NoArrows =,= NoLabels =,= showWalks =,= active =,= group =,= Server =,= Table_List =,= Title_List =,= Info_List =,= Options_List =,= Include =,= Append_Assembly =,= iBase =,= Reads =,= Policy =,= Class =,= Color =,= Data_Type
+Track =:= Gene Models (hg19_Gencode_v19.php) =,= ModelsTrack =,= Annotation Models =,= /aj2/models/hg19_Gencode_v19.php =,= silk_bricks =,= 100 =,= 1 =,=  =,=  =,=  =,= true =,=  =,=  =,=  =,=  =,= 1 =,= 1 =,=  =,= /home/aj2_data/gene_models/hg19_Gencode_v19 =,= hg19_Gencode_v19 =,= hg19_Gencode_v19 =,=  =,= simple_models.php =,=  =,=  =,= 0 =,=  =,=  =,=  =,= 
+Track =:= hg19_CGi =,= AlignsTrack =,= Annotation Models =,= /aj2/tracks/emukamel/hg19_test/Annotation_Models/hg19_CGi.php =,= silk_bricks =,=  =,= 100 =,=  =,=  =,=  =,=  =,=  =,=  =,=  =,=  =,= 2 =,= 1 =,= localhost =,= models.hg19_CGi =,= hg19_CGi =,= hg19_CGi =,=  =,= simple_mask.php =,=  =,=  =,=  =,=  =,=  =,=  =,= 
+Track =:= mc_cerebellum_SRX838272_1 =,= MethTrack =,= mC =,= /aj2/tracks/emukamel/hg19_test/mC/mc_cerebellum_SRX838272.php =,= salk_dna =,=  =,=  =,=  =,=  =,=  =,=  =,=  =,=  =,=  =,=  =,= 3 =,= 2 =,= localhost =,= hg19_cerebellum_SRX838272.mc_cerebellum_SRX838272_ =,= mc_cerebellum_SRX838272 =,= mc_cerebellum_SRX838272 =,=  =,= common_wgta.php =,= true =,=  =,=  =,=  =,=  =,=  =,= 
+Track =:= mc_blood_mononuclear_SRX838242_1 =,= MethTrack =,= mC =,= /aj2/tracks/emukamel/hg19_test/mC/mc_blood_mononuclear_SRX838242_1.php =,= salk_dna =,=  =,=  =,=  =,=  =,=  =,=  =,=  =,=  =,=  =,=  =,= 5 =,= 2 =,= localhost =,= hg19_blood_mononuclear_SRX838242.mc_blood_mononuclear_SRX838242 =,= mc_blood_mononuclear_SRX838242 =,= mc_blood_mononuclear_SRX838242 =,=  =,= common_wgta.php =,= true =,=  =,=  =,=  =,=  =,=  =,= 
+Track =:= mc_broadman_11_SRX838252_1 =,= MethTrack =,= mC =,= /aj2/tracks/emukamel/hg19_test/mC/mc_broadman_11_SRX838252.php =,= salk_dna =,=  =,=  =,=  =,=  =,=  =,=  =,=  =,=  =,=  =,=  =,= 0 =,= 2 =,= localhost =,= hg19_broadman_11_SRX838252.mc_broadman_11_SRX838252 =,= mc_broadman_11_SRX838252 =,= mc_broadman_11_SRX838252 =,=  =,= common_wgta.php =,= true =,=  =,=  =,=  =,=  =,=  =,= 
+Track =:= mc_insular_SRX838269_1 =,= MethTrack =,= mC =,= /aj2/tracks/emukamel/hg19_test/mC/mc_insular_SRX838269_1.php =,= salk_dna =,=  =,=  =,=  =,=  =,=  =,=  =,=  =,=  =,=  =,=  =,= 7 =,= 2 =,= localhost =,= hg19_insular_SRX838269.mc_insular_SRX838269 =,= mc_insular_SRX838269 =,= mc_insular_SRX838269 =,=  =,= common_wgta.php =,= true =,=  =,=  =,=  =,=  =,=  =,= 
+Track =:= mc_hippo_SRX838264_5 =,= MethTrack =,= mC =,= /aj2/tracks/emukamel/hg19_test/mC/mc_hippo_SRX838264_5.php =,= salk_dna =,=  =,=  =,=  =,=  =,=  =,=  =,=  =,=  =,=  =,=  =,= 0 =,= 2 =,= localhost =,= hg19_hippo_SRX838264.mc_hippo_SRX838264_ =,= mc_hippo_SRX838264 =,= mc_hippo_SRX838264 =,=  =,= common_wgta.php =,= true =,=  =,=  =,=  =,=  =,=  =,= 
+Track =:= DMRs_hg19_hyper_blood_mononuclear_SRX838242_1 =,= IntensityTrack =,= DMRs =,= /aj2/tracks/emukamel/hg19_test/DMRs/DMRs_hg19_hyper_blood_mononuclear_SRX838242.php =,= salk_dmr =,=  =,=  =,=  =,=  =,=  =,=  =,=  =,=  =,=  =,=  =,= 4 =,= 3 =,= localhost =,= hg19_dbGaP_DMRs.DMRs_hg19_hyper_blood_mononuclear_SRX838242_ =,= DMRs_hg19_hyper_blood_mononuclear_SRX838242 =,= DMRs_hg19_hyper_blood_mononuclear_SRX838242 =,=  =,= simple_intensity.php =,= true =,=  =,=  =,=  =,=  =,=  =,= 
+Genome_URL =:= /aj2/genomes/hg19.php
+Bookmarks_URL =:= /aj2/includes/common_bookmarks.php
+Author =:= Eran Mukamel
+Email =:= emukamel@ucsd.edu
+Page_Title =:= hg19_FC_HC_Roadmap
+Notes =:= 
+Citation =:= 
+Assembly =:= 1
+Position =:= 10000000
+Bases =:= 200
+Pixels =:= 1
+Yaxis =:= 100
+Max =:= 
+Min =:= 
+Multi =:= 1
+Baseline =:= 0
+Display =:= 0
+Activate =:= 0
+GlobalScale =:= 2
+HiC_d =:= 
+Priority =:= Public
+Provider_Name =:= Eran Mukamel
+Provider_Mail =:= emukamel@ucsd.edu
+Institution =:= University of California San Diego
+Institution_Link =:= brainome.ucsd.edu
+Institution_Logo =:= 
+Organism =:= Homo sapiens
+jBuilder =:= 4.0

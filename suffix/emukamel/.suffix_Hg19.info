@@ -1,0 +1,25 @@
+Provider_Name =:= Eran Mukamel
+Provider_Mail =:= emukamel@ucsd.edu
+Institution =:= University of California San Diego
+Institution_Link =:= brainome.ucsd.edu
+Institution_Logo =:= 
+Organism =:= Homo sapiens
+Organism_Options =:= Homo sapiens
+Genome_URL =:= /aj2/genomes/hg19.php
+Genome_Options =:= /aj2/genomes/hg19.php
+Bookmarks_URL =:= 
+Bookmarks_URL_Options =:= 
+Analysis_URL =:= 
+Analysis_URL_Options =:= 
+Assembly =:= 1
+Position =:= 1
+Bases =:= 20
+Pixels =:= 1
+Yaxis =:= 20
+Baseline =:= 0
+Priority =:= Public
+Suffix_File =:= Hg19
+Suffix_File_Options =:= 
+SuffixSubmit =:= Submit
+Author =:= Eran Mukamel
+Email =:= emukamel@ucsd.edu

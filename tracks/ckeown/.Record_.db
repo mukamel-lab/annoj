@@ -1,0 +1,21 @@
+Provider_Name =:= blah 2
+Provider_Mail =:= christopher.keown@gmail.com
+Institution =:= asdf
+Institution_Link =:= 
+Institution_Logo =:= 
+Organism =:= Mus musculus
+Organism_Options =:= Mus musculus
+Server =:= 
+Table_List =:= /cndd/ckeown/scratch_aj2/chr/chrL.fasta
+Title_List =:= blah
+Info_List =:= blah
+Include =:= simple_models.php
+Include_Options =:= simple_models.php
+Options_List =:= 
+Genome_URL =:= chrl
+Path =:= /cndd/ckeown/scratch_aj2/
+File_List =:= blah
+Record =:= 
+Record_Options =:= 
+Model =:= 1
+Action =:= Build

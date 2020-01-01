@@ -1,0 +1,24 @@
+Provider_Name =:= Huaming
+Provider_Mail =:= h@salk.edu
+Institution =:= 
+Institution_Link =:= 
+Institution_Logo =:= 
+Organism =:= Arabidopsis thaliana
+Organism_Options =:= Arabidopsis thaliana
+Server =:= 
+Table_List =:= /cndd/ckeown/scratch_aj2/Araport
+Title_List =:= Arabidopsis test
+Info_List =:= test again
+Include =:= simple_models.php
+Include_Options =:= simple_models.php
+Options_List =:= 
+Genome_URL =:= /aj2/genomes/chromosome.php
+Genome_Options =:= /aj2/genomes/chromosome.php
+Path =:= 
+File_List =:= aport11.php
+Record =:= aport11.php
+Record_Options =:= 
+Force =:= 1
+CORS =:= 1
+Model =:= 1
+Action =:= Build

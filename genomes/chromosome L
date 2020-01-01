@@ -1,0 +1,37 @@
+<?PHP
+require_once '../includes/common.php';
+
+if ($action=='syndicate')
+{
+	$genome = array(
+		'institution' => array(
+			'name' => 'asdf',
+			'url' => '',
+			'logo' => ''
+		),
+		'engineer' => array(
+			'name' => 'Chromose L',
+			'email' => '',
+		),
+		'service' => array(
+			'title' => 'chromosome l',
+			'version' => '1',
+			'description' => 'asdf',
+		),
+		'genome' => array(
+			'assemblies' => array(
+				array( 'id' => '', 'size' => 48503 ),
+				array( 'id' => '~', 'size' => 49202 ),
+			)
+		)
+	);
+	respond($genome);
+}
+
+$genome_dir = '/cndd/ckeown/scratch_aj2/chrL.fasta';
+$ibase = 1;
+
+include_once '../includes/common_genome.php';
+
+error('Invalid action requested: '.$action);
+?>

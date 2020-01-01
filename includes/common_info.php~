@@ -1,0 +1,30 @@
+<?PHP
+if ($action == 'syndicate')
+{
+	$syndication = array
+	(
+		'institution' => array
+		(
+			'name' => (isset($institution_name))?$institution_name:'University of California, San Diego',
+			'url'  => (isset($institution_url))?$institution_url:'http://brainome.ucsd.edu',
+			'logo' => (isset($institution_logo))?$institution_logo:'/aj2/img/logo_salk.png'
+		),
+		'engineer' => array
+		(
+			'name'  => (isset($provider_name))?$provider_name:'Huaming Chen',
+			'email' => (isset($provider_email))?$provider_email:'hchen@salk.edu'
+		),
+		'service' => array
+		(
+			'title'       => (isset($title))?$title:'No title provided',
+			'species'     => (isset($species))?$species:'Arabidopsis thaliana',
+			'access'      => (isset($access))?$access:'public',
+			'version'     => 'Unspecified',
+			'format'      => 'Unspecified',
+			'server'      => '',
+			'description' => (isset($info))? $info:'No information available'
+		)
+	);
+}
+?>
+

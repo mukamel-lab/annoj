@@ -1,0 +1,24 @@
+Provider_Name =:= Junhao Li
+Provider_Mail =:= jul307@ucsd.edu
+Institution =:= UCSD
+Institution_Link =:= 
+Institution_Logo =:= 
+Organism =:= Homo sapiens
+Organism_Options =:= 
+Server =:= 
+Table_List =:= /home/aj2_data/gene_models/hg19_Gencode_v19
+Title_List =:= hg19_Gencode_v19
+Info_List =:= hg19_Gencode_v19
+Include =:= simple_models.php
+Include_Options =:= 
+Options_List =:= 
+Genome_URL =:= /aj2/genomes/hg19.php
+Genome_Options =:= 
+Path =:= 
+File_List =:= hg19_Gencode_v19.php
+Record =:= 
+Record_Options =:= 
+Force =:= 1
+CORS =:= 1
+Model =:= 1
+Action =:= Build
