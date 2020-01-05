@@ -6694,6 +6694,13 @@ AnnoJ.BrowserTrack = function(userConfig) {
 			self.setHeight(self.config.originalHeight);
 			self.fireEvent('resize', self.config.originalHeight)
 		}
+	}), 
+	'-', new Ext.menu.Item({  // EAM Jan 2019
+		text: 'Toggle line',
+		handler: function() {
+			var my_id=self.config.id;
+			AnnoJ.getGUI().Tracks.tracks.find('id',my_id).Frame.ext.toggleClass('AJ_darkborder')
+		}
 	})])
 	};
 	var Scaler = (function() {
