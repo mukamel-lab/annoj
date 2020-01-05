@@ -2610,6 +2610,8 @@ AnnoJ.Tracks = function(userConfig) {
 				else max = AnnoJ.config.max;
 
 				var conf = findConf(cursor.id);
+				var mytxt = '<div>';
+				if (conf.name) { mytxt += conf.name+': '; }
 				var scroll_width = (body.dom.offsetWidth - body.dom.clientWidth)/2;
 				InfoRequest.position = AnnoJ.pixels2bases(mouse.x + offset + scroll_width);
 				if(cursor.type == 'HiCTrack'){
@@ -2624,9 +2626,9 @@ AnnoJ.Tracks = function(userConfig) {
 						var idy = trk.config.indexy + Math.floor((cursor.offsetHeight - cursor.offsetTop) / conf.unity);
 						if(data[idx] && data[idx][idy]){
 							var val = data[idx][idy];
-							showText('<div>' + x + ',' + y + ',' + val + '</div>&darr;')
+							mytxt += x + ',' + y + ',' + val;
 						}
-						else showText('<div>' + x + ',' + y + '</div>&darr;')
+						else mytxt += x + ',' + y;
 					}
 					if(conf.style == 0){
 						var x1 = x - AnnoJ.pixels2bases(cursor.offsetHeight-cursor.offsetTop);
@@ -2635,29 +2637,32 @@ AnnoJ.Tracks = function(userConfig) {
 						var i2 = Math.floor(x2 / bin);
 						if(data[i1] && data[i1][i2]){
 							var val = data[i1][i2];
-							showText('<div>' + x + ',' + x1 + ',' + x2 + ',' + val + '</div>&darr;')
+							mytxt += x + ',' + x1 + ',' + x2 + ',' + val;
 						}
-						else showText('<div>' + x + ',' + x1 + ',' + x2 + '</div>&darr;')
+						else mytxt += x + ',' + x1 + ',' + x2;
 					}
 				}
 				else{
 					var x = AnnoJ.pixels2bases(offset + mouse.x + scroll_width);
 					var x1 = x - AnnoJ.pixels2bases(cursor.offsetHeight-cursor.offsetTop);
 					var x2 = x + AnnoJ.pixels2bases(cursor.offsetHeight-cursor.offsetTop);
-					showText('<div>' + x + ',' + x1 + ',' + x2 + '</div>&darr;')
+					mytxt +=  x + ',' + x1 + ',' + x2;
 				}
 				}
 				else{
 					if(!max || !conf.scale || AnnoJ.config.settings.display == 1){
-						showText('<div>' + AnnoJ.pixels2bases(mouse.x + offset + scroll_width) + '</div>&darr;');
+						mytxt += AnnoJ.pixels2bases(mouse.x + offset + scroll_width).toLocaleString();
 					}
 					else {
 						max /= conf.scale;
 						var ppos = Math.round(-pp * max * 20 / cursor.offsetHeight)/10;
-						showText('<div>' + AnnoJ.pixels2bases(mouse.x + offset + scroll_width) + ',' + ppos + '</div>&darr;');
+						// mytxt +=  AnnoJ.pixels2bases(mouse.x + offset + scroll_width) + ',' + ppos;
+						mytxt +=  AnnoJ.pixels2bases(mouse.x + offset + scroll_width).toLocaleString(); // EAM January 2020
 					}
 				}
 			}
+			mytxt += '</div>';
+			showText(mytxt);
 			ext.setLeft(mouse.x - Math.round(ext.getWidth() / 2));
 			ext.setTop(mouse.y - ext.getHeight() - 5)
 		});

@@ -227,6 +227,10 @@
 .AJ_track_title {
 	color:black;
 	background-color:white;
+	font-family:arial;
+}
+.AJ_track_title:hover {
+	font-size:18px;
 }
 .ytb-spacer {
 	width:20px!important;
@@ -242,7 +246,8 @@
 }
 .AJ_mouse_label {
 	position:absolute;
-	font-size:10px;
+	font-size:14px;
+	font-family:arial;
 	top:0px;
 	z-index:6;
 	text-align:center;
