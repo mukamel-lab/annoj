@@ -608,16 +608,17 @@ var AnnoJ = (function() {
 			collapsible: true,
 			split: true,
 			minSize: 160,
-			width: 250,
+			// width: 250, // commented by EAM 2019
 			//height: screen.height/2,				//added by H. C. 2015-06-21
 			height: window.innerHeight - 28,			//added by H. C. 2015-06-21
-			maxSize: 400,
+			// maxSize: 400,
 			margins: '0 0 0 0',
 			header: false,						//added by H. C.
 			layoutConfig: {
 				animate: true
 			},
-			items: [AboutBox, TrackSelector, InfoBox, Bookmarker, Messenger] //, StyleSelector, Bookmarker]
+			// items: [AboutBox, TrackSelector, InfoBox, Bookmarker, Messenger] //, StyleSelector, Bookmarker]
+			items: [AboutBox, TrackSelector, InfoBox] //, StyleSelector, Bookmarker]
 		});
 		var Container = new Ext.Panel({
 			title: 'Configuration',
@@ -627,7 +628,7 @@ var AnnoJ = (function() {
 			split: true,
 			minSize: 160,
 			width: 250,
-			maxSize: 400,
+			// maxSize: 400,
 			margins: '0 0 0 0',
 			//header: false, 			//added by H. C.
 			collapseMode: 'header', 		//added by H. C.
@@ -2350,7 +2351,7 @@ AnnoJ.AboutBox = (function() {
 		logo: " <a href='http://signal.salk.edu/aj2' target=_blank><div class='annoj'> &nbsp; </div></a>",
 		//version: 'Beta 1.5',
 		version: '4.5.0 - min9',
-		engineer: 'Julian Tonti-Filippini (2007-2009),<br>Tao Wang (2010-2012),<br>Huaming Chen (2013-2016)',
+		engineer: 'Julian Tonti-Filippini (2007-2009),<br>Tao Wang (2010-2012),<br>Huaming Chen (2013-2016),<br>Eran Mukamel (2017-)',
 		//contact: 'tontij01(at)student.uwa.edu.au',
 		contact: 'hchen@salk.edu, emukamel@ucsd.edu',
 		//copyright: '&copy; 2008 Julian Tonti-Filippini',

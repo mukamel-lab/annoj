@@ -1,0 +1,205 @@
+<html>
+<head>
+  <meta http-equiv='Content-Type' content='text/html; charset=iso-8859-1'>
+  <title>BICCN: Mouse primary motor cortex (MOp) cell types</title>
+  <!-- <link type='text/css' rel='stylesheet' href='browser/css/navbar.css' /> -->
+
+  <meta charset="utf-8">
+  <script src="https://use.fontawesome.com/c8d6e6a627.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+  <link rel="stylesheet" href="annoj_cndd/css/bootstrap-select.css">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+  <script src="annoj_cndd/js/bootstrap-select.js"></script>
+
+  <style type="text/css">
+
+    select.selectpicker { display:none; } /* Prevent FOUC }*/
+    div {
+      text-align: center;
+    }
+    .div1 {
+      float: left;
+      padding: 8px 8px 8px 32px;
+    }
+    .nav-item { 
+      margin:5; 
+    }
+  </style>
+  
+  <script type='text/javascript'> var queryPost; </script>
+  <script type='text/javascript' src='./browser/js/urlinit.js'></script>
+
+  <script>
+    var startingLoc=getQueryVariable('location'); 
+
+    function buildURL() {
+      var modalities=document.getElementById('select_modalities').selectedOptions;
+      var showctxt = '';
+      for (i=0; i<modalities.length; i++) {
+        showctxt += modalities[i].value+':';
+      }
+      src = "https://brainome.ucsd.edu/annoj/BICCN_MOp/biccn_annoj.php?";
+      var annoj_frame = document.getElementById('annoj_frame');
+      try {
+            var loc = annoj_frame.contentWindow.AnnoJ.getLocation();
+            src += 'location='+loc.assembly+':'+loc.position+':'+loc.bases+':'+loc.pixels+'&';
+      } catch {
+        if (startingLoc) {
+          src += 'location='+startingLoc;
+        }
+      };
+      var params = ['ensemble','celltype','colorby','groupby'];
+      for (i=0; i<params.length; i++) {
+        if (document.getElementById('select_'+params[i]).value) { src += params[i]+'='+document.getElementById('select_'+params[i]).value+'&'; }
+      }
+      src += 'showctxt='+showctxt;
+      return src
+    }
+
+    function myRefresh() {
+      src = buildURL();
+      document.getElementById('annoj_frame').src = src;
+    }
+
+    function getLink() {
+      src = buildURL();
+      src = src.replace('biccn_annoj.php','index.html');
+      document.getElementById('srcBox').value = src;
+    }
+
+    function copyLink() {
+      /* Select the text field */
+      var copySrc = document.getElementById('srcBox')
+      copySrc.style.visibility = 'visible'; // The box must be visible to copy
+      copySrc.select();
+      copySrc.setSelectionRange(0, 99999); /*For mobile devices*/
+
+      /* Copy the text inside the text field */
+      document.execCommand("copy");
+      copySrc.style.visibility = 'hidden';
+
+      /* Alert the copied text */
+      alert("Copied the text: " + copySrc.value);
+    }
+
+    function setParams() {
+      var params = ['ensemble','celltype','colorby','groupby'];
+      for (i=0; i<params.length; i++) {
+        a=getQueryVariable(params[i]); 
+        if (a) { 
+          document.getElementById('select_'+params[i]).value = a;
+        }
+      }
+    }
+
+    $(document).ready(function () {
+      $('.glyphicon').click(function () {
+        $(this).toggleClass("glyphicon-chevron-down").toggleClass("glyphicon-chevron-up");
+      });
+
+      setParams();
+      console.log(document.getElementById('srcBox'))
+      myRefresh(); 
+      getLink();
+    });
+
+  </script>
+
+  <link rel="shortcut icon" type="image/png" href="/favicon.png"/>
+</head>
+
+<body>
+  <nav class="navbar navbar-default" style="margin:0;">
+    <div class="collapse in" id="topbar">
+      <div class="container-fluid">
+        <ul class="nav navbar-nav">
+          <li class="nav-item">  
+            <a href="http://biccn.org" target="_blank" style="padding: 0">
+              <img src="browser/img/logo_BICCN.png" height="34">
+            </a>
+          </li>
+          <li class="nav-item">  
+              <p><button onclick="window.open('https://brainome.ucsd.edu/portal/Ens10');" class="btn btn-primary">View cells
+              <!-- <img src="browser/img/tsne_portal.png" height="34"> -->
+            </button></p>
+          </li>
+          <li class="nav-item">  
+            <select id="select_ensemble" class="selectpicker" data-width="auto"  onchange="getLink();" data-toggle="tooltip" data-placement="top" title="Cluster depth">
+              <option value="2" selected>Cluster depth...</option>
+              <option value="2" >Level 2: Cell classes</option>
+              <option value="3">Level 3: Cell types</option>
+            </select>
+          </li>
+          <li class="nav-item">
+            <select id="select_celltype" class="selectpicker" data-width="auto" onchange="getLink();" data-toggle="tooltip" data-placement="top" title="Cells to show" >
+              <option value="inh" selected>Cells to show...</option>
+              <option value="all">All cell types</option>
+              <option value="exc">Excitatory neurons</option>
+              <option value="inh">Inhibitory neurons</option>
+              <option value="mge">MGE-derived neurons</option>
+              <option value="cge">CGE-derived neurons</option>
+            </select>
+          </li>
+
+          <li class="nav-item">  
+            <select id="select_modalities" class="selectpicker" data-width="auto" multiple data-width="auto" data-toggle="tooltip" data-placement="top" title="Modalities to show">
+              <option value="mcg" selected> mCG</option>
+              <!-- <option value="mch" > mCH</option> -->
+              <option value="atac" selected> ATAC</option>
+              <option value="scrna" selected> scRNA</option>
+              <option value="snrna"> snRNA</option>
+              <option selected value="enhancer"> Enhancers</option>
+            </select>
+          </li>
+          <li class="nav-item">
+            <select id="select_groupby" class="selectpicker" data-width="auto" onchange="getLink();" data-toggle="tooltip" data-placement="top" title="Group tracks by">
+              <option value="modality" selected>Group tracks by...</option>
+              <option value="celltype">Cell type</option>
+              <option value="modality">Modality</option>    
+            </select>
+          </li>
+
+          <li class="nav-item">
+            <select class="selectpicker" id="select_colorby" data-width="auto" onchange="getLink();" data-toggle="tooltip" data-placement="top" title="Color tracks by">
+              <option value="modality" selected>Color tracks by...</option>
+              <option value="celltype">Cell type</option>
+              <option value="modality">Modality</option>    
+            </select>
+          </li>
+          
+          <li class="nav-item">
+              <p><button onclick="myRefresh(); getLink();" class="btn btn-primary">Reload browser</button></p>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="container-fluid">
+        <ul class="nav navbar-nav">
+          <li class="nav-item">
+            <span class="glyphicon glyphicon-chevron-down" data-toggle="collapse" href="#topbar" title="Set track options" style="line-height: inherit; font-size:18;"></span>
+          </li>
+          <li class="nav-item">
+            <div class="text-nowrap" width=100%>
+              <label for="srcBox"><p onclick="getLink(); copyLink();" >
+                Get shareable link <i class="fa fa-link" aria-hidden="true"></i></p></label>
+                <input type="text" id="srcBox" size="1" style="visibility:hidden;">
+
+              </input>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <iframe id="annoj_frame" target="_blank" 
+    src="'"
+    width=100% height=100%> 
+    iframe
+    </iframe>
+
+
+</body>
+
+</html>
