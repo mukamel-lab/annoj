@@ -43,8 +43,8 @@
       src = "https://brainome.ucsd.edu/annoj/BICCN_MOp/biccn_annoj.php?";
       var annoj_frame = document.getElementById('annoj_frame');
       try {
-            var loc = annoj_frame.contentWindow.AnnoJ.getLocation();
-            src += 'location='+loc.assembly+':'+loc.position+':'+loc.bases+':'+loc.pixels+'&';
+        var loc = annoj_frame.contentWindow.AnnoJ.getLocation();
+        src += 'location='+loc.assembly+':'+loc.position+':'+loc.bases+':'+loc.pixels+'&';
       } catch {
         if (startingLoc) {
           src += 'location='+startingLoc;
@@ -67,6 +67,7 @@
       src = buildURL();
       src = src.replace('biccn_annoj.php','index.html');
       document.getElementById('srcBox').value = src;
+      window.history.pushState("object or string", "", src);
     }
 
     function copyLink() {
@@ -81,7 +82,7 @@
       copySrc.style.visibility = 'hidden';
 
       /* Alert the copied text */
-      alert("Copied the text: " + copySrc.value);
+      // alert("Copied the text: " + copySrc.value);
     }
 
     function setParams() {
@@ -112,92 +113,102 @@
 
 <body>
   <nav class="navbar navbar-default" style="margin:0;">
-    <div class="collapse in" id="topbar">
-      <div class="container-fluid">
-        <ul class="nav navbar-nav">
-          <li class="nav-item">  
-            <a href="http://biccn.org" target="_blank" style="padding: 0">
-              <img src="browser/img/logo_BICCN.png" height="34">
-            </a>
-          </li>
-          <li class="nav-item">  
-              <p><button onclick="window.open('https://brainome.ucsd.edu/portal/Ens10');" class="btn btn-primary">View cells
-              <!-- <img src="browser/img/tsne_portal.png" height="34"> -->
-            </button></p>
-          </li>
-          <li class="nav-item">  
-            <select id="select_ensemble" class="selectpicker" data-width="auto"  onchange="getLink();" data-toggle="tooltip" data-placement="top" title="Cluster depth">
-              <option value="2" selected>Cluster depth...</option>
-              <option value="2" >Level 2: Cell classes</option>
-              <option value="3">Level 3: Cell types</option>
-            </select>
-          </li>
-          <li class="nav-item">
-            <select id="select_celltype" class="selectpicker" data-width="auto" onchange="getLink();" data-toggle="tooltip" data-placement="top" title="Cells to show" >
-              <option value="inh" selected>Cells to show...</option>
-              <option value="all">All cell types</option>
-              <option value="exc">Excitatory neurons</option>
-              <option value="inh">Inhibitory neurons</option>
-              <option value="mge">MGE-derived neurons</option>
-              <option value="cge">CGE-derived neurons</option>
-            </select>
-          </li>
+    <div class="container-fluid">
+      <ul class="nav navbar-nav">
+        <li class="nav-item">
+          <span class="glyphicon glyphicon-chevron-down" data-toggle="collapse" href="#topbar" title="Show/hide options" style="line-height: inherit; font-size:18;"></span>
+        </li>
+        <li class="nav-item">  
+         <a href="http://biccn.org" target="_blank" style="padding: 0">
+           <img src="browser/img/logo_BICCN.png" height="34">
+         </a>
+       </li>
+       <li class="nav-item">  
+         <button title="About the AnnoJ browser." onclick="window.open('https://brainome.ucsd.edu/howto_annoj.html');" class="btn btn-info"><i class="fa fa-question-circle" aria-hidden="true"></i> About
+         </button>
+       </li>
+       <li class="nav-item">
+        <button onclick="getLink(); copyLink();" class="btn btn-primary" >
+          <i class="fa fa-link" aria-hidden="true"></i> Copy shareable link</button>
+          <input type="text" id="srcBox" size="1" style="visibility:hidden;">
+        </input>
+      </li>
 
-          <li class="nav-item">  
-            <select id="select_modalities" class="selectpicker" data-width="auto" multiple data-width="auto" data-toggle="tooltip" data-placement="top" title="Modalities to show">
-              <option value="mcg" selected> mCG</option>
-              <!-- <option value="mch" > mCH</option> -->
-              <option value="atac" selected> ATAC</option>
-              <option value="scrna" selected> scRNA</option>
-              <option value="snrna"> snRNA</option>
-              <option selected value="enhancer"> Enhancers</option>
-            </select>
-          </li>
-          <li class="nav-item">
-            <select id="select_groupby" class="selectpicker" data-width="auto" onchange="getLink();" data-toggle="tooltip" data-placement="top" title="Group tracks by">
-              <option value="modality" selected>Group tracks by...</option>
-              <option value="celltype">Cell type</option>
-              <option value="modality">Modality</option>    
-            </select>
-          </li>
+    </ul>
+  </div>
+  <div class="collapse in" id="topbar">
+    <div class="container-fluid">
+     <ul class="nav navbar-nav">
+       <li class="nav-item">  			      
+         <button onclick="window.open('https://brainome.ucsd.edu/portal/Ens10');" title="Go to cell browser to view clusters and genes" class="btn btn-primary">
+          <img src="browser/img/Logo_ClearBg3.png" style="height:30px; padding:5px;"> Launch cell browser</button>
+        </li>
+        <li class="nav-item">  
+         <button onclick="window.open('http://www.mouseconnectome.org/Dinoskin/page/cemba');" title="Go to mouse connectome browser to view anatomy and connectivity data (Hongwei Dong lab)" class="btn btn-primary">
+           <img src="browser/img/mouseconnectome.png" style="height:30px;"> Launch anatomy browser
+         </button>
+       </li>
+     </ul>
+   </div>
+   <div class="container-fluid">
+     <ul class="nav navbar-nav">
+      <li class="nav-item">  
+        <select id="select_ensemble" class="selectpicker" data-width="auto"  onchange="getLink();" data-toggle="tooltip" data-placement="top" title="Cluster depth">
+          <option value="2" selected>Cluster depth...</option>
+          <option value="2" >Level 2: Cell classes</option>
+          <option value="3">Level 3: Cell types</option>
+        </select>
+      </li>
+      <li class="nav-item">
+        <select id="select_celltype" class="selectpicker" data-width="auto" onchange="getLink();" data-toggle="tooltip" data-placement="top" title="Cells to show" >
+          <option value="inh" selected>Cells to show...</option>
+          <option value="all">All cell types</option>
+          <option value="exc">Excitatory neurons</option>
+          <option value="inh">Inhibitory neurons</option>
+          <option value="mge">MGE-derived neurons</option>
+          <option value="cge">CGE-derived neurons</option>
+        </select>
+      </li>
 
-          <li class="nav-item">
-            <select class="selectpicker" id="select_colorby" data-width="auto" onchange="getLink();" data-toggle="tooltip" data-placement="top" title="Color tracks by">
-              <option value="modality" selected>Color tracks by...</option>
-              <option value="celltype">Cell type</option>
-              <option value="modality">Modality</option>    
-            </select>
-          </li>
-          
-          <li class="nav-item">
-              <p><button onclick="myRefresh(); getLink();" class="btn btn-primary">Reload browser</button></p>
-            </li>
-          </ul>
-        </div>
-      </div>
-      <div class="container-fluid">
-        <ul class="nav navbar-nav">
-          <li class="nav-item">
-            <span class="glyphicon glyphicon-chevron-down" data-toggle="collapse" href="#topbar" title="Set track options" style="line-height: inherit; font-size:18;"></span>
-          </li>
-          <li class="nav-item">
-            <div class="text-nowrap" width=100%>
-              <label for="srcBox"><p onclick="getLink(); copyLink();" >
-                Get shareable link <i class="fa fa-link" aria-hidden="true"></i></p></label>
-                <input type="text" id="srcBox" size="1" style="visibility:hidden;">
+      <li class="nav-item">  
+        <select id="select_modalities" class="selectpicker" onchange="getLink();" data-width="auto" multiple data-width="auto" data-toggle="tooltip" data-placement="top" title="Modalities to show">
+          <option value="mcg" selected> mCG</option>
+          <!-- <option value="mch" > mCH</option> -->
+          <option value="atac" selected> ATAC</option>
+          <option value="scrna" selected> scRNA</option>
+          <option value="snrna"> snRNA</option>
+          <option selected value="enhancer"> Enhancers</option>
+        </select>
+      </li>
+      <li class="nav-item">
+        <select id="select_groupby" class="selectpicker" data-width="auto" onchange="getLink();" data-toggle="tooltip" data-placement="top" title="Group tracks by">
+          <option value="modality" selected>Group tracks by...</option>
+          <option value="celltype">Cell type</option>
+          <option value="modality">Modality</option>    
+        </select>
+      </li> 
 
-              </input>
-            </div>
-          </li>
-        </ul>
-      </div>
-    </nav>
+      <li class="nav-item">
+        <select class="selectpicker" id="select_colorby" data-width="auto" onchange="getLink();" data-toggle="tooltip" data-placement="top" title="Color tracks by">
+          <option value="modality" selected>Color tracks by...</option>
+          <option value="celltype">Cell type</option>
+          <option value="modality">Modality</option>    
+        </select>
+      </li>
+      <li class="nav-item">
+        <p><button onclick="myRefresh(); getLink();" class="btn btn-primary">Reload browser</button></p>
+      </li>
+    </ul>
+  </div>
+</div>
 
-    <iframe id="annoj_frame" target="_blank" 
-    src="'"
-    width=100% height=100%> 
-    iframe
-    </iframe>
+</nav>
+
+<iframe id="annoj_frame" target="_blank" 
+src="'"
+width=100% height=100%> 
+iframe
+</iframe>
 
 
 </body>

@@ -151,7 +151,7 @@ for (i=0; i<tracks.length; i++) {
       'scale': snrna_scales[tracks[i].cluster],
       'single': true,
       'color' : {count: '#ff0000'},
-      'cellclass' : tracks[i].cellclass, 'modality' : 'snRNA', 'hidden': hidden,
+      'cellclass' : tracks[i].cellclass, 'modality' : 'snrna', 'hidden': hidden,
     };
     new_tracks.push(track);
 
@@ -166,7 +166,7 @@ for (i=0; i<tracks.length; i++) {
         'scale': scrna_scales[tracks[i].cluster],
         'single': true,
         'color' : {count: '#af0770'},
-        'cellclass' : tracks[i].cellclass, 'modality' : 'scRNA', 'hidden': hidden,
+        'cellclass' : tracks[i].cellclass, 'modality' : 'scrna', 'hidden': hidden,
       };
       new_tracks.push(track);
     }
@@ -227,7 +227,7 @@ for (var i=0; i<enhancer_clusters.length; i++) {
   [ens,celltype1,celltype2] = track.name.split(' ');
   track = {
     'id'   : 'Enhancer_'+cluster,
-    'name' : 'Enhancer '+cluster,
+    'name' : 'Enhancer '+cluster.replace('ens2_','ens2 '+enhancer_parent_cluster[i]+' '),
     'type' : 'PairedEndTrack',
     'path' : 'Enhancers',
     'data' : './browser/fetchers/dmr/ENHANCER_'+cluster+'.php',
@@ -254,58 +254,40 @@ AnnoJ.config.tracks = AnnoJ.config.tracks.concat(new_tracks);
 var re_celltype = new RegExp(celltype);
 var re_ens = new RegExp('_ens'+ensemble+'_');
 var re_modality, modality = [];
-var modalities = ['mcg','mch','atac','scRNA','snRNA'];
-var etrk;
-switch (groupby) {
-  case 'modality':
-  for (i1=0; i1<modalities.length; i1++){
-    modality = modalities[i1];
-    re_modality = RegExp(modality,"i");
-    var enhancers_used = new Array(enhancer_parent_cluster.length).fill(false);
-    if (re_modality.test(showctxt)) { 
-      for (i=0; i<AnnoJ.config.tracks.length; i++) {
-        if (((re_celltype.test(AnnoJ.config.tracks[i].cellclass)) | (celltype=='all')) & (re_ens.test(AnnoJ.config.tracks[i].id)) & 
-          (AnnoJ.config.tracks[i].modality==modality) & (!AnnoJ.config.tracks[i].hidden)) {
-          AnnoJ.config.active.push(AnnoJ.config.tracks[i].id);
-          if ( (modality=='mcg') & (/enhancer/i.test(showctxt)) ) {
-// AnnoJ.getGUI().Tracks.tracks.find('id', cursor.id);
-              for (i2=0; i2<enhancer_parent_cluster.length; i2++) {
-                if ((RegExp(enhancer_parent_cluster[i2],"i").test(AnnoJ.config.tracks[i].id)) & (!enhancers_used[i2])) {
-                  AnnoJ.config.active.push('Enhancer_'+enhancer_clusters[i2]);
-                  enhancers_used[i2]=true;
-                }
-              }
-            }
-          }
-        }
-      }
+var modalities = ['mcg','enhancer','mch','atac','scRNA','snRNA'];
+var showctxts=showctxt.replace(/:$/,'').split(':');
 
-      // Add border between modalities
-      var curr_trk=AnnoJ.config.active[AnnoJ.config.active.length-1];
-      AnnoJ.config.tracks.find(x => x['id']==curr_trk)['cls'] = 'AJ_track AJ_darkborder';
-    }
-  break;
-  case 'celltype':
-  	var showctxts=showctxt.replace(/:$/,'').split(':');
-    for (i=0; i<AnnoJ.config.tracks.length; i++) {
-      for (i1=0; i1<modalities.length; i1++){
-        var modality = modalities[i1];
-        re_modality = RegExp(modality,"i");
-        if (re_modality.test(showctxt)) { 
-          if (((re_celltype.test(AnnoJ.config.tracks[i].cellclass)) | (celltype=='all')) & (re_ens.test(AnnoJ.config.tracks[i].id)) & 
-            (AnnoJ.config.tracks[i].modality==modality) & (!AnnoJ.config.tracks[i].hidden)) {
-            AnnoJ.config.active.push(AnnoJ.config.tracks[i].id)
-          if (RegExp(modality,"i").test(showctxts[showctxts.length-1])) {
-                    AnnoJ.config.tracks[i].cls = "AJ_track AJ_darkborder" ;// This adds a border below the track
-                  } 
-                }
-              }
-            }
-          } 
-          break;     
+// Select the tracks to be shown
+var currTracks=AnnoJ.config.tracks.filter(x => RegExp(celltype).test(x['cellclass']) & re_ens.test(x['id']) & 
+  showctxts.includes(x['modality']) & !x['hidden']);
+
+// Sort the tracks by cell type, then modality
+function modalityIndex(a) {
+  return modalities.findIndex(function (x) { return RegExp(x,'i').test(a['modality'])});
+}
+function getCellTypeModality(a, groupby) {
+  var x = a['name'].split(' ');
+  x.splice(0,1);
+  switch (groupby) {
+    case 'modality':
+      x = modalityIndex(a)+'_'+x.join('_');
+      break;
+    case 'celltype':
+      x = x.join('_')+'_'+modalityIndex(a);
+      break;
     default:
-        break;
-      }
+      break;
+  }
+  return x;
+}
+currTracks.sort(function(a, b) { return (getCellTypeModality(a,groupby) > getCellTypeModality(b,groupby)) ? 1 : -1});
+for (i=0; i<currTracks.length-1; i++) {
+  AnnoJ.config.active.push(currTracks[i].id);
+  // if (modalityIndex(currTracks[i])==showctxts.length-1) {
+  if (modalityIndex(currTracks[i])>modalityIndex(currTracks[i+1])) {
+    AnnoJ.config.tracks.find(x => x['id']==currTracks[i].id).cls =  "AJ_track AJ_darkborder";
+  }
+}
 
     // Set track colors
     var celltype='', modality='', color='', tmp='';
