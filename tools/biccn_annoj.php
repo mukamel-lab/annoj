@@ -43,7 +43,7 @@
       path : 'Annotation models',
       data : './browser/fetchers/models/genes_mm10.php',
       height : 100,
-      showControls : true
+      showControls : true, cls :  "AJ_track AJ_darkborder",
     },
     {
       id   : 'gene_model_mm10_gencode_vM2',
@@ -52,7 +52,7 @@
       path : 'Annotation models',
       data : './browser/fetchers/models/genes_mm10_gencode.php',
       height : 100,
-      showControls : true
+      showControls : true, cls :  "AJ_track AJ_darkborder",
     },
 
     ],
@@ -106,70 +106,70 @@ for (i=0; i<tracks.length; i++) {
     'class' : 'CG -COV',
     'single': true,
     'showControls' : false,
-    'cellclass' : tracks[i].cellclass, 'modality' : 'mcg', 'hidden': hidden,
+    'cellclass' : tracks[i].cellclass, 'modality' : 'mcg', 'hidden': hidden, 'cluster': tracks[i].cluster,
   };
   new_tracks.push(track);
 
-    // **** mCH - Not included for now
-    // track = {
-    //     'id'   : 'mch_ens'+tracks[i].ensemble+'_C'+tracks[i].cluster+'_CGN',
-    //     'name' : 'mCH ens'+tracks[i].ensemble+' C'+tracks[i].cluster+' '+tracks[i].name,
-    //     'type' : 'MethTrack',
-    //     'path' : 'DNA Methylation',
-    //     'data' : './browser/fetchers/mc/mc_Round'+tracks[i].ensemble+'_C'+tracks[i].cluster+'_CGN_Merge_mc.php',
-    //     'iconCls' : 'salk_meth',
-    //     'height' : track_height,
-    //     'class' : '-CG CH -COV',
-    //     'single': true,
-    //     'showControls' : false,
-    //     'cellclass' : tracks[i].cellclass, 'modality' : 'mch',
-    //   };
-    // new_tracks.push(track);
+  // **** mCH - Not included for now
+  // track = {
+  //     'id'   : 'mch_ens'+tracks[i].ensemble+'_C'+tracks[i].cluster+'_CGN',
+  //     'name' : 'mCH ens'+tracks[i].ensemble+' C'+tracks[i].cluster+' '+tracks[i].name,
+  //     'type' : 'MethTrack',
+  //     'path' : 'DNA Methylation',
+  //     'data' : './browser/fetchers/mc/mc_Round'+tracks[i].ensemble+'_C'+tracks[i].cluster+'_CGN_Merge_mc.php',
+  //     'iconCls' : 'salk_meth',
+  //     'height' : track_height,
+  //     'class' : '-CG CH -COV',
+  //     'single': true,
+  //     'showControls' : false,
+  //     'cellclass' : tracks[i].cellclass, 'modality' : 'mch',
+  //   };
+  // new_tracks.push(track);
 
-    track = {
-      'id'   : 'atac_ens'+tracks[i].ensemble+'_C'+tracks[i].cluster,
-      'name' : 'ATAC ens'+tracks[i].ensemble+' C'+tracks[i].cluster+' '+tracks[i].name,
-      'type' : 'PairedEndTrack',
-      'path' : 'Epigenome/ATAC-Seq',
-      'data' : './browser/fetchers/atac/atac_round'+tracks[i].ensemble+'_C'+tracks[i].cluster+'.php',
-      'iconCls' : 'salk_bed',
-      'height' : track_height,
-      'scale': atac_scales[tracks[i].cluster],
-      'single': true,
-      'cellclass' : tracks[i].cellclass, 'modality' : 'atac', 'hidden': hidden,
-    }
-    new_tracks.push(track);
+  track = {
+    'id'   : 'atac_ens'+tracks[i].ensemble+'_C'+tracks[i].cluster,
+    'name' : 'ATAC ens'+tracks[i].ensemble+' C'+tracks[i].cluster+' '+tracks[i].name,
+    'type' : 'PairedEndTrack',
+    'path' : 'Epigenome/ATAC-Seq',
+    'data' : './browser/fetchers/atac/atac_round'+tracks[i].ensemble+'_C'+tracks[i].cluster+'.php',
+    'iconCls' : 'salk_bed',
+    'height' : track_height,
+    'scale': atac_scales[tracks[i].cluster],
+    'single': true,
+    'cellclass' : tracks[i].cellclass, 'modality' : 'atac', 'hidden': hidden, 'cluster': tracks[i].cluster,
+  }
+  new_tracks.push(track);
 
-    track = {
-      'id'   : 'snRNA_ens'+tracks[i].ensemble+'_C'+tracks[i].cluster,
-      'name' : 'snRNA ens'+tracks[i].ensemble+' C'+tracks[i].cluster+' '+tracks[i].name,
-      'type' : 'PairedEndTrack',
-      'path' : 'RNA/snRNA-Seq',
-      'data' : './browser/fetchers/rna/RNA_round'+tracks[i].ensemble+'_C'+tracks[i].cluster+'.php',
-      'iconCls' : 'silk_bricks',
-      'height' : track_height,
-      'scale': snrna_scales[tracks[i].cluster],
+  track = {
+    'id'   : 'snRNA_ens'+tracks[i].ensemble+'_C'+tracks[i].cluster,
+    'name' : 'snRNA ens'+tracks[i].ensemble+' C'+tracks[i].cluster+' '+tracks[i].name,
+    'type' : 'PairedEndTrack',
+    'path' : 'RNA/snRNA-Seq',
+    'data' : './browser/fetchers/rna/RNA_round'+tracks[i].ensemble+'_C'+tracks[i].cluster+'.php',
+    'iconCls' : 'silk_bricks',
+    'height' : track_height,
+    'scale': snrna_scales[tracks[i].cluster],
+    'single': true,
+    'color' : {count: '#ff0000'},
+    'cellclass' : tracks[i].cellclass, 'modality' : 'snrna', 'hidden': hidden, 'cluster': tracks[i].cluster,
+  };
+  new_tracks.push(track);
+
+  track = {
+    'id'   : 'scRNA_ens'+tracks[i].ensemble+'_C'+tracks[i].cluster,
+    'name' : 'scRNA ens'+tracks[i].ensemble+' C'+tracks[i].cluster+' '+tracks[i].name,
+    'type' : 'PairedEndTrack',
+    'path' : 'RNA/scRNA-Seq',
+    'data' : './browser/fetchers/rna/scRNA_round'+tracks[i].ensemble+'_C'+tracks[i].cluster+'.php',
+    'iconCls' : 'silk_bricks',
+    'height' : track_height,
+      'scale': scrna_scales[tracks[i].cluster],
       'single': true,
-      'color' : {count: '#ff0000'},
-      'cellclass' : tracks[i].cellclass, 'modality' : 'snrna', 'hidden': hidden,
+      'color' : {count: '#af0770'},
+      'cellclass' : tracks[i].cellclass, 'modality' : 'scrna', 'hidden': hidden, 'cluster': tracks[i].cluster,
     };
-    new_tracks.push(track);
-
-    track = {
-      'id'   : 'scRNA_ens'+tracks[i].ensemble+'_C'+tracks[i].cluster,
-      'name' : 'scRNA ens'+tracks[i].ensemble+' C'+tracks[i].cluster+' '+tracks[i].name,
-      'type' : 'PairedEndTrack',
-      'path' : 'RNA/scRNA-Seq',
-      'data' : './browser/fetchers/rna/scRNA_round'+tracks[i].ensemble+'_C'+tracks[i].cluster+'.php',
-      'iconCls' : 'silk_bricks',
-      'height' : track_height,
-        'scale': scrna_scales[tracks[i].cluster],
-        'single': true,
-        'color' : {count: '#af0770'},
-        'cellclass' : tracks[i].cellclass, 'modality' : 'scrna', 'hidden': hidden,
-      };
-      new_tracks.push(track);
-    }
+  new_tracks.push(track);
+} 
 
 // REPTILE enhancers
 
@@ -237,7 +237,7 @@ for (var i=0; i<enhancer_clusters.length; i++) {
     'single': true,
     'color' : {read: '#000000'},
     'cellclass' : enhancer_cellclass[i],
-    'modality' : 'enhancer'
+    'modality' : 'enhancer', 'cluster' : enhancer_parent_cluster[i].replace(/^C/,''),
   };
   new_tracks.push(track);
 }
@@ -254,23 +254,32 @@ AnnoJ.config.tracks = AnnoJ.config.tracks.concat(new_tracks);
 var re_celltype = new RegExp(celltype);
 var re_ens = new RegExp('_ens'+ensemble+'_');
 var re_modality, modality = [];
-var modalities = ['mcg','enhancer','mch','atac','scRNA','snRNA'];
-var showctxts=showctxt.replace(/:$/,'').split(':');
+var AllModalities = ['mcg','enhancer','mch','atac','scRNA','snRNA'];
+var showModalities=modalities.replace(/:$/,'').split(':');
 
 // Select the tracks to be shown
 var currTracks=AnnoJ.config.tracks.filter(x => RegExp(celltype).test(x['cellclass']) & re_ens.test(x['id']) & 
-  showctxts.includes(x['modality']) & !x['hidden']);
+  showModalities.includes(x['modality']) & !x['hidden']);
 
 // Sort the tracks by cell type, then modality
 function modalityIndex(a) {
-  return modalities.findIndex(function (x) { return RegExp(x,'i').test(a['modality'])});
+  var out=-1;
+  if (a['modality']) {
+    var mod=a['modality'];
+    if (mod=='enhancer') { mod=AllModalities[0]; }
+    out=AllModalities.findIndex(function (x) { return RegExp(x,'i').test(mod)});
+    // if (mod=='enhancer') { mod='0a'; }
+  } else { out=-1; }
+  return out
 }
 function getCellTypeModality(a, groupby) {
-  var x = a['name'].split(' ');
-  x.splice(0,1);
+  var x=a['cluster'];
   switch (groupby) {
     case 'modality':
-      x = modalityIndex(a)+'_'+x.join('_');
+      if (a['modality']!='enhancer') {
+        x = x+'0';
+      }
+      x = modalityIndex(a)+'_'+x;
       break;
     case 'celltype':
       x = x.join('_')+'_'+modalityIndex(a);
@@ -278,14 +287,26 @@ function getCellTypeModality(a, groupby) {
     default:
       break;
   }
+  console.log(x)
   return x;
 }
 currTracks.sort(function(a, b) { return (getCellTypeModality(a,groupby) > getCellTypeModality(b,groupby)) ? 1 : -1});
-for (i=0; i<currTracks.length-1; i++) {
+for (i=0; i<currTracks.length; i++) {
   AnnoJ.config.active.push(currTracks[i].id);
-  // if (modalityIndex(currTracks[i])==showctxts.length-1) {
-  if (modalityIndex(currTracks[i])>modalityIndex(currTracks[i+1])) {
-    AnnoJ.config.tracks.find(x => x['id']==currTracks[i].id).cls =  "AJ_track AJ_darkborder";
+  var nextTrack=currTracks[i+1];
+  if (groupby=='modality') {
+    if (nextTrack) {
+      if (nextTrack['modality']=='enhancer') {
+            nextTrack=currTracks[i+2];
+      }
+    }
+  }
+  if (nextTrack) {
+    // console.log(currTracks[i].id, modalityIndex(currTracks[i]), modalityIndex(nextTrack));
+    if ((groupby=='celltype' && currTracks[i].cluster!=nextTrack.cluster) || 
+      (groupby=='modality' && currTracks[i].modality!=nextTrack.modality && currTracks[i].modality!='enhancer')) {
+      AnnoJ.config.tracks.find(x => x['id']==currTracks[i].id).cls =  "AJ_track AJ_darkborder";
+    }
   }
 }
 

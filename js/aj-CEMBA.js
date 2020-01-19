@@ -4,7 +4,7 @@
  * ------------------------------------------------------------------------------
  * ------------------------------------------------------------------------------
  * Minor modifications by Eran Mukamel, June 2017 (emukamel@ucsd.edu)
- *  Documentation: http://brainome.ucsd.edu/howto_annoj.html
+ *  Documentation: https://brainome.ucsd.edu/howto_annoj.html
  * ------------------------------------------------------------------------------
  *
  *  About The latest Anno-J browser 4.5 (aj-min9-src.js), 4.0-4.1.2 (aj-min8-src.js)
@@ -30,9 +30,9 @@
  *
  *  License:  Attribution-Noncommercial-Share Alike 3.0 Unported
  *
- *  License Overview: http://creativecommons.org/licenses/by-nc-sa/3.0/
+ *  License Overview: https://creativecommons.org/licenses/by-nc-sa/3.0/
  *
- *  License Specifics: http://creativecommons.org/licenses/by-nc-sa/3.0/legalcode
+ *  License Specifics: https://creativecommons.org/licenses/by-nc-sa/3.0/legalcode
  *
  *  Commercial Purposes:  Contact the authors
  *
@@ -307,7 +307,7 @@ var BaseJS = (function() {
 
 		// EAM -- added these manually
 		s.institution.logo="aj2/img/logo_ucsd.png";
-		s.institution.url="http://brainome.ucsd.edu";
+		s.institution.url="https://brainome.ucsd.edu";
 		s.institution.name="University of California, San Diego";
 		s.engineer.email="emukamel @ ucsd.edu";
 		s.engineer.name="Eran Mukamel"
@@ -2031,7 +2031,7 @@ AnnoJ.Navigator = function() {
 			cls: 'x-panel-header',
 			height: 24,
 			style: "margin: 0px; padding: 0px;",
-			items: [Controls.info, Controls.title, "<b><font color=#15428b>AnnoJ Epigenome Browser at <a href=http://brainome.ucsd.edu>CNDD lab, UCSD</a>.  <a target=_blank href='http://brainome.ucsd.edu/howto_annoj.html'>User guide</a>.  </font></b>", ' ', AnnoJ.config.info.title, ' ' , AnnoJ.config.info.genome, ' ', AnnoJ.config.info.contact,' ', AnnoJ.config.info.email, ' ', AnnoJ.config.info.institution]
+			items: [Controls.info, Controls.title, "<b><font color=#15428b>AnnoJ Epigenome Browser at <a href=https://brainome.ucsd.edu>CNDD lab, UCSD</a>.  <a target=_blank href='https://brainome.ucsd.edu/howto_annoj.html'>User guide</a>.  </font></b>", ' ', AnnoJ.config.info.title, ' ' , AnnoJ.config.info.genome, ' ', AnnoJ.config.info.contact,' ', AnnoJ.config.info.email, ' ', AnnoJ.config.info.institution]
 		},
 		{
 			height: 25,
@@ -2357,8 +2357,8 @@ AnnoJ.AboutBox = (function() {
 		//copyright: '&copy; 2008 Julian Tonti-Filippini',
 		copyright: '&copy; Julian Tonti-Filippini, Tao Wang, Huaming Chen',
 		website: "<a href=http://signal.salk.edu/aj2/>http://signal.salk.edu/aj2</a><br><a href=http://tabit.ucsd.edu>http://tabit.ucsd.edu</a><br><a href='http://www.annoj.org'>http://www.annoj.org</a>",
-		tutorial: "<a target='_blank' href='http://brainome.ucsd.edu/annoj_tutorial.html'>AnnoJ tutorial and video</a>",
-		license: "<a target='new' rel='license' href='http://creativecommons.org/licenses/by-nc-sa/3.0/'><img alt='Creative Commons License' style='border-width:0' src='http://i.creativecommons.org/l/by-nc-sa/3.0/88x31.png' /></a>"
+		tutorial: "<a target='_blank' href='https://brainome.ucsd.edu/annoj_tutorial.html'>AnnoJ tutorial and video</a>",
+		license: "<a target='new' rel='license' href='https://creativecommons.org/licenses/by-nc-sa/3.0/'><img alt='Creative Commons License' style='border-width:0' src='https://i.creativecommons.org/l/by-nc-sa/3.0/88x31.png' /></a>"
 	};
 	var body = new Ext.Element(document.createElement('DIV'));
 	var html = "<div style='padding-bottom:10px;'>" + info.logo + "<b>Anno-J Genome Browser</b></div>" + "<table style='font-size:10px';>" + "<tr><td><div><b>Version: </b></td><td>" + info.version + "</div></td></tr>" + "<tr><td valign=top><div><b>Engineers: </b></td><td>" + info.engineer + "</div></td></tr>" + "<tr><td><div><b>Contact: </b></td><td>" + info.contact + "</div></td></tr>" + "<tr><td valign=top><div><b>Copyright: </b></td><td>" + info.copyright + "</div></td></tr>" + "<tr><td valign=top><div><b>Websites: </b></td><td>" + info.website + "</div></td></tr>" + "<tr><td><div><b>License: </b></td><td>" + info.license + "</div></td></tr>" + "<tr><td><div><b>Tutorial: </b></td><td>" + info.tutorial + "</div></td></tr>" + "</table><br><br>";

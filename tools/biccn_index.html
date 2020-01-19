@@ -31,15 +31,11 @@
   <script type='text/javascript'> var queryPost; </script>
   <script type='text/javascript' src='./browser/js/urlinit.js'></script>
 
-  <script>
+  <script type='text/javascript'>
     var startingLoc=getQueryVariable('location'); 
 
     function buildURL() {
-      var modalities=document.getElementById('select_modalities').selectedOptions;
-      var showctxt = '';
-      for (i=0; i<modalities.length; i++) {
-        showctxt += modalities[i].value+':';
-      }
+      var modalities=Array.from(document.getElementById('select_modalities').selectedOptions).map(x => x['value']).join(':');
       src = "https://brainome.ucsd.edu/annoj/BICCN_MOp/biccn_annoj.php?";
       var annoj_frame = document.getElementById('annoj_frame');
       try {
@@ -47,23 +43,27 @@
         src += 'location='+loc.assembly+':'+loc.position+':'+loc.bases+':'+loc.pixels+'&';
       } catch {
         if (startingLoc) {
-          src += 'location='+startingLoc;
+          src += 'location='+startingLoc+'&';
         }
       };
       var params = ['ensemble','celltype','colorby','groupby'];
       for (i=0; i<params.length; i++) {
-        if (document.getElementById('select_'+params[i]).value) { src += params[i]+'='+document.getElementById('select_'+params[i]).value+'&'; }
+        if (document.getElementById('select_'+params[i]).value) { 
+          src += params[i]+'='+document.getElementById('select_'+params[i]).value+'&'; 
+        }
       }
-      src += 'showctxt='+showctxt;
+      src += 'modalities='+modalities;
       return src
     }
 
     function myRefresh() {
+      // Refresh the iframe containing AnnoJ
       src = buildURL();
       document.getElementById('annoj_frame').src = src;
     }
 
     function getLink() {
+      // Update the URL in the window
       src = buildURL();
       src = src.replace('biccn_annoj.php','index.html');
       document.getElementById('srcBox').value = src;
@@ -71,6 +71,8 @@
     }
 
     function copyLink() {
+      // Copy link to the current state to the clipboard
+
       /* Select the text field */
       var copySrc = document.getElementById('srcBox')
       copySrc.style.visibility = 'visible'; // The box must be visible to copy
@@ -86,6 +88,7 @@
     }
 
     function setParams() {
+      // Get parameters from menus
       var params = ['ensemble','celltype','colorby','groupby'];
       for (i=0; i<params.length; i++) {
         a=getQueryVariable(params[i]); 
@@ -100,15 +103,20 @@
         $(this).toggleClass("glyphicon-chevron-down").toggleClass("glyphicon-chevron-up");
       });
 
+      if (modalities){
+            $('#select_modalities').selectpicker('deselectAll'); 
+            $('#select_modalities').selectpicker('val',modalities.split(':')); 
+          }
+      
       setParams();
-      console.log(document.getElementById('srcBox'))
       myRefresh(); 
       getLink();
     });
 
+
   </script>
 
-  <link rel="shortcut icon" type="image/png" href="/favicon.png"/>
+  <!-- <link rel="shortcut icon" type="image/png" href="/favicon.png"/> -->
 </head>
 
 <body>
@@ -209,6 +217,9 @@ src="'"
 width=100% height=100%> 
 iframe
 </iframe>
+
+<script type='text/javascript'>
+</script>
 
 
 </body>
