@@ -1545,24 +1545,20 @@ AnnoJ.Navigator = function() {
 		AnnoJ.config.location.assembly = e.getValue()
 		});
 
-
-
-		// *********** EAM Dec. 2018
-		
-		var toggleMeth_allTracks = new Ext.Button({
-			iconCls: 'silk_zoom_out',
-			tooltip: 'Toggle CG',
-			handler: function() {
-				if (this.disabled) return;
-				for (j=0; j<AnnoJ.config.tra.length; j++) {
-					AnnoJ.config
-
-				}
-				Navigator.step(false);
-				refreshControls();
-				self.fireEvent('browse', Navigator.getLocation())
-			}
-		});
+		// // *********** EAM Dec. 2018
+		// var toggleMeth_allTracks = new Ext.Button({
+		// 	iconCls: 'silk_zoom_out',
+		// 	tooltip: 'Toggle CG',
+		// 	handler: function() {
+		// 		if (this.disabled) return;
+		// 		for (j=0; j<AnnoJ.config.tra.length; j++) {
+		// 			AnnoJ.config
+		// 		}
+		// 		Navigator.step(false);
+		// 		refreshControls();
+		// 		self.fireEvent('browse', Navigator.getLocation())
+		// 	}
+		// });
 
 		var ensemble = new Ext.CycleButton({
 			showText: true,
