@@ -6,6 +6,8 @@
 /* Buttons */
 .silk_arrow_down     { background-image:url('../img/silk/icons/arrow_down.png') !important;              }
 .silk_arrow_inout    { background-image:url('../img/silk/icons/arrow_inout.png') !important;             }
+.silk_arrow_in       { background-image:url('../img/silk/icons/arrow_in_2.png') !important;              }
+.silk_arrow_out      { background-image:url('../img/silk/icons/arrow_out_2.png') !important;             }
 .silk_arrow_left     { background-image:url('../img/silk/icons/arrow_left.png') !important;              }
 .silk_arrow_right    { background-image:url('../img/silk/icons/arrow_right.png') !important;             }
 .silk_arrow_refresh  { background-image:url('../img/silk/icons/arrow_refresh.png') !important;           }
