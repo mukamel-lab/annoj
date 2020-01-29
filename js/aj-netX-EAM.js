@@ -1966,6 +1966,10 @@ AnnoJ.Navigator = function() {
             }, {
                 name: 'description',
                 mapping: 'description'
+            },
+            {
+                name: 'tss',  // EAM 4/2019
+                mapping: 'tss'
             }])
         });
         var pageTpl = new Ext.XTemplate('<tpl for="."><div style="font-size:11px;" class="gi">', '{index}. <b>{title} : </b><span>{url} </span> <span>{description}</span>', '</div></tpl>');
@@ -8776,6 +8780,10 @@ AnnoJ.ModelsTrack = function(userConfig) {
             }, {
                 name: 'description',
                 mapping: 'description'
+            },
+            {
+                name: 'tss',  // EAM 4/2019
+                mapping: 'tss'
             }])
         });
         var resultTpl = new Ext.XTemplate('<tpl for="."><div class="gi">', '<b>{id}: </b><span>{description}</span>', '</div></tpl>');
@@ -8796,7 +8804,7 @@ AnnoJ.ModelsTrack = function(userConfig) {
             onSelect: function(record) {
                 var loc = AnnoJ.getLocation();
                 loc.assembly = record.data.assembly;
-                loc.position = parseInt(record.data.start);
+                loc.position = parseInt(record.data.tss); // EAM
                 AnnoJ.setLocation(loc);
                 self.fireEvent('browse', loc);
                 this.collapse()
