@@ -1453,7 +1453,8 @@ AnnoJ.Navigator = function() {
                 if (Tracks) {
                     for (var i = 0; i < Tracks.tracks.tracks.length; i++) {
                         var track = Tracks.tracks.tracks[i];
-                        if (Tracks.tracks.isActive(track)) track.Toolbar.setScale(f);
+                        // EAM - Only scale the ATAC, RNA tracks, not mC or models tracks
+                        if (Tracks.tracks.isActive(track) && !/^mc/.test(track.config.modality) && track.config.type!='ModelsTrack') track.Toolbar.setScale(f); 
                     }
                 }
                 AnnoJ.config.settings.multi = 1
