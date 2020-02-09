@@ -112,21 +112,22 @@ for (i=0; i<tracks.length; i++) {
   };
   new_tracks.push(track);
 
-  // **** mCH - Not included for now
-  // track = {
-  //     'id'   : 'mch_ens'+tracks[i].ensemble+'_C'+tracks[i].cluster+'_CGN',
-  //     'name' : 'mCH ens'+tracks[i].name+' C'+tracks[i].cluster,
-  //     'type' : 'MethTrack',
-  //     'path' : 'DNA Methylation',
-  //     'data' : './browser/fetchers/mc/mc_Round'+tracks[i].ensemble+'_C'+tracks[i].cluster+'_CGN_Merge_mc.php',
-  //     'iconCls' : 'salk_meth',
-  //     'height' : track_height,
-  //     'class' : '-CG CH -COV',
-  //     'single': true,
-  //     'showControls' : false, 'modality' : 'mch',
-    // 'trackdata' : tracks[i],
-  //   };
-  // new_tracks.push(track);
+  // **** mCH
+  track = {
+      'id'   : 'mcac_ens'+tracks[i].ensemble+'_C'+tracks[i].cluster+'_CAC',
+      'name' : 'mCAC '+tracks[i].name+' C'+tracks[i].cluster,
+      'type' : 'MethTrack',
+      'path' : 'Epigenome/DNA Methylation',
+      'data' : './browser/fetchers/mc/mc_round'+tracks[i].ensemble+'_C'+tracks[i].cluster+'_CAC.php',
+      'iconCls' : 'salk_meth',
+      'height' : track_height,
+      'class' : 'CH -COV',
+      'single': true,
+      'showControls' : false, 
+      'modality' : 'mcac','hidden': hidden, 'cluster': tracks[i].cluster,
+      'trackdata' : tracks[i],
+    };
+  new_tracks.push(track);
 
   track = {
     'id'   : 'atac_ens'+tracks[i].ensemble+'_C'+tracks[i].cluster,
@@ -279,7 +280,7 @@ AnnoJ.config.settings.yaxis = 100;
   // Set active tracks
 var re_ens = new RegExp('_ens'+ensemble+'_');
 var re_modality, modality = [];
-var AllModalities = ['mcg','enhancer','mch','atac','scRNA','snRNA'];
+var AllModalities = ['mcg','enhancer','mcac','atac','scRNA','snRNA'];
 var showModalities=modalities.replace(/:$/,'').split(':');
 
 // Select the tracks to be shown
@@ -374,6 +375,9 @@ for (i=0; i<currTracks.length; i++) {
       // AnnoJ.config.tracks[i].cluster_rank = cluster_ranks[celltype]
       switch (modality) {
         case 'mCG': 
+        AnnoJ.config.tracks[i].color = {'CG': color};
+        break;
+        case 'mCAC': 
         AnnoJ.config.tracks[i].color = {'CG': color};
         break;
         case 'ATAC':

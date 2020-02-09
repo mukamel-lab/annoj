@@ -689,9 +689,9 @@ var AnnoJ = (function() {
             collapsible: true,
             split: true,
             minSize: 160,
-            width: 240,
+            // width: 240, // EAM
             height: window.innerHeight - 28,
-            maxSize: 400,
+            // maxSize: 400,
             margins: '0 0 0 0',
             header: false,
             layoutConfig: {
@@ -706,7 +706,7 @@ var AnnoJ = (function() {
             collapsible: true,
             split: true,
             width: 240,
-            maxSize: 400,
+            // maxSize: 400,
             margins: '0 0 0 0',
             collapseMode: 'header',
             layoutConfig: {
