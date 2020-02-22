@@ -15,7 +15,7 @@
   <script type='text/javascript' src='annoj_cndd/js/aj-netX-EAM.js'></script>
   
   <!-- cluster info -->
-  <script type="text/javascript" src="miniatlas_cluster_round2.js"></script>
+  <script type="text/javascript" src="miniatlas_clusters.js"></script>
   <?php 
   include './annoj_cndd/includes/loadCsv.php'; 
   $fn = 'miniatlas_tracks.csv';
@@ -267,9 +267,6 @@ for (var i=0; i<enhancer_clusters.length; i++) {
   new_tracks.push(track);
 }
 AnnoJ.config.tracks = AnnoJ.config.tracks.concat(new_tracks);
-
-AnnoJ.config.settings.yaxis = 100;
-
 </script>
 
 <!-- Enable URL queries -->
@@ -286,8 +283,11 @@ var showModalities=modalities.replace(/:$/,'').split(':');
 // Select the tracks to be shown
 function myTrackFilter(track) {
   var out=false;
+  var clusters=cluster.split(':');
   try {
-    out = (RegExp(celltype).test(track.trackdata.cellclass) || celltype=='all') && 
+    out = (RegExp(celltype).test(track.trackdata.cellclass) || 
+      (cluster && clusters.indexOf(track.trackdata.cluster)>-1) || 
+      celltype=='all') && 
       re_ens.test(track['id']) &&
       showModalities.includes(track['modality']) &&
       !track['hidden'];

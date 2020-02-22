@@ -46,13 +46,15 @@
           src += 'location='+startingLoc+'&';
         }
       };
-      var params = ['ensemble','celltype','colorby','groupby'];
+      // var params = ['ensemble','celltype','colorby','groupby'];
+      var params = ['ensemble','celltype','groupby'];
       for (i=0; i<params.length; i++) {
         if (document.getElementById('select_'+params[i]).value) { 
           src += params[i]+'='+document.getElementById('select_'+params[i]).value+'&'; 
         }
       }
-      src += 'modalities='+modalities;
+      if (modalities) {src += '&modalities='+modalities;}
+      if (cluster) {src += '&cluster='+cluster;}
       return src
     }
 
@@ -89,7 +91,8 @@
 
     function setParams() {
       // Get parameters from menus
-      var params = ['ensemble','celltype','colorby','groupby'];
+      // var params = ['ensemble','celltype','colorby','groupby'];
+      var params = ['ensemble','celltype','groupby'];
       for (i=0; i<params.length; i++) {
         a=getQueryVariable(params[i]); 
         if (a) { 
@@ -135,24 +138,32 @@
          <button title="About the AnnoJ browser." onclick="window.open('https://brainome.ucsd.edu/howto_annoj.html');" class="btn btn-info"><i class="fa fa-question-circle" aria-hidden="true"></i> About
          </button>
        </li>
-       <li class="nav-item">
-        <button onclick="getLink(); copyLink();" class="btn btn-primary" >
-          <i class="fa fa-link" aria-hidden="true"></i> Copy shareable link</button>
-          <input type="text" id="srcBox" size="1" style="visibility:hidden;">
-        </input>
-      </li>
-    </ul>
-    <ul class="nav navbar-nav navbar-right">
        <li class="nav-item">              
          <button onclick="window.open('https://brainome.ucsd.edu/portal/Ens218');" title="Go to cell browser to view clusters and genes" class="btn btn-primary">
           <img src="browser/img/Logo_ClearBg3.png" style="height:20px; padding:0px;"> 
         Launch cell browser</button>
         </li>
+        <li class="nav-item">
+        <button onclick="getLink(); copyLink();" class="btn btn-primary" >
+          <i class="fa fa-link" aria-hidden="true"></i> Copy shareable link</button>
+          <input type="text" id="srcBox" size="1" style="visibility:hidden;">
+        </input>
+        </li>
+    </ul>
+    <ul class="nav navbar-nav navbar-right">
         <li class="nav-item">  
-         <button onclick="window.open('http://www.mouseconnectome.org/Dinoskin/page/cemba');" title="Go to mouse connectome browser to view anatomy and connectivity data (Hongwei Dong lab)" class="btn btn-primary">
-           <img src="browser/img/mouseconnectome.png" style="height:20px; padding: 0px;"> Launch anatomy browser
+          External resources:
+        </li>
+        <li class="nav-item">  
+         <button onclick="window.open('http://www.mouseconnectome.org/Dinoskin/page/cemba');" title="Go to mouse connectome browser to view anatomy and connectivity data (Hongwei Dong lab)" class="btn btn-info">
+           <img src="browser/img/mouseconnectome.png" style="height:20px; padding: 0px;"> Anatomy browser
          </button>
        </li>
+       <li class="nav-item">              
+         <button onclick="window.open('https://nemoanalytics.org');" title="Go to cell browser to view clusters and genes" class="btn btn-info">
+          <img src="browser/img/nemo-logo.svg" style="height:20px; padding:0px;"> 
+        NeMO analytics</button>
+        </li>
     </ul>
   </div>
   <div class="collapse in" id="topbar">
@@ -162,8 +173,8 @@
       <li class="nav-item">  
         <select id="select_ensemble" class="selectpicker" data-width="auto"  onchange="getLink();" data-toggle="tooltip" data-placement="top" title="Cluster depth">
           <option value="2" selected>Cluster depth...</option>
-          <option value="2" >Level 2: Cell classes</option>
-          <option value="3">Level 3: Cell types</option>
+          <option value="2">Level 1: Cell classes</option>
+          <option value="3">Level 2: Cell types</option>
         </select>
       </li>
       <li class="nav-item">
@@ -174,6 +185,7 @@
           <option value="inh">Inhibitory neurons</option>
           <option value="mge">MGE-derived neurons</option>
           <option value="cge">CGE-derived neurons</option>
+          <option value="none">None</option>
         </select>
       </li>
 
@@ -195,14 +207,15 @@
         </select>
       </li> 
 
-      <li class="nav-item">
+<!--       <li class="nav-item">
         <select class="selectpicker" id="select_colorby" data-width="auto" onchange="getLink();" data-toggle="tooltip" data-placement="top" title="Color tracks by">
           <option value="modality" selected>Color tracks by...</option>
           <option value="celltype">Cell type</option>
           <option value="modality">Modality</option>    
         </select>
       </li>
-      <li class="nav-item">
+ -->
+       <li class="nav-item">
         <p><button onclick="myRefresh(); getLink();" class="btn btn-primary">Reload browser</button></p>
       </li>
     </ul>
