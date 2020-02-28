@@ -26,41 +26,35 @@
   <script type='text/javascript'>
   
   AnnoJ.config = {
-
     info : {
       title  : 'Mouse MOp BICCN',
-      genome  : '',
-      contact  : '',
-      email : '',
-      institution : ''
+      genome  : 'Genome: mm10',
+      contact  : 'Contact: Eran Mukamel',
+      email : 'emukamel@ucsd.edu',
+      institution : 'UCSD'
     },
     tracks : [
-    //Models
-    
-    {
-      id   : 'gene_model_mm10',
-      name : 'Gene Models (mm10)',
-      type : 'ModelsTrack',
-      path : 'Annotation models',
-      data : './browser/fetchers/models/genes_mm10.php',
-      height : 100,
-      showControls : true, cls :  "AJ_track AJ_darkborder",
-    },
-    {
-      id   : 'gene_model_mm10_gencode_vM2',
-      name : 'Gene Models (mm10 Gencode vM2)',
-      type : 'ModelsTrack',
-      path : 'Annotation models',
-      data : './browser/fetchers/models/genes_mm10_gencode.php',
-      height : 100,
-      showControls : true, cls :  "AJ_track AJ_darkborder",
-    },
-
+      {
+        id   : 'gene_model_mm10',
+        name : 'Gene Models (mm10)',
+        type : 'ModelsTrack',
+        path : 'Annotation models',
+        data : './browser/fetchers/models/genes_mm10.php',
+        height : 100,
+        showControls : true, cls :  "AJ_track AJ_darkborder",
+      },
+      {
+        id   : 'gene_model_mm10_gencode_vM2',
+        name : 'Gene Models (mm10 Gencode vM2)',
+        type : 'ModelsTrack',
+        path : 'Annotation models',
+        data : './browser/fetchers/models/genes_mm10_gencode.php',
+        height : 100,
+        showControls : true, cls :  "AJ_track AJ_darkborder",
+      },
     ],
 
-  active : [// *** Gene models
-  'gene_model_mm10',
-  ],
+  active : ['gene_model_mm10'],
   genome    : './browser/fetchers/mus_musculus.php',
   bookmarks : './browser/fetchers/mus_musculus.php',
   stylesheets : [
@@ -284,9 +278,11 @@ var showModalities=modalities.replace(/:$/,'').split(':');
 function myTrackFilter(track) {
   var out=false;
   var clusters=cluster.split(':');
+  var tracknames_re=RegExp(tracknames.split(':').join('|'),"i");
   try {
     out = (RegExp(celltype).test(track.trackdata.cellclass) || 
       (cluster && clusters.indexOf(track.trackdata.cluster)>-1) || 
+      (tracknames && tracknames_re.test(track.trackdata.name)) || 
       celltype=='all') && 
       re_ens.test(track['id']) &&
       showModalities.includes(track['modality']) &&

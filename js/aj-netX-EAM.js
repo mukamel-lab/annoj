@@ -590,6 +590,7 @@ var AnnoJ = (function() {
                 GUI.NavBar.setLocation(config.location);
                 buildTracks();
                 GUI.notice('Tracks instantiated');
+                scaleInit(); // EAM - Set the initial scale for ATAC, RNA tracks
                 Ext.MessageBox.updateProgress(1.0, '', 'Finished.');
                 Ext.MessageBox.hide();
                 AnnoJ.isReady = true
@@ -788,6 +789,10 @@ var AnnoJ = (function() {
         }
     };
 
+    function scaleInit() {
+        return GUI.NavBar.Controls.scaleInit.handler()
+    };
+
     function getLocation() {
         return GUI.NavBar.getLocation()
     };
@@ -839,6 +844,7 @@ var AnnoJ = (function() {
         error: error,
         warning: warning,
         notice: notice,
+        scaleInit: scaleInit,
         getLocation: getLocation,
         setLocation: setLocation,
         pixels2bases: pixels2bases,
@@ -1437,45 +1443,45 @@ AnnoJ.Navigator = function() {
         Ext.applyIf(AnnoJ.config.settings, defaultSettings);
         var checked1 = true;
         var checked2 = false;
-        var scaleBox = new Ext.form.TextField({
-            width: 32,
-            value: 1,
-            maskRe: /[0-9\.]/,
-            regex: /^[0-9\.]+$/,
-            selectOnFocus: true
-        });
-        scaleBox.on('specialKey', function(config, event) {
-            if (event.getKey() == event.ENTER) {
-                var f = scaleBox.getValue();
-                if (f == "") f = 1;
-                scaleBox.setValue(f);
-                var Tracks = AnnoJ.getGUI().Tracks;
-                if (Tracks) {
-                    for (var i = 0; i < Tracks.tracks.tracks.length; i++) {
-                        var track = Tracks.tracks.tracks[i];
-                        // EAM - Only scale the ATAC, RNA tracks, not mC or models tracks
-                        if (Tracks.tracks.isActive(track) && !/^mc/.test(track.config.modality) && track.config.type!='ModelsTrack') track.Toolbar.setScale(f); 
-                    }
-                }
-                AnnoJ.config.settings.multi = 1
-            }
-        });
-        var GlobalscaleBox = new Ext.form.TextField({
-            width: 32,
-            value: AnnoJ.config.settings.yaxis,
-            maskRe: /[0-9\.]/,
-            regex: /^[0-9\.]+$/,
-            selectOnFocus: true
-        });
-        GlobalscaleBox.on('specialKey', function(config, event) {
-            if (event.getKey() == event.ENTER) {
-                var scaler = GlobalscaleBox.getValue();
-                if (scaler == "") GlobalscaleBox.setValue(AnnoJ.config.settings.yaxis);
-                AnnoJ.config.settings.yaxis = GlobalscaleBox.getValue();
-                refreshControls();
-                self.fireEvent('browse', Navigator.getLocation())
-            }
-        });
+        // var scaleBox = new Ext.form.TextField({
+        //     width: 32,
+        //     value: 1,
+        //     maskRe: /[0-9\.]/,
+        //     regex: /^[0-9\.]+$/,
+        //     selectOnFocus: true
+        // });
+        // scaleBox.on('specialKey', function(config, event) {
+        //     if (event.getKey() == event.ENTER) {
+        //         var f = scaleBox.getValue();
+        //         if (f == "") f = 1;
+        //         scaleBox.setValue(f);
+        //         var Tracks = AnnoJ.getGUI().Tracks;
+        //         if (Tracks) {
+        //             for (var i = 0; i < Tracks.tracks.tracks.length; i++) {
+        //                 var track = Tracks.tracks.tracks[i];
+        //                 // EAM - Only scale the ATAC, RNA tracks, not mC or models tracks
+        //                 if (Tracks.tracks.isActive(track) && !/^mc/.test(track.config.modality) && track.config.type!='ModelsTrack') track.Toolbar.setScale(f); 
+        //             }
+        //         }
+        //         AnnoJ.config.settings.multi = 1
+        //     }
+        // });
+        // var GlobalscaleBox = new Ext.form.TextField({
+        //     width: 32,
+        //     value: AnnoJ.config.settings.yaxis,
+        //     maskRe: /[0-9\.]/,
+        //     regex: /^[0-9\.]+$/,
+        //     selectOnFocus: true
+        // });
+        // GlobalscaleBox.on('specialKey', function(config, event) {
+        //     if (event.getKey() == event.ENTER) {
+        //         var scaler = GlobalscaleBox.getValue();
+        //         if (scaler == "") GlobalscaleBox.setValue(AnnoJ.config.settings.yaxis);
+        //         AnnoJ.config.settings.yaxis = GlobalscaleBox.getValue();
+        //         refreshControls();
+        //         self.fireEvent('browse', Navigator.getLocation())
+        //     }
+        // });
         var dragMode = new Ext.CycleButton({
             showText: true,
             autoWidth: false,
@@ -1582,9 +1588,72 @@ AnnoJ.Navigator = function() {
                 self.fireEvent('browse', Navigator.getLocation())
             }
         });
+
+        // EAM - Add scale controls
+        var scaleUp = new Ext.Button({
+            iconCls: 'silk_arrow_up',
+            tooltip: '<nobr>Increase track scale (non-mC tracks)</nobr>',
+            handler: function() {
+            	var f = 1.25;
+                var Tracks = AnnoJ.getGUI().Tracks;
+                var scaleModalities = ['atac','scrna','snrna'];
+                var scaleFactor = AnnoJ.config.scaleFactor;
+                if (!scaleFactor) scaleFactor=1;
+                scaleFactor *= f;
+                if (Tracks) {
+                    for (var i = 0; i < Tracks.tracks.tracks.length; i++) {
+                        var track = Tracks.tracks.tracks[i];
+                        // EAM - Only scale the ATAC, RNA tracks, not mC or models tracks
+                        if (Tracks.tracks.isActive(track) && scaleModalities.includes(track.config['modality'])) track.Toolbar.setScale(scaleFactor, true); 
+                    }
+                }
+                AnnoJ.config.scaleFactor = scaleFactor;
+            }
+        });
+        var scaleDown = new Ext.Button({
+            iconCls: 'silk_arrow_down',
+            tooltip: '<nobr>Decrease track scale (non-mC tracks)</nobr>',
+            handler: function() {
+                var f = 0.8;
+                var Tracks = AnnoJ.getGUI().Tracks;
+                var scaleModalities = ['atac','scrna','snrna'];
+                var scaleFactor = AnnoJ.config.scaleFactor;
+                if (!scaleFactor) scaleFactor=1;
+                scaleFactor *= f;
+                if (Tracks) {
+                    for (var i = 0; i < Tracks.tracks.tracks.length; i++) {
+                        var track = Tracks.tracks.tracks[i];
+                        // EAM - Only scale the ATAC, RNA tracks, not mC or models tracks
+                        if (Tracks.tracks.isActive(track) && scaleModalities.includes(track.config['modality'])) track.Toolbar.setScale(scaleFactor, true); 
+                    }
+                }
+                AnnoJ.config.scaleFactor = scaleFactor;
+            }
+        });
+        var scaleInit = new Ext.Button({
+            iconCls: 'silk_bullet_green',
+            tooltip: '<nobr>Reset track scale (non-mC tracks)</nobr>',
+            handler: function() {
+                var Tracks = AnnoJ.getGUI().Tracks;
+                var scaleModalities = ['atac','scrna','snrna'];
+                var scaleFactorInit = AnnoJ.config.scaleFactorInit;
+                if (!scaleFactor) scaleFactor=1;
+                if (Tracks) {
+                    for (var i = 0; i < Tracks.tracks.tracks.length; i++) {
+                        var track = Tracks.tracks.tracks[i];
+                        // EAM - Only scale the ATAC, RNA tracks, not mC or models tracks
+                        if (Tracks.tracks.isActive(track) && scaleModalities.includes(track.config['modality'])) track.Toolbar.setScale(scaleFactorInit, true); 
+                    }
+                }
+                AnnoJ.config.scaleFactor = scaleFactor;
+            }
+        });
+        // EAM - end
+
+
         var higher = new Ext.Button({
             iconCls: 'silk_arrow_out',
-            tooltip: '<nobr>Increase all track heights in certain pixels</nobr>',
+            tooltip: '<nobr>Increase all track heights</nobr>',
             handler: function() {
                 if (this.disabled) return;
                 AnnoJ.getGUI().Tracks.tracks.each(function(track) {
@@ -1596,7 +1665,7 @@ AnnoJ.Navigator = function() {
         });
         var lower = new Ext.Button({
             iconCls: 'silk_arrow_in',
-            tooltip: '<nobr>Decrease all track heights in certain pixels</nobr>',
+            tooltip: '<nobr>Decrease all track heights</nobr>',
             handler: function() {
                 if (this.disabled) return;
                 AnnoJ.getGUI().Tracks.tracks.each(function(track) {
@@ -2113,8 +2182,8 @@ AnnoJ.Navigator = function() {
                 }
             }
             Ext.apply(AnnoJ.config, settings);
-            scaleBox.setValue(1);
-            GlobalscaleBox.setValue(AnnoJ.config.settings.yaxis);
+            // scaleBox.setValue(1);
+            // GlobalscaleBox.setValue(AnnoJ.config.settings.yaxis);
             ratio.setValue(AnnoJ.config.location.bases + ':' + AnnoJ.config.location.pixels);
             assembly.setValue(AnnoJ.config.location.assembly);
             if (Tracks) {
@@ -2138,11 +2207,14 @@ AnnoJ.Navigator = function() {
             title: title,
             filler: filler,
             dragMode: dragMode,
-            scaleBox: scaleBox,
-            GlobalscaleBox: GlobalscaleBox,
+            // scaleBox: scaleBox,
+            // GlobalscaleBox: GlobalscaleBox,
             ratio: ratio,
             further: further,
             closer: closer,
+            scaleUp: scaleUp,
+            scaleInit: scaleInit,
+            scaleDown: scaleDown,
             higher: higher,
             lower: lower,
             assembly: assembly,
@@ -2170,7 +2242,9 @@ AnnoJ.Navigator = function() {
         cls: 'AJ_Navbar',
         width: '100%',
         style: 'margin: 0px; padding: 0px; font-size: 11px; border: 0px;',
-        items: [Controls.jumpLeft, ' ', ' ', ' ', '<b>Multi:</b>', Controls.scaleBox, ' ', ' ', '<b>Y-axis:</b>', Controls.GlobalscaleBox, ' ', ' ', '<b>Height:</b>', Controls.higher, Controls.lower, ' ', '-', ' ', Controls.dragMode, ' ', ' ', '<b>Zoom level:</b>', ' ', Controls.ratio, Controls.further, Controls.closer, ' ', ' ', '<b>Location:</b>', Controls.assembly, Controls.jump, ' ', ' ', Controls.go, ' ', ' ', Controls.prev, Controls.next, '->', Controls.jumpRight]
+        // items: [Controls.jumpLeft, ' ', ' ', ' ', '<b>Multi:</b>', Controls.scaleBox, ' ', ' ', '<b>Y-axis:</b>', Controls.GlobalscaleBox, ' ', ' ', '<b>Height:</b>', Controls.higher, Controls.lower, ' ', '-', ' ', Controls.dragMode, ' ', ' ', '<b>Zoom level:</b>', ' ', Controls.ratio, Controls.further, Controls.closer, ' ', ' ', '<b>Location:</b>', Controls.assembly, Controls.jump, ' ', ' ', Controls.go, ' ', ' ', Controls.prev, Controls.next, '->', Controls.jumpRight]
+        // EAM - Simplify the scaleBox
+        items: [Controls.jumpLeft, '  <b>Track scale:</b> ', Controls.scaleUp, Controls.scaleInit, Controls.scaleDown,  ' <b>Track height:</b>', Controls.higher, Controls.lower, ' ', '-', ' ', Controls.dragMode, ' ', ' ', '<b>Zoom level:</b>', ' ', Controls.ratio, Controls.further, Controls.closer, ' ', ' ', '<b>Location:</b>', Controls.assembly, Controls.jump, ' ', ' ', Controls.go, ' ', ' ', Controls.prev, Controls.next, '->', Controls.jumpRight]
     });
     Toolbar.on('render', function() {
         this.un('render');
@@ -11079,3 +11153,4 @@ AnnoJ.ProxyTrack = function(userConfig) {
     this.isProxy = true;
     if (!this.config.iconCls) this.config.iconCls = 'silk_bricks';
 }
+
