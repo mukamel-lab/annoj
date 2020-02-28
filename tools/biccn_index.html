@@ -65,10 +65,8 @@
       if (modalities) {src += '&modalities='+modalities;}
       if (cluster) {src += '&cluster='+cluster;}
       if (tracknames) { // User can set active tracks by name; overrides celltype
-        src += '&tracknames='+tracknames;
-        celltype = 'none';
-      } 
-      src += '&celltype='+celltype;
+        src += '&tracknames='+tracknames+'&celltype=none';
+      } else {src += '&celltype='+document.getElementById('select_celltype').value;}
 
 
       // Get index of active tracks
@@ -108,9 +106,6 @@
       /* Copy the text inside the text field */
       document.execCommand("copy");
       copySrc.style.visibility = 'hidden';
-
-      /* Alert the copied text */
-      // alert("Copied the text: " + copySrc.value);
     }
 
     function setParams() {
@@ -138,7 +133,8 @@
       setParams();
       myRefresh(); 
       getLink();
-
+      $('.selectpicker').selectpicker('refresh');
+      
     });
 
 
@@ -216,12 +212,12 @@
 
       <li class="nav-item">  
         <select id="select_modalities" class="selectpicker" onchange="getLink();" data-width="auto" multiple data-width="auto" data-toggle="tooltip" data-placement="top" title="Modalities to show">
-          <option value="mcg" selected> mCG</option>
+          <option selected value="mcg" selected> mCG</option>
           <option value="mcac" > mCAC</option>
           <option value="atac" selected> ATAC</option>
           <option value="scrna" selected> scRNA</option>
           <option value="snrna"> snRNA</option>
-          <option selected value="enhancer"> Enhancers</option>
+          <option value="enhancer"> Enhancers</option>
         </select>
       </li>
       <li class="nav-item">

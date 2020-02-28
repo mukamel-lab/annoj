@@ -21,7 +21,8 @@
 .silk_book_open      { background-image:url('../img/silk/icons/book_open.png') !important;               }
 .silk_bug            { background-image:url('../img/silk/icons/bug.png') !important;                     }
 .silk_bullet_black   { background-image:url('../img/silk/icons/bullet_black.png') !important;            }
-.silk_bullet_blue    { background-image:url('../img/silk/icons/bullet_blue.png') !important;             }
+.silk_bullet_blue    { background-image:url('../img/silk/icons/bullet_blue.png') !important; }
+.silk_bullet_green_narrow   { background-image:url('../img/silk/icons/bullet_green.png') !important;            }
 .silk_bullet_green   { background-image:url('../img/silk/icons/bullet_green.png') !important;            }
 .silk_bullet_orange  { background-image:url('../img/silk/icons/bullet_orange.png') !important;           }
 .silk_bullet_pink    { background-image:url('../img/silk/icons/bullet_pink.png') !important;             }
@@ -83,6 +84,8 @@
 .silk_page_red       { background-image:url('../img/silk/icons/page_red.png') !important;                } 
 .silk_asterisk_orange { background-image:url('../img/silk/icons/asterisk_orange.png') !important;        }
  
+.narrow { width:6px !important;}
+
 .loading { background:url('../img/loading.gif') no-repeat 2px 2px !important; width:60px; height:16px;}
 .waiting { 
 	background:url(../img/loading.gif) no-repeat 0px 1px !important; 

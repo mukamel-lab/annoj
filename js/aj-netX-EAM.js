@@ -1591,14 +1591,14 @@ AnnoJ.Navigator = function() {
 
         // EAM - Add scale controls
         var scaleUp = new Ext.Button({
-            iconCls: 'silk_arrow_up',
+            iconCls: 'silk_arrow_up narrow',
             tooltip: '<nobr>Increase track scale (non-mC tracks)</nobr>',
             handler: function() {
             	var f = 1.25;
                 var Tracks = AnnoJ.getGUI().Tracks;
                 var scaleModalities = ['atac','scrna','snrna'];
                 var scaleFactor = AnnoJ.config.scaleFactor;
-                if (!scaleFactor) scaleFactor=1;
+                if (!scaleFactor) scaleFactor = AnnoJ.config.scaleFactorInit;
                 scaleFactor *= f;
                 if (Tracks) {
                     for (var i = 0; i < Tracks.tracks.tracks.length; i++) {
@@ -1611,14 +1611,14 @@ AnnoJ.Navigator = function() {
             }
         });
         var scaleDown = new Ext.Button({
-            iconCls: 'silk_arrow_down',
+            iconCls: 'silk_arrow_down narrow',
             tooltip: '<nobr>Decrease track scale (non-mC tracks)</nobr>',
             handler: function() {
                 var f = 0.8;
                 var Tracks = AnnoJ.getGUI().Tracks;
                 var scaleModalities = ['atac','scrna','snrna'];
                 var scaleFactor = AnnoJ.config.scaleFactor;
-                if (!scaleFactor) scaleFactor=1;
+                if (!scaleFactor) scaleFactor = AnnoJ.config.scaleFactorInit;
                 scaleFactor *= f;
                 if (Tracks) {
                     for (var i = 0; i < Tracks.tracks.tracks.length; i++) {
@@ -1631,13 +1631,12 @@ AnnoJ.Navigator = function() {
             }
         });
         var scaleInit = new Ext.Button({
-            iconCls: 'silk_bullet_green',
+            iconCls: 'silk_bullet_green narrow',
             tooltip: '<nobr>Reset track scale (non-mC tracks)</nobr>',
             handler: function() {
                 var Tracks = AnnoJ.getGUI().Tracks;
                 var scaleModalities = ['atac','scrna','snrna'];
                 var scaleFactorInit = AnnoJ.config.scaleFactorInit;
-                if (!scaleFactor) scaleFactor=1;
                 if (Tracks) {
                     for (var i = 0; i < Tracks.tracks.tracks.length; i++) {
                         var track = Tracks.tracks.tracks[i];
@@ -1645,7 +1644,7 @@ AnnoJ.Navigator = function() {
                         if (Tracks.tracks.isActive(track) && scaleModalities.includes(track.config['modality'])) track.Toolbar.setScale(scaleFactorInit, true); 
                     }
                 }
-                AnnoJ.config.scaleFactor = scaleFactor;
+                AnnoJ.config.scaleFactor = scaleFactorInit;
             }
         });
         // EAM - end
@@ -2951,7 +2950,7 @@ AnnoJ.AboutBox = (function() {
         copyright: '&copy; Huaming Chen, Tao Wang, Julian Tonti-Filippini',
         website: "<a href=http://signal.salk.edu/aj2/>http://signal.salk.edu/aj2</a><br><a href=http://tabit.ucsd.edu>http://tabit.ucsd.edu</a>",
         tutorial: "<a target='new' href='http://neomorph.salk.edu/index.html'>SALK example</a>",
-        license: "<a target='new' rel='license' href='http://creativecommons.org/licenses/by-nc-sa/3.0/'><img alt='Creative Commons License' style='border-width:0' src='http://i.creativecommons.org/l/by-nc-sa/3.0/88x31.png' /></a>"
+        license: "<a target='new' rel='license' href='https://creativecommons.org/licenses/by-nc-sa/3.0/'><img alt='Creative Commons License' style='border-width:0' src='https://i.creativecommons.org/l/by-nc-sa/3.0/88x31.png' /></a>"
     };
     var body = new Ext.Element(document.createElement('DIV'));
     var html = "<div style='padding-bottom:10px;'>" + info.logo + "<b>Anno-J Networked Genome Browser</b></div>" + "<table style='font-size:10px';>" + "<tr><td><div><b>Version: </b></td><td>" + info.version + "</div></td></tr>" + "<tr><td valign=top><div><b>Engineers: </b></td><td>" + info.engineer + "</div></td></tr>" + "<tr><td><div><b>Contact: </b></td><td>" + info.contact + "</div></td></tr>" + "<tr><td valign=top><div><b>Copyright: </b></td><td>" + info.copyright + "</div></td></tr>" + "<tr><td valign=top><div><b>Websites: </b></td><td>" + info.website + "</div></td></tr>" + "<tr><td><div><b>License: </b></td><td>" + info.license + "</div></td></tr>" + "<tr><td><div><b>Tutorial: </b></td><td>" + info.tutorial + "</div></td></tr>" + "</table><br><br>";

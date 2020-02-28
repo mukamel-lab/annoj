@@ -4,7 +4,7 @@
 }
 
 /* Buttons */
-.silk_arrow_down     { background-image:url('../img/silk/icons/arrow_down.png') !important;              }
+.silk_arrow_down     { background-image:url('../img/silk/icons/arrow_down.png') !important; width:7px !important; ;             }
 .silk_arrow_inout    { background-image:url('../img/silk/icons/arrow_inout.png') !important;             }
 .silk_arrow_in       { background-image:url('../img/silk/icons/arrow_in_2.png') !important;              }
 .silk_arrow_out      { background-image:url('../img/silk/icons/arrow_out_2.png') !important;             }
@@ -12,7 +12,7 @@
 .silk_arrow_right    { background-image:url('../img/silk/icons/arrow_right.png') !important;             }
 .silk_arrow_refresh  { background-image:url('../img/silk/icons/arrow_refresh.png') !important;           }
 .silk_arrow_undo     { background-image:url('../img/silk/icons/arrow_undo.png') !important;              }
-.silk_arrow_up       { background-image:url('../img/silk/icons/arrow_up.png') !important;                }
+.silk_arrow_up       { background-image:url('../img/silk/icons/arrow_up.png'); width:7px;               }
 .silk_application    { background-image:url('../img/silk/icons/application.png') !important;             }
 .silk_terminal       { background-image:url('../img/silk/icons/application_xp_terminal.png') !important; }
 .silk_bricks         { background-image:url('../img/silk/icons/bricks.png') !important;                  }
