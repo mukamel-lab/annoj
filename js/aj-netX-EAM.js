@@ -1597,17 +1597,14 @@ AnnoJ.Navigator = function() {
             	var f = 1.25;
                 var Tracks = AnnoJ.getGUI().Tracks;
                 var scaleModalities = ['atac','scrna','snrna'];
-                var scaleFactor = AnnoJ.config.scaleFactor;
-                if (!scaleFactor) scaleFactor = AnnoJ.config.scaleFactorInit;
-                scaleFactor *= f;
                 if (Tracks) {
                     for (var i = 0; i < Tracks.tracks.tracks.length; i++) {
                         var track = Tracks.tracks.tracks[i];
                         // EAM - Only scale the ATAC, RNA tracks, not mC or models tracks
-                        if (Tracks.tracks.isActive(track) && scaleModalities.includes(track.config['modality'])) track.Toolbar.setScale(scaleFactor, true); 
+                        if (Tracks.tracks.isActive(track) && scaleModalities.includes(track.config['modality'])) track.Toolbar.setScale(f, false); 
                     }
                 }
-                AnnoJ.config.scaleFactor = scaleFactor;
+                AnnoJ.config.scaleFactor *= f;
             }
         });
         var scaleDown = new Ext.Button({
@@ -1617,17 +1614,14 @@ AnnoJ.Navigator = function() {
                 var f = 0.8;
                 var Tracks = AnnoJ.getGUI().Tracks;
                 var scaleModalities = ['atac','scrna','snrna'];
-                var scaleFactor = AnnoJ.config.scaleFactor;
-                if (!scaleFactor) scaleFactor = AnnoJ.config.scaleFactorInit;
-                scaleFactor *= f;
                 if (Tracks) {
                     for (var i = 0; i < Tracks.tracks.tracks.length; i++) {
                         var track = Tracks.tracks.tracks[i];
                         // EAM - Only scale the ATAC, RNA tracks, not mC or models tracks
-                        if (Tracks.tracks.isActive(track) && scaleModalities.includes(track.config['modality'])) track.Toolbar.setScale(scaleFactor, true); 
+                        if (Tracks.tracks.isActive(track) && scaleModalities.includes(track.config['modality'])) track.Toolbar.setScale(f, false); 
                     }
                 }
-                AnnoJ.config.scaleFactor = scaleFactor;
+                AnnoJ.config.scaleFactor *= f;
             }
         });
         var scaleInit = new Ext.Button({
@@ -1636,15 +1630,15 @@ AnnoJ.Navigator = function() {
             handler: function() {
                 var Tracks = AnnoJ.getGUI().Tracks;
                 var scaleModalities = ['atac','scrna','snrna'];
-                var scaleFactorInit = AnnoJ.config.scaleFactorInit;
+                var f = 1/AnnoJ.config.scaleFactor;
                 if (Tracks) {
                     for (var i = 0; i < Tracks.tracks.tracks.length; i++) {
                         var track = Tracks.tracks.tracks[i];
                         // EAM - Only scale the ATAC, RNA tracks, not mC or models tracks
-                        if (Tracks.tracks.isActive(track) && scaleModalities.includes(track.config['modality'])) track.Toolbar.setScale(scaleFactorInit, true); 
+                        if (Tracks.tracks.isActive(track) && scaleModalities.includes(track.config['modality'])) track.Toolbar.setScale(f, false); 
                     }
                 }
-                AnnoJ.config.scaleFactor = scaleFactorInit;
+                AnnoJ.config.scaleFactor *= f;
             }
         });
         // EAM - end

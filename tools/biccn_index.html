@@ -32,6 +32,7 @@
   <script type='text/javascript' src='./browser/js/urlinit.js'></script>
 
   <script type='text/javascript'>
+    var firstLoad = true;
 
     function buildURL() {
       // Get current browser location and other settings and build a URL
@@ -39,19 +40,20 @@
       src = "https://brainome.ucsd.edu/annoj/BICCN_MOp/biccn_annoj.php?";
       var annoj_frame = document.getElementById('annoj_frame');
 
-      try {
+      try { // After first load
         var loc = annoj_frame.contentWindow.AnnoJ.getLocation();
         src += 'location='+loc.assembly+':'+loc.position+':'+loc.bases+':'+loc.pixels+'&';
-        var scaleFactor = annoj_frame.contentWindow.AnnoJ.config.scaleFactor;
+        var scaleFactor = annoj_frame.contentWindow.AnnoJ.config.scaleFactor * annoj_frame.contentWindow.AnnoJ.config.scaleFactorInit;
+        // var scaleFactor = annoj_frame.contentWindow.AnnoJ.config.scaleFactor;
         if (scaleFactor) {src += '&scaleFactor='+scaleFactor.toFixed(5);}
-      } catch {
+      } catch { // First load
         var startingLoc=getQueryVariable('location'); 
         if (startingLoc) {
           src += 'location='+startingLoc;
         }
-        var scaleFactor=getQueryVariable('scaleFactor'); 
+        // var scaleFactor=parseFloat(getQueryVariable('scaleFactor'));
         if (scaleFactor) {
-          src += '&scaleFactor='+scaleFactor;
+          src += '&scaleFactor='+scaleFactor.toFixed(5);
         }
       };
 
