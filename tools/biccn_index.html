@@ -43,7 +43,7 @@
         var loc = annoj_frame.contentWindow.AnnoJ.getLocation();
         src += 'location='+loc.assembly+':'+loc.position+':'+loc.bases+':'+loc.pixels+'&';
         var scaleFactor = annoj_frame.contentWindow.AnnoJ.config.scaleFactor;
-        if (scaleFactor) {src += '&scaleFactor='+scaleFactor.toFixed(7);}
+        if (scaleFactor) {src += '&scaleFactor='+scaleFactor.toFixed(5);}
       } catch {
         var startingLoc=getQueryVariable('location'); 
         if (startingLoc) {
