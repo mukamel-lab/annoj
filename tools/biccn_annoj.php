@@ -395,6 +395,22 @@ for (i=0; i<currTracks.length; i++) {
     //         AnnoJ.config.tracks[i]['height'] = track_height;
     //       }
     // }
+
+
+    var activeTracksIndex=getQueryVariable('tracks').split(':');
+    console.log(activeTracksIndex);
+    if (activeTracksIndex!="") {
+      console.log('111')
+      var ActiveTracks = [];
+      var tracks = AnnoJ.config.tracks.map((tr) => tr['id']);
+      for (j=0; j<activeTracksIndex.length; j++) {
+        ActiveTracks.push(tracks[activeTracksIndex[j]]);
+      }
+      AnnoJ.config.active = ActiveTracks;
+      console.log(ActiveTracks);
+    }
+    console.log('222')
+
     </script>
 </head>
 

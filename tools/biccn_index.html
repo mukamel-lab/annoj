@@ -32,7 +32,7 @@
   <script type='text/javascript' src='./browser/js/urlinit.js'></script>
 
   <script type='text/javascript'>
-    var firstLoad = true;
+    // var firstLoad = true;
 
     function buildURL() {
       // Get current browser location and other settings and build a URL
@@ -73,11 +73,14 @@
 
       // Get index of active tracks
       if (annoj_frame.contentWindow.AnnoJ){
-        var activeTracks = annoj_frame.contentWindow.AnnoJ.config.active;
-        var tracks = annoj_frame.contentWindow.AnnoJ.config.tracks.map((tr) => tr['id']);
-        var activeTracksIndex = activeTracks.map((tr) =>  tracks.indexOf(tr)).join(':');
+        // var activeTracks = annoj_frame.contentWindow.AnnoJ.config.active;
+        var activeTracks = annoj_frame.contentWindow.AnnoJ.getGUI().TrackSelector.getActiveIDs()
+        var allTracks = annoj_frame.contentWindow.AnnoJ.config.tracks.map((tr) => tr['id']);
+        var activeTracksIndex = activeTracks.map((tr) =>  allTracks.indexOf(tr)).join(':');
         if (activeTracksIndex) {src += '&tracks='+activeTracksIndex;}
-      }
+      } else {
+        var a = getQueryVariable('tracks'); if (a) { src+='&tracks='+a; }
+       }
       
       return src
     }
@@ -111,15 +114,15 @@
     }
 
     function setParams() {
-      // Get parameters from menus
-      // var params = ['ensemble','celltype','colorby','groupby'];
-      var params = ['ensemble','celltype','groupby'];
-      for (i=0; i<params.length; i++) {
-        a=getQueryVariable(params[i]); 
-        if (a) { 
-          document.getElementById('select_'+params[i]).value = a;
-        }
-      }
+		// Get parameters from menus
+		// var params = ['ensemble','celltype','colorby','groupby'];
+		var params = ['ensemble','celltype','groupby'], a;
+		for (i=0; i<params.length; i++) {
+			a=getQueryVariable(params[i]); 
+			if (a) { 
+				document.getElementById('select_'+params[i]).value = a;
+			}
+		}
     }
 
     $(document).ready(function () {
