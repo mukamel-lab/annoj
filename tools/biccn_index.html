@@ -83,30 +83,25 @@
             if (tracknames) { // User can set active tracks by name; overrides celltype
                 src += '&tracknames=' + tracknames + '&celltype=none';
             } else {
-                src += '&celltype=' + document.getElementById('select_celltype').value;
+                var celltype=document.getElementById('select_celltype').value;
+                src += '&celltype=' + celltype;
+	            if (celltype=='custom') {
+	            	// If celltype is set to custom, get the tracks from the current window
+		            if (annoj_frame.contentWindow.AnnoJ) {
+		                var activeTracks = annoj_frame.contentWindow.AnnoJ.getGUI().TrackSelector.getActiveIDs()
+		                var allTracks = annoj_frame.contentWindow.AnnoJ.config.tracks.map((tr) => tr['id']);
+		                var activeTracksIndex = activeTracks.map((tr) => allTracks.indexOf(tr)).join(':');
+		                if (activeTracksIndex) {
+		                    src += '&tracks=' + activeTracksIndex;
+		                };
+		            } else {
+                        var activeTracksIndex = getQueryVariable('tracks');
+                        src += '&tracks=' + activeTracksIndex;
+                    }
+	            }
             }
 
             return src
-        }
-
-        function initURL() {
-            // Build the annoj URL upon initial load. 
-            src = buildURL();
-            // Get index of active tracks
-            if (annoj_frame.contentWindow.AnnoJ) {
-                // var activeTracks = annoj_frame.contentWindow.AnnoJ.config.active;
-                var activeTracks = annoj_frame.contentWindow.AnnoJ.getGUI().TrackSelector.getActiveIDs()
-                var allTracks = annoj_frame.contentWindow.AnnoJ.config.tracks.map((tr) => tr['id']);
-                var activeTracksIndex = activeTracks.map((tr) => allTracks.indexOf(tr)).join(':');
-                if (activeTracksIndex) {
-                    src += '&tracks=' + activeTracksIndex;
-                };
-            } else {
-                var a = getQueryVariable('tracks');
-                if (a) {
-                    src += '&tracks=' + a;
-                }
-            }
         }
 
         function myRefresh() {
@@ -138,7 +133,7 @@
         }
 
         function setParams() {
-            // Get parameters from menus
+            // Get parameters from URL and set the dropdowns
             // var params = ['ensemble','celltype','colorby','groupby'];
             var params = ['ensemble', 'celltype', 'groupby'],
                 a;
@@ -147,6 +142,13 @@
                 if (a) {
                     document.getElementById('select_' + params[i]).value = a;
                 }
+            }
+        }
+        function toggleTrackSelectionDiv() {
+            var el =document.getElementsByClassName('track-selection');
+            if ( document.getElementById('select_celltype').value=='custom' ) { var disp='none'; } else { var disp='block'; }
+            for (j=0; j<el.length; j++) {
+                el[j].style.display = disp;
             }
         }
 
@@ -161,6 +163,7 @@
             }
 
             setParams();
+            // initURL();
             myRefresh();
             getLink();
             $('.selectpicker').selectpicker('refresh');
@@ -218,14 +221,7 @@
             <div class="container-fluid">
                 <ul class="nav navbar-nav">
                     <li class="nav-item">
-                        <select id="select_ensemble" class="selectpicker" data-width="auto" onchange="getLink();" data-toggle="tooltip" data-placement="top" title="Cluster depth">
-                            <option value="2" selected>Cluster depth...</option>
-                            <option value="2">Level 1: Cell classes</option>
-                            <option value="3">Level 2: Cell types</option>
-                        </select>
-                    </li>
-                    <li class="nav-item">
-                        <select id="select_celltype" class="selectpicker" data-width="auto" onchange="getLink();" data-toggle="tooltip" data-placement="top" title="Cells to show">
+                        <select id="select_celltype" class="selectpicker" data-width="auto" onchange="getLink(); toggleTrackSelectionDiv();" data-toggle="tooltip" data-placement="top" title="Cells to show">
                             <option value="inh" selected>Cells to show...</option>
                             <option value="all">All cell types</option>
                             <option value="exc">Excitatory neurons</option>
@@ -233,26 +229,36 @@
                             <option value="mge">MGE-derived neurons</option>
                             <option value="cge">CGE-derived neurons</option>
                             <option value="none">None</option>
+                            <option value="custom">Custom track list</option>
                         </select>
                     </li>
 
-                    <li class="nav-item">
-                        <select id="select_modalities" class="selectpicker" onchange="getLink();" data-width="auto" multiple data-width="auto" data-toggle="tooltip" data-placement="top" title="Modalities to show">
-                            <option selected value="mcg" selected> mCG</option>
-                            <option value="mcac"> mCAC</option>
-                            <option value="atac" selected> ATAC</option>
-                            <option value="scrna" selected> scRNA</option>
-                            <option value="snrna"> snRNA</option>
-                            <option value="enhancer"> Enhancers</option>
-                        </select>
-                    </li>
-                    <li class="nav-item">
-                        <select id="select_groupby" class="selectpicker" data-width="auto" onchange="getLink();" data-toggle="tooltip" data-placement="top" title="Group tracks by">
-                            <option value="modality" selected>Group tracks by...</option>
-                            <option value="celltype">Cell type</option>
-                            <option value="modality">Modality</option>
-                        </select>
-                    </li>
+                    
+                        <li class="nav-item track-selection">
+                            <select id="select_ensemble" class="selectpicker" data-width="auto" onchange="getLink();" data-toggle="tooltip" data-placement="top" title="Cluster depth">
+                                <option value="2" selected>Cluster depth...</option>
+                                <option value="2">Level 1: Cell classes</option>
+                                <option value="3">Level 2: Cell types</option>
+                            </select>
+                        </li>
+
+                        <li class="nav-item track-selection">
+                            <select id="select_modalities" class="selectpicker" onchange="getLink();" data-width="auto" multiple data-width="auto" data-toggle="tooltip" data-placement="top" title="Modalities to show">
+                                <option selected value="mcg" selected> mCG</option>
+                                <option value="mcac"> mCAC</option>
+                                <option value="atac" selected> ATAC</option>
+                                <option value="scrna" selected> scRNA</option>
+                                <option value="snrna"> snRNA</option>
+                                <option value="enhancer"> Enhancers</option>
+                            </select>
+                        </li>
+                        <li class="nav-item track-selection">
+                            <select id="select_groupby" class="selectpicker" data-width="auto" onchange="getLink();" data-toggle="tooltip" data-placement="top" title="Group tracks by">
+                                <option value="modality" selected>Group tracks by...</option>
+                                <option value="celltype">Cell type</option>
+                                <option value="modality">Modality</option>
+                            </select>
+                        </li>
 
                     <!--       <li class="nav-item">
 <select class="selectpicker" id="select_colorby" data-width="auto" onchange="getLink();" data-toggle="tooltip" data-placement="top" title="Color tracks by">
