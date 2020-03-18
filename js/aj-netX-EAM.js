@@ -1590,21 +1590,44 @@ AnnoJ.Navigator = function() {
         });
 
         // EAM - Add scale controls
+
+        var scaleTrackGroup = new Ext.CycleButton({
+            showText: true,
+            autoWidth: true,
+            // width: 110,
+            prependText: '<b>Scale tracks: </b>',
+            tooltip: '<nobr>Choose track group to scale</nobr>',
+            items: [{
+                text: 'ATAC, RNA',
+                checked: true,
+                value: ['scrna','atac','snrna'],
+            }, {
+                text: 'ATAC',
+                value: ['atac'],
+            }, {
+                text: 'scRNA',
+                value: ['scrna'],
+            }, {
+                text: 'snRNA',
+                value: ['snrna'],
+            }],
+        });
         var scaleUp = new Ext.Button({
             iconCls: 'silk_arrow_up narrow',
             tooltip: '<nobr>Increase track scale (non-mC tracks)</nobr>',
             handler: function() {
             	var f = 1.25;
-                var Tracks = AnnoJ.getGUI().Tracks;
-                var scaleModalities = ['atac','scrna','snrna'];
+                var scaleModalities = AnnoJ.getGUI().NavBar.Controls.scaleTrackGroup.activeItem.value;
+                var Tracks = AnnoJ.getGUI().Tracks.tracks.tracks;
+                Tracks = Tracks.filter(x => AnnoJ.getGUI().Tracks.tracks.isActive(x) && scaleModalities.includes(x.config['modality']))
                 if (Tracks) {
-                    for (var i = 0; i < Tracks.tracks.tracks.length; i++) {
-                        var track = Tracks.tracks.tracks[i];
-                        // EAM - Only scale the ATAC, RNA tracks, not mC or models tracks
-                        if (Tracks.tracks.isActive(track) && scaleModalities.includes(track.config['modality'])) track.Toolbar.setScale(f, false); 
+                    for (var i = 0; i < Tracks.length; i++) {
+                        Tracks[i].Toolbar.setScale(f, false); 
                     }
                 }
-                AnnoJ.config.scaleFactor *= f;
+                for (var i=0; i<scaleModalities.length; i++) {
+                    AnnoJ.config.scaleFactor[scaleModalities[i]] *= f;
+                }
             }
         });
         var scaleDown = new Ext.Button({
@@ -1612,33 +1635,36 @@ AnnoJ.Navigator = function() {
             tooltip: '<nobr>Decrease track scale (non-mC tracks)</nobr>',
             handler: function() {
                 var f = 0.8;
-                var Tracks = AnnoJ.getGUI().Tracks;
-                var scaleModalities = ['atac','scrna','snrna'];
+                var scaleModalities = AnnoJ.getGUI().NavBar.Controls.scaleTrackGroup.activeItem.value;
+                var Tracks = AnnoJ.getGUI().Tracks.tracks.tracks;
+                Tracks = Tracks.filter(x => AnnoJ.getGUI().Tracks.tracks.isActive(x) && scaleModalities.includes(x.config['modality']))
                 if (Tracks) {
-                    for (var i = 0; i < Tracks.tracks.tracks.length; i++) {
-                        var track = Tracks.tracks.tracks[i];
-                        // EAM - Only scale the ATAC, RNA tracks, not mC or models tracks
-                        if (Tracks.tracks.isActive(track) && scaleModalities.includes(track.config['modality'])) track.Toolbar.setScale(f, false); 
+                    for (var i = 0; i < Tracks.length; i++) {
+                        Tracks[i].Toolbar.setScale(f, false); 
                     }
                 }
-                AnnoJ.config.scaleFactor *= f;
+                for (var i=0; i<scaleModalities.length; i++) {
+                    AnnoJ.config.scaleFactor[scaleModalities[i]] *= f;
+                }
             }
         });
         var scaleInit = new Ext.Button({
             iconCls: 'silk_bullet_green narrow',
             tooltip: '<nobr>Reset track scale (non-mC tracks)</nobr>',
             handler: function() {
-                var Tracks = AnnoJ.getGUI().Tracks;
-                var scaleModalities = ['atac','scrna','snrna'];
-                var f = 1/AnnoJ.config.scaleFactor;
-                if (Tracks) {
-                    for (var i = 0; i < Tracks.tracks.tracks.length; i++) {
-                        var track = Tracks.tracks.tracks[i];
-                        // EAM - Only scale the ATAC, RNA tracks, not mC or models tracks
-                        if (Tracks.tracks.isActive(track) && scaleModalities.includes(track.config['modality'])) track.Toolbar.setScale(f, false); 
+                var scaleModalities = AnnoJ.getGUI().NavBar.Controls.scaleTrackGroup.activeItem.value;
+                var allTracks = AnnoJ.getGUI().Tracks.tracks.tracks;
+                for (var i=0; i<scaleModalities.length; i++) {
+                    var scaleModality=scaleModalities[i];
+                    var f = 1/AnnoJ.config.scaleFactor[scaleModality];
+                    Tracks = allTracks.filter(x => AnnoJ.getGUI().Tracks.tracks.isActive(x) && scaleModality.includes(x.config['modality']))
+                    if (Tracks) {
+                        for (var i = 0; i < Tracks.length; i++) {
+                            Tracks[i].Toolbar.setScale(f, false); 
+                        }
                     }
+                    AnnoJ.config.scaleFactor[scaleModalities[i]] *= f;
                 }
-                AnnoJ.config.scaleFactor *= f;
             }
         });
         // EAM - end
@@ -2205,6 +2231,7 @@ AnnoJ.Navigator = function() {
             ratio: ratio,
             further: further,
             closer: closer,
+            scaleTrackGroup: scaleTrackGroup,
             scaleUp: scaleUp,
             scaleInit: scaleInit,
             scaleDown: scaleDown,
@@ -2237,7 +2264,10 @@ AnnoJ.Navigator = function() {
         style: 'margin: 0px; padding: 0px; font-size: 11px; border: 0px;',
         // items: [Controls.jumpLeft, ' ', ' ', ' ', '<b>Multi:</b>', Controls.scaleBox, ' ', ' ', '<b>Y-axis:</b>', Controls.GlobalscaleBox, ' ', ' ', '<b>Height:</b>', Controls.higher, Controls.lower, ' ', '-', ' ', Controls.dragMode, ' ', ' ', '<b>Zoom level:</b>', ' ', Controls.ratio, Controls.further, Controls.closer, ' ', ' ', '<b>Location:</b>', Controls.assembly, Controls.jump, ' ', ' ', Controls.go, ' ', ' ', Controls.prev, Controls.next, '->', Controls.jumpRight]
         // EAM - Simplify the scaleBox
-        items: [Controls.jumpLeft, '  <b>Track scale:</b> ', Controls.scaleUp, Controls.scaleInit, Controls.scaleDown,  ' <b>Track height:</b>', Controls.higher, Controls.lower, ' ', '-', ' ', Controls.dragMode, ' ', ' ', '<b>Zoom level:</b>', ' ', Controls.ratio, Controls.further, Controls.closer, ' ', ' ', '<b>Location:</b>', Controls.assembly, Controls.jump, ' ', ' ', Controls.go, ' ', ' ', Controls.prev, Controls.next, '->', Controls.jumpRight]
+        items: [Controls.jumpLeft, '  ', Controls.scaleTrackGroup, Controls.scaleUp, Controls.scaleInit, Controls.scaleDown,  
+        ' <b>Track height:</b>', 
+        Controls.higher, Controls.lower, ' ', '-', ' ', Controls.dragMode, '  ',
+         '<b>Zoom level:</b>', ' ', Controls.ratio, Controls.further, Controls.closer, ' ', ' ', '<b>Location:</b>', Controls.assembly, Controls.jump, ' ', ' ', Controls.go, ' ', ' ', Controls.prev, Controls.next, '->', Controls.jumpRight]
     });
     Toolbar.on('render', function() {
         this.un('render');

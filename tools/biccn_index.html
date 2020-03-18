@@ -48,22 +48,28 @@
             src = "https://brainome.ucsd.edu/annoj/BICCN_MOp/biccn_annoj.php?";
             var annoj_frame = document.getElementById('annoj_frame');
 
-            try { // After first load
+            try { // After first load - get location and scaleFactor from the AnnoJ frame
                 var loc = annoj_frame.contentWindow.AnnoJ.getLocation();
-                src += 'location=' + loc.assembly + ':' + loc.position + ':' + loc.bases + ':' + loc.pixels + '&';
-                var scaleFactor = annoj_frame.contentWindow.AnnoJ.config.scaleFactor * annoj_frame.contentWindow.AnnoJ.config.scaleFactorInit;
-                // var scaleFactor = annoj_frame.contentWindow.AnnoJ.config.scaleFactor;
-                if (scaleFactor) {
-                    src += '&scaleFactor=' + scaleFactor.toFixed(5);
+                src += 'location=' + loc.assembly + ':' + loc.position + ':' + loc.bases + ':' + loc.pixels;
+                var scaleFactor=[], modalitiesu=['atac','scrna','snrna']
+                for (var i=0; i<modalitiesu.length; i++) {
+                    scaleFactor[i] = annoj_frame.contentWindow.AnnoJ.config.scaleFactor[modalitiesu[i]] * annoj_frame.contentWindow.AnnoJ.config.scaleFactorInit[modalitiesu[i]];
+                    scaleFactor[i] = scaleFactor[i].toPrecision(3);
                 }
-            } catch { // First load
+                scaleFactor = scaleFactor.join(':');
+                src += '&scaleFactor=' + scaleFactor;
+            } catch { // First load - get location and scaleFactor from URL
                 var startingLoc = getQueryVariable('location');
                 if (startingLoc) {
                     src += 'location=' + startingLoc;
                 }
-                // var scaleFactor=parseFloat(getQueryVariable('scaleFactor'));
                 if (scaleFactor) {
-                    src += '&scaleFactor=' + scaleFactor.toFixed(5);
+                    var scaleFactoru=[], modalitiesu=['atac','scrna','snrna']
+                    for (var i=0; i<modalitiesu.length; i++) {
+                        scaleFactoru[i] = scaleFactor[modalitiesu[i]].toPrecision(3);
+                    }
+                    scaleFactoru = scaleFactoru.join(':');
+                    src += '&scaleFactor=' + scaleFactoru;
                 }
             };
 
@@ -229,36 +235,37 @@
                             <option value="mge">MGE-derived neurons</option>
                             <option value="cge">CGE-derived neurons</option>
                             <option value="none">None</option>
+                            <option disabled>--------</option>
                             <option value="custom">Custom track list</option>
                         </select>
                     </li>
 
-                    
-                        <li class="nav-item track-selection">
-                            <select id="select_ensemble" class="selectpicker" data-width="auto" onchange="getLink();" data-toggle="tooltip" data-placement="top" title="Cluster depth">
-                                <option value="2" selected>Cluster depth...</option>
-                                <option value="2">Level 1: Cell classes</option>
-                                <option value="3">Level 2: Cell types</option>
-                            </select>
-                        </li>
+                
+                    <li class="nav-item track-selection">
+                        <select id="select_ensemble" class="selectpicker" data-width="auto" onchange="getLink();" data-toggle="tooltip" data-placement="top" title="Cluster depth">
+                            <option value="2" selected>Cluster depth...</option>
+                            <option value="2">Level 1: Cell classes</option>
+                            <option value="3">Level 2: Cell types</option>
+                        </select>
+                    </li>
 
-                        <li class="nav-item track-selection">
-                            <select id="select_modalities" class="selectpicker" onchange="getLink();" data-width="auto" multiple data-width="auto" data-toggle="tooltip" data-placement="top" title="Modalities to show">
-                                <option selected value="mcg" selected> mCG</option>
-                                <option value="mcac"> mCAC</option>
-                                <option value="atac" selected> ATAC</option>
-                                <option value="scrna" selected> scRNA</option>
-                                <option value="snrna"> snRNA</option>
-                                <option value="enhancer"> Enhancers</option>
-                            </select>
-                        </li>
-                        <li class="nav-item track-selection">
-                            <select id="select_groupby" class="selectpicker" data-width="auto" onchange="getLink();" data-toggle="tooltip" data-placement="top" title="Group tracks by">
-                                <option value="modality" selected>Group tracks by...</option>
-                                <option value="celltype">Cell type</option>
-                                <option value="modality">Modality</option>
-                            </select>
-                        </li>
+                    <li class="nav-item track-selection">
+                        <select id="select_modalities" class="selectpicker" onchange="getLink();" data-width="auto" multiple data-width="auto" data-toggle="tooltip" data-placement="top" title="Modalities to show">
+                            <option selected value="mcg" selected> mCG</option>
+                            <option value="mcac"> mCAC</option>
+                            <option value="atac" selected> ATAC</option>
+                            <option value="scrna" selected> scRNA</option>
+                            <option value="snrna"> snRNA</option>
+                            <option value="enhancer"> Enhancers</option>
+                        </select>
+                    </li>
+                    <li class="nav-item track-selection">
+                        <select id="select_groupby" class="selectpicker" data-width="auto" onchange="getLink();" data-toggle="tooltip" data-placement="top" title="Group tracks by">
+                            <option value="modality" selected>Group tracks by...</option>
+                            <option value="celltype">Cell type</option>
+                            <option value="modality">Modality</option>
+                        </select>
+                    </li>
 
                     <!--       <li class="nav-item">
 <select class="selectpicker" id="select_colorby" data-width="auto" onchange="getLink();" data-toggle="tooltip" data-placement="top" title="Color tracks by">
