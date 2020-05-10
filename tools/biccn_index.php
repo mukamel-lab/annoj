@@ -38,11 +38,6 @@
     var queryPost;
     </script>
     <script type='text/javascript' src='./browser/js/urlinit.js'></script>
-	<?php 
-	include './annoj_cndd/includes/loadCsv.php'; 
-	$fn = 'miniatlas_tracks.csv';
-	loadCsv($fn)
-	?>
 
     <script type='text/javascript'>
     // var firstLoad = true;
@@ -148,7 +143,7 @@
     {
         // Update the URL in the window
         src = buildURL();
-        src = src.replace('biccn_annoj.php', 'index.html');
+        src = src.replace('biccn_annoj.php', 'index.php');
         document.getElementById('srcBox').value = src;
         window.history.pushState("object or string", "", src);
     }
@@ -211,7 +206,9 @@
         // Get tracks
         var tracks = document.getElementById('annoj_frame').contentWindow.AnnoJ.config.tracks;
         var active = document.getElementById('annoj_frame').contentWindow.AnnoJ.config.active;
+        $('#select_tracks').empty(); // Empty the options
         var custom_track_selection = document.getElementById('select_tracks');
+        tracks.sort(function(a,b) { return  a.name.localeCompare(b.name) + 1000*(active.includes(b.id) - active.includes(a.id)) }); // Sort the track list by name
         for (j=0; j<tracks.length; j++)
         {
             var option = document.createElement("option");
@@ -330,7 +327,7 @@
 
             </nav>
 
-            <iframe id="annoj_frame" target="_blank" src="about:blank" width=100% height=100% onload="set_trackslist()">
+            <iframe id="annoj_frame" target="_blank" src="about:blank" width=100% height=100% onload="set_trackslist();">
                 iframe
             </iframe>
 
@@ -357,6 +354,8 @@
         $('.selectpicker').selectpicker('refresh');
         
         toggleTrackSelectionDiv();
+
+        set_trackslist();
     }); 
 </script>
 

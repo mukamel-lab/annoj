@@ -341,7 +341,7 @@ var WebApp = (function() {
     };
 
     function exception(e, message) {
-        if (!Ext.isIE && console && console.log) console.log(e);
+        if (!Ext.isIE && !!console && console.log) console.log(e);
         if (!message) var message = 'An exception was encountered.';
         error(message + '<br /><br />Details:<br />File: ' + e.fileName + '<br />Line: ' + e.lineNumber + '<br />Info: ' + e.message)
     };
@@ -1590,7 +1590,6 @@ AnnoJ.Navigator = function() {
         });
 
         // EAM - Add scale controls
-
         var scaleTrackGroup = new Ext.CycleButton({
             showText: true,
             autoWidth: true,
@@ -1659,8 +1658,8 @@ AnnoJ.Navigator = function() {
                     var f = 1/AnnoJ.config.scaleFactor[scaleModality];
                     Tracks = allTracks.filter(x => AnnoJ.getGUI().Tracks.tracks.isActive(x) && scaleModality.includes(x.config['modality']))
                     if (Tracks) {
-                        for (var i = 0; i < Tracks.length; i++) {
-                            Tracks[i].Toolbar.setScale(f, false); 
+                        for (var j = 0; j < Tracks.length; j++) {
+                            Tracks[j].Toolbar.setScale(f, false); 
                         }
                     }
                     AnnoJ.config.scaleFactor[scaleModalities[i]] *= f;
@@ -2906,12 +2905,12 @@ AnnoJ.Messenger = (function() {
     };
 
     function error(message) {
-        if (!Ext.isIE && console) console.trace();
+        if (!Ext.isIE && !!console) console.trace();
         alert(message, 'error', true)
     };
 
     function warning(message) {
-        if (!Ext.isIE && console) console.trace();
+        if (!Ext.isIE && !!console) console.trace();
         alert(message, 'warning', true)
     };
 

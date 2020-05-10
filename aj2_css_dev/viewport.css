@@ -31,7 +31,7 @@
 .silk_next           { background-image:url('../img/silk/icons/resultset_next.png') !important;          }
 .silk_previous       { background-image:url('../img/silk/icons/resultset_previous.png') !important;      }
 .silk_location       { background-image:url('../img/silk/icons/image.png') !important;                   }
-.silk_capture        { background-image:url('../img/silk/icons/capture.png') !important;                 }
+.silk_capture        { background-image:url('../img/silk/icons/image.png') !important;                 }
 .silk_css            { background-image:url('../img/silk/icons/css.png') !important;                     }
 .silk_more           { background-image:url('../img/silk/icons/vertical_ellipsis.png') !important;       }
 .silk_connect        { background-image:url('../img/silk/icons/connect.png') !important;                 }

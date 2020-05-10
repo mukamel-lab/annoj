@@ -11,52 +11,20 @@ function getQueryVariable(variable)
 	{ 
 		if (!queryPost) queryPost = window.location.search.substring(1);
 		variables = decodeURI(queryPost).split("&");
-	}
+	} 
 	for (var i=0;i<variables.length;i++) 
 	{ 
 		var pair = variables[i].split("="); 
 		if (pair[0] == variable) return pair[1]; 
 	} 
-	return '';
 } 
 
 /*  can tell it to set assembly, position, bases, and pixels values, from upenn site  */
-console.log('test1')
 var variables;
-var celltype='exc', groupby='modality', colorby='modality', ensemble=2, ens=2, modalities = 'mcg:enhancer:atac:scRNA', cluster='', tracknames='', gene='';
-if (typeof(AnnoJ)=='undefined') { 
-	var AnnoJ={}, a; 
-	AnnoJ.config = {};
-	AnnoJ.config.location = {};
-	}
 a=getQueryVariable('assembly'); if (a) { AnnoJ.config.location.assembly = a;}
 a=getQueryVariable('position'); if (a) { AnnoJ.config.location.position = a;}
 a=getQueryVariable('bases'   ); if (a) { AnnoJ.config.location.bases	= a;}
 a=getQueryVariable('pixels'  ); if (a) { AnnoJ.config.location.pixels   = a;}
-
-var scaleFactors=[1,1,1];
-// var scaleFactors=getQueryVariable('scaleFactor').split(':');
-// if (scaleFactors=="") { scaleFactors=[1,1,1]; }
-// for (i=0; i<scaleFactors.length; i++) {
-// 	scaleFactors[i] = 1/parseFloat(scaleFactors[i]);
-// }
-var scaleFactor = {'atac': scaleFactors[0], 'scrna': scaleFactors[1], 'snrna': scaleFactors[2]};
-AnnoJ.config.scaleFactor = AnnoJ.config.scaleFactorInit = {...scaleFactor};
-
-var input_vars = ["celltype", "groupby", "colorby", "ensemble", "modalities", "cluster",'tracknames','gene',"scaleFactor"];
-console.log(modalities)
-for (i=0; i<input_vars.length; i++) {
-	eval('a=getQueryVariable("'+input_vars[i]+'"); if (a) { '+input_vars[i]+'=a;} ');
-}
-console.log(modalities)
-
-a=getQueryVariable('location'); if (a) { 
-	loc = a.split(':');
-	if (loc[0]) AnnoJ.config.location.assembly = loc[0];
-	if (loc[1]) AnnoJ.config.location.position = parseInt(loc[1]);
-	if (loc[2]) AnnoJ.config.location.bases    = parseInt(loc[2]);
-	if (loc[3]) AnnoJ.config.location.pixels   = parseInt(loc[3]);
-}
 
 /*  can tell it to remove track(s) from AnnoJ.config.tracks            -- added by HC *
  *  Usage : deltrack=track_name;track_name;track_path;track_parent_path               */
