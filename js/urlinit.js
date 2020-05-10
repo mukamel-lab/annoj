@@ -21,7 +21,6 @@ function getQueryVariable(variable)
 } 
 
 /*  can tell it to set assembly, position, bases, and pixels values, from upenn site  */
-console.log('test1')
 var variables;
 var celltype='exc', groupby='modality', colorby='modality', ensemble=2, ens=2, modalities = 'mcg:enhancer:atac:scRNA', cluster='', tracknames='', gene='';
 if (typeof(AnnoJ)=='undefined') { 
@@ -35,20 +34,18 @@ a=getQueryVariable('bases'   ); if (a) { AnnoJ.config.location.bases	= a;}
 a=getQueryVariable('pixels'  ); if (a) { AnnoJ.config.location.pixels   = a;}
 
 var scaleFactors=[1,1,1];
-// var scaleFactors=getQueryVariable('scaleFactor').split(':');
-// if (scaleFactors=="") { scaleFactors=[1,1,1]; }
-// for (i=0; i<scaleFactors.length; i++) {
-// 	scaleFactors[i] = 1/parseFloat(scaleFactors[i]);
-// }
+var scaleFactors=getQueryVariable('scaleFactor').split(':');
+if (scaleFactors=="") { scaleFactors=[1,1,1]; }
+for (i=0; i<scaleFactors.length; i++) {
+	scaleFactors[i] = 1/parseFloat(scaleFactors[i]);
+}
 var scaleFactor = {'atac': scaleFactors[0], 'scrna': scaleFactors[1], 'snrna': scaleFactors[2]};
 AnnoJ.config.scaleFactor = AnnoJ.config.scaleFactorInit = {...scaleFactor};
 
 var input_vars = ["celltype", "groupby", "colorby", "ensemble", "modalities", "cluster",'tracknames','gene',"scaleFactor"];
-console.log(modalities)
 for (i=0; i<input_vars.length; i++) {
 	eval('a=getQueryVariable("'+input_vars[i]+'"); if (a) { '+input_vars[i]+'=a;} ');
 }
-console.log(modalities)
 
 a=getQueryVariable('location'); if (a) { 
 	loc = a.split(':');

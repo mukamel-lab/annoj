@@ -273,8 +273,6 @@ var re_ens = new RegExp('_ens'+ensemble+'_');
 var re_modality, modality = [];
 var AllModalities = ['mcg','enhancer','mcac','atac','scRNA','snRNA'];
 var showModalities=modalities.replace(/:$/,'').split(':');
-console.log(modalities)
-console.log(showModalities)
 
 // Select the tracks to be shown
 function myTrackFilter(track) {

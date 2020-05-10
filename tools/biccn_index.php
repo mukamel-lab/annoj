@@ -6,7 +6,7 @@
     <!-- <link type='text/css' rel='stylesheet' href='browser/css/navbar.css' /> -->
 
     <meta charset="utf-8">
-    <script src="https://use.fontawesome.com/c8d6e6a627.js"></script>
+    <script src="annoj_cndd/js/fontawesome.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
     <link rel="stylesheet" href="annoj_cndd/css/bootstrap-select.css">
 
@@ -40,7 +40,7 @@
     <script type='text/javascript' src='./browser/js/urlinit.js'></script>
 
     <script type='text/javascript'>
-    // var firstLoad = true;
+    var firstLoad = true;
 
     function buildURL()
     {
@@ -49,22 +49,9 @@
         src = "https://brainome.ucsd.edu/annoj/BICCN_MOp/biccn_annoj.php?";
         var annoj_frame = document.getElementById('annoj_frame');
 
-        try
-        { // After first load - get location and scaleFactor from the AnnoJ frame
-            var loc = annoj_frame.contentWindow.AnnoJ.getLocation();
-            src += 'location=' + loc.assembly + ':' + loc.position + ':' + loc.bases + ':' + loc.pixels;
-            var scaleFactor = [],
-            modalitiesu = ['atac', 'scrna', 'snrna']
-            for (var i = 0; i < modalitiesu.length; i++)
-            {
-                scaleFactor[i] = annoj_frame.contentWindow.AnnoJ.config.scaleFactor[modalitiesu[i]] * annoj_frame.contentWindow.AnnoJ.config.scaleFactorInit[modalitiesu[i]];
-                scaleFactor[i] = scaleFactor[i].toPrecision(3);
-            }
-            scaleFactor = scaleFactor.join(':');
-            src += '&scaleFactor=' + scaleFactor;
-        }
-        catch
+        if (firstLoad)
         { // First load - get location and scaleFactor from URL
+            firstLoad = false;
             var startingLoc = getQueryVariable('location');
             if (startingLoc)
             {
@@ -81,6 +68,21 @@
                 scaleFactoru = scaleFactoru.join(':');
                 src += '&scaleFactor=' + scaleFactoru;
             }
+        }
+        else
+        { // After first load - get location and scaleFactor from the AnnoJ frame
+            var loc = annoj_frame.contentWindow.AnnoJ.getLocation();
+            src += 'location=' + loc.assembly + ':' + loc.position + ':' + loc.bases + ':' + loc.pixels;
+            var scaleFactor = [],
+            modalitiesu = ['atac', 'scrna', 'snrna']
+            for (var i = 0; i < modalitiesu.length; i++)
+            {
+                scaleFactor[i] = annoj_frame.contentWindow.AnnoJ.config.scaleFactor[modalitiesu[i]] * annoj_frame.contentWindow.AnnoJ.config.scaleFactorInit[modalitiesu[i]];
+                scaleFactor[i] = scaleFactor[i].toPrecision(3);
+            }
+            scaleFactor = scaleFactor.join(':');
+            src += '&scaleFactor=' + scaleFactor;
+            firstLoad = false;
         };
 
         // var params = ['ensemble','celltype','colorby','groupby'];
