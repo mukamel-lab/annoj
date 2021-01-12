@@ -204,11 +204,14 @@
     }
 
     function set_trackslist() {
-    	// After the AnnoJ frame is loaded
+    	// After the AnnoJ frame is loaded, set the selected tracks in the custom tracks list
         // Get tracks
         var tracks = document.getElementById('annoj_frame').contentWindow.AnnoJ.config.tracks;
         var active = document.getElementById('annoj_frame').contentWindow.AnnoJ.config.active;
         var custom_track_selection = document.getElementById('select_tracks');
+        custom_track_selection.options.length=0;
+        $('.selectpicker').selectpicker('refresh');
+
         for (j=0; j<tracks.length; j++)
         {
             var option = document.createElement("option");
