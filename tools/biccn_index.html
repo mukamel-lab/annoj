@@ -50,12 +50,13 @@
     function buildURL()
     {
         // Get current browser location and other settings and build a URL
+        var scaleFactor = window.scaleFactor;
+
         var modalities = Array.from(document.getElementById('select_modalities').selectedOptions).map(x => x['value']).join(':');
         src = "https://brainome.ucsd.edu/annoj/BICCN_MOp/biccn_annoj.php?";
         var annoj_frame = document.getElementById('annoj_frame');
 
-        if (firstLoad)
-        { // First load - get location and scaleFactor from URL
+        if (firstLoad) { // First load - get location and scaleFactor from URL
             var startingLoc = getQueryVariable('location');
             if (startingLoc)
             {
@@ -72,10 +73,10 @@
                 scaleFactoru = scaleFactoru.join(':');
                 src += '&scaleFactor=' + scaleFactoru;
             }
+            toggleTrackSelectionDiv();
             firstLoad = false;
         }
-        else
-        { // After first load - get location and scaleFactor from the AnnoJ frame
+        else { // After first load - get location and scaleFactor from the AnnoJ frame
             var loc = annoj_frame.contentWindow.AnnoJ.getLocation();
             src += 'location=' + loc.assembly + ':' + loc.position + ':' + loc.bases + ':' + loc.pixels;
             var scaleFactor = [],
@@ -102,37 +103,31 @@
         if (modalities)
         {
             src += '&modalities=' + modalities;
-        }
+        } else { src += '&modalities=None'; }
         if (cluster)
         {
             src += '&cluster=' + cluster;
         }
-        if (tracknames)
-        { // User can set active tracks by name; overrides celltype
-            src += '&tracknames=' + tracknames + '&celltype=none';
-        }
-        else
+        var celltype = document.getElementById('select_celltype').value;
+        src += '&celltype=' + celltype;
+        if (celltype == 'custom')
         {
-            var celltype = document.getElementById('select_celltype').value;
-            src += '&celltype=' + celltype;
-            if (celltype == 'custom')
+            // If celltype is set to custom, get the tracks from the current window
+            if (annoj_frame.contentWindow.AnnoJ)
             {
-                // If celltype is set to custom, get the tracks from the current window
-                if (annoj_frame.contentWindow.AnnoJ)
+            	var activeTracks = document.getElementById('select_tracks').selectedOptions;
+            	activeTracks = Array.from(activeTracks).map(tr => tr['value']);
+                var allTracks = annoj_frame.contentWindow.AnnoJ.config.tracks.map((tr) => tr['id']);
+                var activeTracksIndex = activeTracks.map((tr) => allTracks.indexOf(tr)).join(':');
+                if (activeTracksIndex)
                 {
-                    var activeTracks = annoj_frame.contentWindow.AnnoJ.getGUI().TrackSelector.getActiveIDs()
-                    var allTracks = annoj_frame.contentWindow.AnnoJ.config.tracks.map((tr) => tr['id']);
-                    var activeTracksIndex = activeTracks.map((tr) => allTracks.indexOf(tr)).join(':');
-                    if (activeTracksIndex)
-                    {
-                        src += '&tracks=' + activeTracksIndex;
-                    };
-                }
-                else
-                {
-                    var activeTracksIndex = getQueryVariable('tracks');
                     src += '&tracks=' + activeTracksIndex;
-                }
+                };
+            }
+            else
+            {
+                var activeTracksIndex = getQueryVariable('tracks');
+                src += '&tracks=' + activeTracksIndex;
             }
         }
 
@@ -218,10 +213,17 @@
         {
             var option = document.createElement("option");
             option.text=tracks[j].name;
+            option.value=tracks[j].id;
             if (active.includes(tracks[j].id)) { option.selected = true; }
             custom_track_selection.add(option);
         }
         $('.selectpicker').selectpicker('refresh');
+    }
+
+    function goToNewPage() {
+        var url = document.getElementById('select_ext_link').value;
+        window.open(url);
+        document.getElementById('select_ext_link').selectpicker
     }
 
     </script>
@@ -237,7 +239,7 @@
                 </li>
                 <li class="nav-item">
                     <a href="http://biccn.org" target="_blank" style="padding: 0">
-                        <img src="browser/img/logo_BICCN.png" height="34">
+                        <img src="browser/img/logo_BICCN.png" height="34" alt="BICCN">
                     </a>
                 </li>
                 <li class="nav-item">
@@ -256,19 +258,44 @@
                     </li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    <li class="nav-item">
-                        External resources:
-                    </li>
-                    <li class="nav-item">
-                        <button onclick="window.open('http://www.mouseconnectome.org/Dinoskin/page/cemba');" title="Go to mouse connectome browser to view anatomy and connectivity data (Hongwei Dong lab)" class="btn btn-info">
-                            <img src="browser/img/mouseconnectome.png" style="height:20px; padding: 0px;"> Anatomy browser
-                        </button>
-                    </li>
-                    <li class="nav-item">
-                        <button onclick="window.open('https://nemoanalytics.org');" title="Go to cell browser to view clusters and genes" class="btn btn-info">
-                            <img src="browser/img/nemo-logo.svg" style="height:20px; padding:0px;"> NeMO analytics</button>
-                        </li>
+                    <ul class="nav navbar-nav">
+
+				    <li class="nav-item">
+				        <button id="dLabel" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="btn btn-info">
+				            <i class="fa fa-external-link" aria-hidden="true"></i> External resources
+				            <span class="caret"></span>
+				        </button>
+				    
+				      <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+				          <li role="presentation" class="dropdown">
+				              <a role="menuitem" tabindex="-1" href="http://biccn.org" target="_blank">
+				                   <img src="browser/img/logo_BICCN.png" height="34" alt="BICCN">
+				              </a>
+				          </li>
+				          <li role="presentation" class="dropdown">
+				              <a role="menuitem" tabindex="-1" href="http://nemoarchive.org" target="_blank">
+				                  <img src="browser/img/nemo-logo.svg" style="height:20px; padding:0px;">
+				              </a>
+				          </li>
+				          <li role="presentation" class="dropdown">
+				              <a role="menuitem" tabindex="-1" href="http://nemoanalytics.org" target="_blank">
+				                  NeMO analytics
+				              </a>
+				          </li>
+				          <li role="presentation" class="dropdown">
+				              <a role="menuitem" tabindex="-1" href="http://www.mouseconnectome.org/Dinoskin/page/cemba" target="_blank">
+				                  <img src="browser/img/mouseconnectome.png" style="height:20px; padding: 0px;"> Anatomy browser (Hongwei Dong lab)
+				              </a>
+				          </li>
+				          <li role="presentation" class="dropdown">
+				              <a role="menuitem" tabindex="-1" href="https://singlecell.broadinstitute.org/single_cell?scpbr=biccn-anatomy-and-morphology-project" target="_blank">
+				                  Single Cell Portal - BICCN Anatomy/Morphology
+				              </a>
+				          </li>
+				      </ul>
+				    </div>
                     </ul>
+                </ul>
                 </div>
                 <div class="collapse in" id="topbar">
 
@@ -336,30 +363,27 @@
                 iframe
             </iframe>
 
-        </body>
+		<script>
+		    $(document).ready(function ()
+		    {
+		        $('.glyphicon').click(function ()
+		        {
+		            $(this).toggleClass("glyphicon-chevron-down").toggleClass("glyphicon-chevron-up");
+		        });
 
-<script>
-    $(document).ready(function ()
-    {
-        $('.glyphicon').click(function ()
-        {
-            $(this).toggleClass("glyphicon-chevron-down").toggleClass("glyphicon-chevron-up");
-        });
+		        if (modalities)
+		        {
+		            $('#select_modalities').selectpicker('deselectAll');
+		            $('#select_modalities').selectpicker('val', modalities.split(':'));
+		        }
 
-        if (modalities)
-        {
-            $('#select_modalities').selectpicker('deselectAll');
-            $('#select_modalities').selectpicker('val', modalities.split(':'));
-        }
-
-        setParams();
-        // initURL();
-        myRefresh();
-        getLink();
-        $('.selectpicker').selectpicker('refresh');
-        
-        toggleTrackSelectionDiv();
-    }); 
-</script>
-
+		        setParams();
+		        // initURL();
+		        myRefresh();
+		        getLink();
+		        $('.selectpicker').selectpicker('refresh');
+		        
+		    }); 
+		</script>
+	</body>
 </html> 

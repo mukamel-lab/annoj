@@ -24,7 +24,6 @@
 
   <!-- Config -->
   <script type='text/javascript'>
-  
   AnnoJ.config = {
     info : {
       title  : 'Mouse MOp BICCN',
@@ -171,7 +170,7 @@ for (i=0; i<tracks.length; i++) {
     'trackdata' : tracks[i],
     };
   new_tracks.push(track);
-} 
+}
 
 // REPTILE enhancers
 
@@ -266,8 +265,8 @@ AnnoJ.config.tracks = AnnoJ.config.tracks.concat(new_tracks);
 <!-- Enable URL queries -->
 <script type='text/javascript'> var queryPost; </script>
 <script type='text/javascript' src='./browser/js/urlinit.js'></script>
-
 <script type='text/javascript'>
+  
   // Set active tracks
 var re_ens = new RegExp('_ens'+ensemble+'_');
 var re_modality, modality = [];
@@ -293,7 +292,6 @@ function myTrackFilter(track) {
   return out;
 }
 var currTracks=AnnoJ.config.tracks.filter(myTrackFilter);
-console.log(currTracks)
 // var currTracks=AnnoJ.config.tracks.filter(x => RegExp(celltype).test(x.trackdata.cellclass) & re_ens.test(x['id']) & 
 //   showModalities.includes(x['modality']) & !x['hidden']);
 

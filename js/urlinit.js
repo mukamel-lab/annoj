@@ -33,16 +33,18 @@ a=getQueryVariable('position'); if (a) { AnnoJ.config.location.position = a;}
 a=getQueryVariable('bases'   ); if (a) { AnnoJ.config.location.bases	= a;}
 a=getQueryVariable('pixels'  ); if (a) { AnnoJ.config.location.pixels   = a;}
 
-var scaleFactors=[1,1,1];
-var scaleFactors=getQueryVariable('scaleFactor').split(':');
+var scaleFactors=getQueryVariable('scaleFactor');
+scaleFactors = scaleFactors.split(':');
 if (scaleFactors=="") { scaleFactors=[1,1,1]; }
+var scaleFactors_inv = [];
 for (i=0; i<scaleFactors.length; i++) {
-	scaleFactors[i] = 1/parseFloat(scaleFactors[i]);
+	// scaleFactors_inv[i] = 1/parseFloat(scaleFactors[i]);
+	scaleFactors_inv[i] = parseFloat(scaleFactors[i]);
 }
-var scaleFactor = {'atac': scaleFactors[0], 'scrna': scaleFactors[1], 'snrna': scaleFactors[2]};
+var scaleFactor = {'atac': scaleFactors_inv[0], 'scrna': scaleFactors_inv[1], 'snrna': scaleFactors_inv[2]};
 AnnoJ.config.scaleFactor = AnnoJ.config.scaleFactorInit = {...scaleFactor};
 
-var input_vars = ["celltype", "groupby", "colorby", "ensemble", "modalities", "cluster",'tracknames','gene',"scaleFactor"];
+var input_vars = ["celltype", "groupby", "colorby", "ensemble", "modalities", "cluster",'tracknames','gene'];
 for (i=0; i<input_vars.length; i++) {
 	eval('a=getQueryVariable("'+input_vars[i]+'"); if (a) { '+input_vars[i]+'=a;} ');
 }
@@ -53,6 +55,23 @@ a=getQueryVariable('location'); if (a) {
 	if (loc[1]) AnnoJ.config.location.position = parseInt(loc[1]);
 	if (loc[2]) AnnoJ.config.location.bases    = parseInt(loc[2]);
 	if (loc[3]) AnnoJ.config.location.pixels   = parseInt(loc[3]);
+}
+
+// Automatically detect the modality of tracks where it's not set already
+for (i=0; i<AnnoJ.config.tracks.length; i++) {
+	var track=AnnoJ.config.tracks[i];
+	if (!track['modality']) {
+		console.log(i)
+		if (track['path'].includes('RNA')) {
+			track['modality']='rna';
+		} else if (track['path'].includes('Methyl') | track['path'].includes('mC')) {
+			track['modality']='mcg';
+		} else if (track['path'].includes('ATAC') ) {
+			track['modality']='atac';
+		} else if (track['path'].includes('ChIP') ) {
+			track['modality']='chip';
+		}
+	}
 }
 
 /*  can tell it to remove track(s) from AnnoJ.config.tracks            -- added by HC *

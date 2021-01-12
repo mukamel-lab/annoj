@@ -1599,16 +1599,22 @@ AnnoJ.Navigator = function() {
             items: [{
                 text: 'ATAC, RNA',
                 checked: true,
-                value: ['scrna','atac','snrna'],
+                value: ['scrna','atac','snrna','rna'],
             }, {
                 text: 'ATAC',
                 value: ['atac'],
             }, {
                 text: 'scRNA',
-                value: ['scrna'],
+                value: ['scrna','rna'],
             }, {
                 text: 'snRNA',
-                value: ['snrna'],
+                value: ['snrna','rna'],
+            }, {
+                text: 'ChIP',
+                value: ['chip'],
+            }, {
+                text: 'mC',
+                value: ['mcg','mcac','mch'],
             }],
         });
         var scaleUp = new Ext.Button({
@@ -1660,6 +1666,7 @@ AnnoJ.Navigator = function() {
                     if (Tracks) {
                         for (var j = 0; j < Tracks.length; j++) {
                             Tracks[j].Toolbar.setScale(f, false); 
+                            console.log(f)
                         }
                     }
                     AnnoJ.config.scaleFactor[scaleModalities[i]] *= f;

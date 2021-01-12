@@ -68,9 +68,11 @@
                 scaleFactoru = scaleFactoru.join(':');
                 src += '&scaleFactor=' + scaleFactoru;
             }
+            console.log(src)
         }
         else
         { // After first load - get location and scaleFactor from the AnnoJ frame
+            firstLoad = false;
             var loc = annoj_frame.contentWindow.AnnoJ.getLocation();
             src += 'location=' + loc.assembly + ':' + loc.position + ':' + loc.bases + ':' + loc.pixels;
             var scaleFactor = [],
@@ -82,7 +84,6 @@
             }
             scaleFactor = scaleFactor.join(':');
             src += '&scaleFactor=' + scaleFactor;
-            firstLoad = false;
         };
 
         // var params = ['ensemble','celltype','colorby','groupby'];
