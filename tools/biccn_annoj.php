@@ -398,7 +398,6 @@ for (i=0; i<currTracks.length; i++) {
 
     var activeTracksIndex=getQueryVariable('tracks').split(':').filter(x => x!="").map(x => parseInt(x,10));
     activeTracksIndex = activeTracksIndex.filter((v, i, a) => a.indexOf(v) === i); // Keep only unique values
-    console.log(activeTracksIndex)
     if (activeTracksIndex!="" & celltype=='custom') {
       var ActiveTracks = [];
       var tracks = AnnoJ.config.tracks.map((tr) => tr['id']);

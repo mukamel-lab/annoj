@@ -58,22 +58,22 @@ a=getQueryVariable('location'); if (a) {
 }
 
 // Automatically detect the modality of tracks where it's not set already
-for (i=0; i<AnnoJ.config.tracks.length; i++) {
-	var track=AnnoJ.config.tracks[i];
-	if (!track['modality']) {
-		console.log(i)
-		if (track['path'].includes('RNA')) {
-			track['modality']='rna';
-		} else if (track['path'].includes('Methyl') | track['path'].includes('mC')) {
-			track['modality']='mcg';
-		} else if (track['path'].includes('ATAC') ) {
-			track['modality']='atac';
-		} else if (track['path'].includes('ChIP') ) {
-			track['modality']='chip';
+if (AnnoJ.config.tracks) {
+	for (i=0; i<AnnoJ.config.tracks.length; i++) {
+		var track=AnnoJ.config.tracks[i];
+		if (!track['modality']) {
+			if (track['path'].includes('RNA')) {
+				track['modality']='rna';
+			} else if (track['path'].includes('Methyl') | track['path'].includes('mC')) {
+				track['modality']='mcg';
+			} else if (track['path'].includes('ATAC') ) {
+				track['modality']='atac';
+			} else if (track['path'].includes('ChIP') ) {
+				track['modality']='chip';
+			}
 		}
 	}
 }
-
 /*  can tell it to remove track(s) from AnnoJ.config.tracks            -- added by HC *
  *  Usage : deltrack=track_name;track_name;track_path;track_parent_path               */
 remove_str = getQueryVariable('deltrack');
