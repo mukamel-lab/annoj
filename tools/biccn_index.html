@@ -38,11 +38,6 @@
     var queryPost;
     </script>
     <script type='text/javascript' src='./browser/js/urlinit.js'></script>
-	<?php 
-	include './annoj_cndd/includes/loadCsv.php'; 
-	$fn = 'miniatlas_tracks.csv';
-	loadCsv($fn)
-	?>
 
     <script type='text/javascript'>
     var firstLoad = true;
@@ -58,9 +53,12 @@
 
         if (firstLoad) { // First load - get location and scaleFactor from URL
             var startingLoc = getQueryVariable('location');
-            if (startingLoc)
+            var gene = getQueryVariable('gene');
+            if (gene) {
+                src += '&gene=' + gene;
+            } else if (startingLoc)
             {
-                src += 'location=' + startingLoc;
+                src += '&location=' + startingLoc;
             }
             if (scaleFactor)
             {

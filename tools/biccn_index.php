@@ -39,7 +39,9 @@
     </script>
     <script type='text/javascript' src='./browser/js/urlinit.js'></script>
 
+
     <script type='text/javascript'>
+
     var firstLoad = true;
 
     function buildURL()
@@ -52,6 +54,7 @@
         if (firstLoad)
         { // First load - get location and scaleFactor from URL
             firstLoad = false;
+
             var startingLoc = getQueryVariable('location');
             if (startingLoc)
             {
