@@ -269,8 +269,8 @@ AnnoJ.config.tracks = AnnoJ.config.tracks.concat(new_tracks);
 <script type='text/javascript'> var queryPost; </script>
 <script type='text/javascript' src='./browser/js/urlinit.js'></script>
 
+<!--   // If the URL contains a gene, look up its coordinates and set the location of the browser -->
 <?php
-  // If the URL contains a gene, look up its coordinates
   $gene = $_GET["gene"];
   if ($gene) {
     $conn = new mysqli("localhost","cndd_annoj","jonna_ddnc","models");
@@ -279,18 +279,20 @@ AnnoJ.config.tracks = AnnoJ.config.tracks.concat(new_tracks);
     $result = $conn->query("SELECT id, assembly, IF(strand='+',start,end) AS tss from $table where id like '%$gene%' LIMIT 1"); 
     
     if ($result->num_rows > 0) {
-      // output data of each row
-      while($row = $result->fetch_assoc()) {
-        echo "<script>";
-        echo "AnnoJ.config.location.assembly =" . $row["assembly"] . ";";
-        echo "AnnoJ.config.location.position =" . $row["tss"] . ";";
-        echo " </script>";
-        break; // Only read the 1st row that is returned from mysql
-      }
+      // while($row = $result->fetch_assoc()) {
+      //   echo "<script>";
+      //   echo "AnnoJ.config.location.assembly =" . $row["assembly"] . ";";
+      //   echo "AnnoJ.config.location.position =" . $row["tss"] . ";";
+      //   echo " </script>";
+      //   break; // Only read the 1st row that is returned from mysql
+      // }
+      $row = $result->fetch_assoc();
+      echo "<script>";
+      echo "AnnoJ.config.location.assembly =" . $row["assembly"] . ";";
+      echo "AnnoJ.config.location.position =" . $row["tss"] . ";";
+      echo " </script>";
     }
   }
-
-  
 ?>
 
 <script type='text/javascript'>
