@@ -11,7 +11,6 @@
   <link type='text/css' rel='stylesheet' href='annoj_cndd/aj2_css_dev/plugins.css' />
   <link type='text/css' rel='stylesheet' href='annoj_cndd/aj2_css_dev/salk.css' />
   <script type='text/javascript' src='annoj_cndd/js/excanvas.js'></script>
-  <!-- <script type='text/javascript' src='annoj_cndd/js/aj-CEMBA.js'></script> -->
   <script type='text/javascript' src='annoj_cndd/js/aj-netX-EAM.js'></script>
   
   <!-- cluster info -->
@@ -51,6 +50,15 @@
         type : 'ModelsTrack',
         path : 'Annotation models',
         data : './browser/fetchers/models/genes_mm10_gencode.php',
+        height : 100,
+        showControls : true, cls :  "AJ_track AJ_darkborder",
+      },
+      {
+        id   : 'models_mm10_line1',
+        name : 'L1 - Line1 repeats',
+        type : 'ModelsTrack',
+        path : 'Annotation models',
+        data : './browser/fetchers/models/models_mm10_line1.php',
         height : 100,
         showControls : true, cls :  "AJ_track AJ_darkborder",
       },
@@ -279,13 +287,6 @@ AnnoJ.config.tracks = AnnoJ.config.tracks.concat(new_tracks);
     $result = $conn->query("SELECT id, assembly, IF(strand='+',start,end) AS tss from $table where id like '%$gene%' LIMIT 1"); 
     
     if ($result->num_rows > 0) {
-      // while($row = $result->fetch_assoc()) {
-      //   echo "<script>";
-      //   echo "AnnoJ.config.location.assembly =" . $row["assembly"] . ";";
-      //   echo "AnnoJ.config.location.position =" . $row["tss"] . ";";
-      //   echo " </script>";
-      //   break; // Only read the 1st row that is returned from mysql
-      // }
       $row = $result->fetch_assoc();
       echo "<script>";
       echo "AnnoJ.config.location.assembly =" . $row["assembly"] . ";";
@@ -436,7 +437,6 @@ for (i=0; i<currTracks.length; i++) {
         ActiveTracks.push(tracks[activeTracksIndex[j]]);
       }
       ActiveTracks = ActiveTracks.filter(function(x) { return x !== undefined; });
-      console.log(ActiveTracks)
       AnnoJ.config.active = ActiveTracks;
     }
 

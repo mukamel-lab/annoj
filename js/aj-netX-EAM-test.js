@@ -789,20 +789,8 @@ var AnnoJ = (function() {
         }
     };
 
-    // function scaleReset() {
-    //     return GUI.NavBar.Controls.scaleReset.handler()
-    // };
     function scaleInit() {
-        var tracks = AnnoJ.getGUI().Tracks.tracks.tracks;
-        tracks = tracks.filter(x => AnnoJ.getGUI().Tracks.tracks.isActive(x));
-        for (i=0; i<tracks.length; i++) {
-            var track=tracks[i];
-            f = AnnoJ.config.scaleFactorInit[track.config.modality];
-            if (f){
-                track.Toolbar.setScale(f,false);
-            }
-            track.config['scaled_cumulative'] = 1;
-        }
+        return GUI.NavBar.Controls.scaleInit.handler()
     };
 
     function getLocation() {
@@ -1611,10 +1599,10 @@ AnnoJ.Navigator = function() {
             items: [{
                 text: 'ATAC, RNA',
                 checked: true,
-                value: ['scrna','snATAC','atac','snrna','rna'],
+                value: ['scrna','atac','snrna','rna'],
             }, {
                 text: 'ATAC',
-                value: ['atac','snATAC'],
+                value: ['atac'],
             }, {
                 text: 'scRNA',
                 value: ['scrna','rna'],
@@ -1635,18 +1623,16 @@ AnnoJ.Navigator = function() {
             handler: function() {
             	var f = 1.25;
                 var scaleModalities = AnnoJ.getGUI().NavBar.Controls.scaleTrackGroup.activeItem.value;
-                var tracks = AnnoJ.getGUI().Tracks.tracks.tracks;
-                tracks = tracks.filter(x => AnnoJ.getGUI().Tracks.tracks.isActive(x) && scaleModalities.includes(x.config['modality']))
-                if (tracks) {
-                    for (var i = 0; i < tracks.length; i++) {
-                        tracks[i].Toolbar.setScale(f, false); 
-                        tracks[i].config['scaled_cumulative'] *= f; 
+                var Tracks = AnnoJ.getGUI().Tracks.tracks.tracks;
+                Tracks = Tracks.filter(x => AnnoJ.getGUI().Tracks.tracks.isActive(x) && scaleModalities.includes(x.config['modality']))
+                if (Tracks) {
+                    for (var i = 0; i < Tracks.length; i++) {
+                        Tracks[i].Toolbar.setScale(f, false); 
                     }
                 }
                 for (var i=0; i<scaleModalities.length; i++) {
                     AnnoJ.config.scaleFactor[scaleModalities[i]] *= f;
                 }
-                console.log('Scale up!')
             }
         });
         var scaleDown = new Ext.Button({
@@ -1655,35 +1641,36 @@ AnnoJ.Navigator = function() {
             handler: function() {
                 var f = 0.8;
                 var scaleModalities = AnnoJ.getGUI().NavBar.Controls.scaleTrackGroup.activeItem.value;
-                var tracks = AnnoJ.getGUI().Tracks.tracks.tracks;
-                tracks = tracks.filter(x => AnnoJ.getGUI().Tracks.tracks.isActive(x) && scaleModalities.includes(x.config['modality']))
-                if (tracks) {
-                    for (var i = 0; i < tracks.length; i++) {
-                        tracks[i].Toolbar.setScale(f, false);
-                        tracks[i].config['scaled_cumulative'] *= f; 
+                var Tracks = AnnoJ.getGUI().Tracks.tracks.tracks;
+                Tracks = Tracks.filter(x => AnnoJ.getGUI().Tracks.tracks.isActive(x) && scaleModalities.includes(x.config['modality']))
+                if (Tracks) {
+                    for (var i = 0; i < Tracks.length; i++) {
+                        Tracks[i].Toolbar.setScale(f, false); 
                     }
                 }
                 for (var i=0; i<scaleModalities.length; i++) {
                     AnnoJ.config.scaleFactor[scaleModalities[i]] *= f;
                 }
-                console.log('Scale down!')
             }
         });
-        // TODO: Create separate functions for scaleInit (called on page load) and scaleReset
-        var scaleReset = new Ext.Button({
+        var scaleInit = new Ext.Button({
             iconCls: 'silk_bullet_green narrow',
             tooltip: '<nobr>Reset track scale (non-mC tracks)</nobr>',
             handler: function() {
-                var tracks = AnnoJ.getGUI().Tracks.tracks.tracks;
                 var scaleModalities = AnnoJ.getGUI().NavBar.Controls.scaleTrackGroup.activeItem.value;
-                tracks = tracks.filter(x => AnnoJ.getGUI().Tracks.tracks.isActive(x) && scaleModalities.includes(x.config['modality']))
-                for (i=0; i<tracks.length; i++) {
-                    var track=tracks[i];
-                    f = 1/track.config['scaled_cumulative'];
-                    track.Toolbar.setScale(f,false);
-                    track.config['scaled_cumulative'] = 1;
+                var allTracks = AnnoJ.getGUI().Tracks.tracks.tracks;
+                for (var i=0; i<scaleModalities.length; i++) {
+                    var scaleModality=scaleModalities[i];
+                    var f = 1/AnnoJ.config.scaleFactor[scaleModality];
+                    Tracks = allTracks.filter(x => AnnoJ.getGUI().Tracks.tracks.isActive(x) && scaleModality.includes(x.config['modality']))
+                    if (Tracks) {
+                        for (var j = 0; j < Tracks.length; j++) {
+                            Tracks[j].Toolbar.setScale(f, false); 
+                            console.log(f)
+                        }
+                    }
+                    AnnoJ.config.scaleFactor[scaleModalities[i]] *= f;
                 }
-                console.log('Ran scaleReset!!')
             }
         });
         // EAM - end
@@ -2252,7 +2239,7 @@ AnnoJ.Navigator = function() {
             closer: closer,
             scaleTrackGroup: scaleTrackGroup,
             scaleUp: scaleUp,
-            scaleReset: scaleReset,
+            scaleInit: scaleInit,
             scaleDown: scaleDown,
             higher: higher,
             lower: lower,
@@ -2283,7 +2270,7 @@ AnnoJ.Navigator = function() {
         style: 'margin: 0px; padding: 0px; font-size: 11px; border: 0px;',
         // items: [Controls.jumpLeft, ' ', ' ', ' ', '<b>Multi:</b>', Controls.scaleBox, ' ', ' ', '<b>Y-axis:</b>', Controls.GlobalscaleBox, ' ', ' ', '<b>Height:</b>', Controls.higher, Controls.lower, ' ', '-', ' ', Controls.dragMode, ' ', ' ', '<b>Zoom level:</b>', ' ', Controls.ratio, Controls.further, Controls.closer, ' ', ' ', '<b>Location:</b>', Controls.assembly, Controls.jump, ' ', ' ', Controls.go, ' ', ' ', Controls.prev, Controls.next, '->', Controls.jumpRight]
         // EAM - Simplify the scaleBox
-        items: [Controls.jumpLeft, '  ', Controls.scaleTrackGroup, Controls.scaleUp, Controls.scaleReset, Controls.scaleDown,  
+        items: [Controls.jumpLeft, '  ', Controls.scaleTrackGroup, Controls.scaleUp, Controls.scaleInit, Controls.scaleDown,  
         ' <b>Track height:</b>', 
         Controls.higher, Controls.lower, ' ', '-', ' ', Controls.dragMode, '  ',
          '<b>Zoom level:</b>', ' ', Controls.ratio, Controls.further, Controls.closer, ' ', ' ', '<b>Location:</b>', Controls.assembly, Controls.jump, ' ', ' ', Controls.go, ' ', ' ', Controls.prev, Controls.next, '->', Controls.jumpRight]
@@ -8750,35 +8737,48 @@ AnnoJ.MaskTrack = function(userConfig) {
     })();
     var handler = Models;
     var policies = [
-    {
+{
         index: 0,
         min: 1 / 100,
+        max: 1 / 1,
+        bases: 1,
+        pixels: 100,
+        cache: 1000
+    }, {
+        index: 1,
+        min: 1 / 1,
         max: 10 / 1,
         bases: 1,
         pixels: 1,
         cache: 10000
-    },    
-     {
-        index: 1,
+    }, {
+        index: 2,
         min: 10 / 1,
         max: 100 / 1,
         bases: 10,
         pixels: 1,
         cache: 100000
     }, {
-        index: 2,
+        index: 3,
         min: 100 / 1,
         max: 1000 / 1,
         bases: 100,
         pixels: 1,
         cache: 1000000
     }, {
-        index: 3,
+        index: 4,
         min: 1000 / 1,
         max: 10000 / 1,
         bases: 1000,
         pixels: 1,
         cache: 10000000
+    }, {
+        index: 5,
+        min: 10000 / 1,
+        max: 200001 / 1,
+        bases: 10000,
+        pixels: 1,
+        cache: 100000000
     }
     ];
     if (self.config.policy != undefined) policies = setPolicy(policies, self.config.policy);
@@ -9685,7 +9685,8 @@ AnnoJ.ReadsTrack = function(userConfig) {
         }
     })();
     var handler = Histogram;
-    var policies = [{
+    var policies = [
+    {
         index: 0,
         min: 1 / 100,
         max: 1 / 1,
@@ -9727,7 +9728,8 @@ AnnoJ.ReadsTrack = function(userConfig) {
         bases: 10000,
         pixels: 1,
         cache: 100000000
-    }];
+    }
+    ];
     if (self.config.policy != undefined) policies = setPolicy(policies, self.config.policy);
     var labels = null;
 

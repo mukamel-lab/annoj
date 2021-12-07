@@ -22,12 +22,16 @@ if ($action == 'lookup')
 	
 	$d = query("select id, assembly, start, end, description from $table where concat(id,description) like '%$query%'");	
 	$count = mysql_num_rows($d);
-	
-	$d = query("select id, assembly, start, end, concat(substring(description,1,120), '...') as description from $table where concat(id,description) like '%$query%' order by id asc limit $start,$limit");
+
+	// EAM: Search only by gene id (not description)
+	$d = query("select id, assembly, start, end, concat(substring(description,1,120), '...') as description from $table where id like '$query%' order by id asc limit $start,$limit");
+//	$d = query("select id, assembly, start, end, '...' as description from $table where id like '$query%' order by id asc limit $start,$limit");
 	$list = array();
 	
+//	$count = 0;
 	while ($r = mysql_fetch_assoc($d)) {
 		$list[] = $r;
+//		$count += 1;
 	}
 	die(json_encode(array(
 		'success' => true,

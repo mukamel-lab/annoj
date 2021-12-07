@@ -18,13 +18,14 @@ if ($action == 'range')
 	}
 	// $query = "select position as start, position + 1 as end, class, if(strand='+',round(100*mc/h),0) as score_above, if (strand='+',0,round(100*mc/h)) as score_below from $table where assembly = '$assembly' and position between $left and $right order by start asc";	
 	$query = "SELECT tBS.position AS start, tBS.position+1 as end, tBS.class as class,
-		if (tBS.strand='+',round(100*(tBS.mc/tBS.h - tOxBS.mc/tOxBS.h)),0) as score_above, 
-		if (tBS.strand='+',0,round(100*(tBS.mc/tBS.h - tOxBS.mc/tOxBS.h))) as score_below
+		if (tBS.strand='+',max(round(100*(tBS.mc/tBS.h - tOxBS.mc/tOxBS.h))),0) as score_above, 
+		if (tBS.strand='+',0,max(round(100*(tBS.mc/tBS.h - tOxBS.mc/tOxBS.h)))) as score_below,
+			tBS.strand as strand1
 		FROM $table_BS AS tBS
 		INNER JOIN $table_OxBS AS tOxBS 
-		ON (tBS.position = tOxBS.position)
+		ON (tBS.position = tOxBS.position AND tBS.strand=tOxBS.strand)
 		WHERE tBS.position between $left and $right 
-		GROUP BY start
+		GROUP BY start, class, strand1
 		order by start asc";	
 	
 	if (cache_exists($query)) cache_stream($query);

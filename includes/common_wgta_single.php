@@ -20,17 +20,9 @@ if ($action == 'range')
 	{
 		$table .= $assembly;
 	}
-	// $query = "SELECT if(strand='+',position+1,position) as start, if(strand='+',position+1,position)+1 as end, 
-	// 	class, round(100*sum(mc)/sum(h)) as methylation, 
-	// 	10*sum(h) as coverage, sum(mc) as mcsum, sum(h) as hsum FROM $table 
-	// 	WHERE assembly = '$assembly' and position between $left and $right GROUP BY start, class ORDER BY start asc";	
 	$query = "SELECT if(strand='+',position+1,position) as start, if(strand='+',position+1,position)+1 as end, 
 		class, 10*sum(h) as coverage, sum(mc) as mcsum, sum(h) as hsum FROM $table 
-		WHERE assembly = '$assembly' AND position BETWEEN $left and $right GROUP BY class,start ORDER BY start ASC";	
-	// $query = "SELECT if(strand='+',position+1,position) as start, if(strand='+',position+1,position)+1 as end, 
-	// 	class, sum(mc) as mcsum, sum(h) as hsum, 
-	// 	10*sum(h) as coverage FROM $table 
-	// 	WHERE assembly = '$assembly' and position between $left and $right GROUP BY start, class ORDER BY start asc";	
+		WHERE assembly = '$assembly' AND position BETWEEN $left and $right GROUP BY class,start,end ORDER BY start ASC";	
 
 	if (cache_exists($query)) cache_stream($query);
 	
@@ -82,25 +74,15 @@ if ($action == 'range')
 		//Update values if needed
 		$counts[$class][$gpos][0] += $mc;
 		$counts[$class][$gpos][1] += $h;
-		// if ($class == 'CG') {
-			$result[$class][$gpos][1] = max($result[$class][$gpos][1], $end-$start);
-			$result[$class][$gpos][2] = 100 * $counts[$class][$gpos][0]/$counts[$class][$gpos][1];
-		// } 
+		$result[$class][$gpos][1] = max($result[$class][$gpos][1], $end-$start);
+		$result[$class][$gpos][2] = 100 * $counts[$class][$gpos][0]/$counts[$class][$gpos][1];
 		$result[$COV][$gpos][1] = max($result[$COV][$gpos][1], $end-$start);
-		// $result[$COV][$gpos][2] = max($result[$COV][$gpos][2],$coverage);
 		$result[$COV][$gpos][2] = 10*$counts[$class][$gpos][1];
 		if ($class == 'CGdmr') {
 			$result[$class][$gpos][1] = max($result[$COV][$gpos][1], $end-$start);
 			$result[$class][$gpos][2] = 10 * $counts[$class][$gpos][1];
 		}
 	}
-
-	// foreach ($result['CGdmr'] as $gpos => $r)
-	// {
-	// 	if ($r[1]>0) {
-	// 		$result['COV'][$gpos][2] = 0;
-	// 	}
-	// }
 
 	//Simplify the data stream
 	foreach ($result as $class => $data)

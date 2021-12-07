@@ -116,11 +116,11 @@
             	var activeTracks = document.getElementById('select_tracks').selectedOptions;
             	activeTracks = Array.from(activeTracks).map(tr => tr['value']);
                 var allTracks = annoj_frame.contentWindow.AnnoJ.config.tracks.map((tr) => tr['id']);
-                var activeTracksIndex = activeTracks.map((tr) => allTracks.indexOf(tr)).join(':');
-                activeTracksIndex = activeTracksIndex.filter((v, i, a) => a.indexOf(v) === i); // Keep only unique values
-                if (activeTracksIndex)
-                {
-                    src += '&tracks=' + activeTracksIndex;
+                var activeTracksIndex = activeTracks.map((tr) => allTracks.indexOf(tr));
+                if (activeTracksIndex) {
+                    // Keep only unique values
+                    activeTracksIndex = activeTracksIndex.filter((v, i, a) => a.indexOf(v) === i); 
+                    src += '&tracks=' + activeTracksIndex.join(':');
                 };
             }
             else
@@ -185,6 +185,7 @@
         if (document.getElementById('select_celltype').value == 'custom')
         {
             var disp='none',disp2='block';
+            set_trackslist();
         }
         else
         {
@@ -205,21 +206,26 @@
     function set_trackslist() {
     	// After the AnnoJ frame is loaded, set the selected tracks in the custom tracks list
         // Get tracks
-        var tracks = document.getElementById('annoj_frame').contentWindow.AnnoJ.config.tracks;
-        var active = document.getElementById('annoj_frame').contentWindow.AnnoJ.config.active;
-        var custom_track_selection = document.getElementById('select_tracks');
-        custom_track_selection.options.length=0;
-        $('.selectpicker').selectpicker('refresh');
-
-        for (j=0; j<tracks.length; j++)
-        {
-            var option = document.createElement("option");
-            option.text=tracks[j].name;
-            option.value=tracks[j].id;
-            if (active.includes(tracks[j].id)) { option.selected = true; }
-            custom_track_selection.add(option);
+        // console.log('Setting trackslist')
+        try {
+            var tracks = document.getElementById('annoj_frame').contentWindow.AnnoJ.config.tracks;
+            var active = document.getElementById('annoj_frame').contentWindow.AnnoJ.config.active;
+            var custom_track_selection = document.getElementById('select_tracks');
+            custom_track_selection.options.length=0;
+            $('.selectpicker').selectpicker('refresh');
+    
+            for (j=0; j<tracks.length; j++)
+            {
+                var option = document.createElement("option");
+                option.text=tracks[j].name;
+                option.value=tracks[j].id;
+                if (active.includes(tracks[j].id)) { option.selected = true; }
+                custom_track_selection.add(option);
+            }
+            $('.selectpicker').selectpicker('refresh');
+        } catch {
+            console.log('Could not load track list (yet).')
         }
-        $('.selectpicker').selectpicker('refresh');
     }
 
     function goToNewPage() {
@@ -345,8 +351,10 @@
 
 
                             <li class="nav-item custom-track-selection" style="display:none">
+                                <button onclick="set_trackslist();" class="btn btn-success">Tracks from AnnoJ -></button>
                                 <select id="select_tracks" class="selectpicker" onchange="getLink();" data-width="auto" multiple data-width="auto" data-toggle="tooltip" data-placement="top" title="Tracks" data-actions-box="true" data-live-search="true" data-selected-text-format="count">
                                 </select>
+
                             </li>
 
                             <li class="nav-item">
@@ -384,9 +392,11 @@
 		        myRefresh();
                 $('.selectpicker').selectpicker('refresh');
 		        getLink();
-		        set_trackslist();
-
 		    }); 
+            $('#annoj_frame').on('load', function() {
+                set_trackslist();
+            });
+
 		</script>
 	</body>
 </html> 
