@@ -1646,7 +1646,6 @@ AnnoJ.Navigator = function() {
                 for (var i=0; i<scaleModalities.length; i++) {
                     AnnoJ.config.scaleFactor[scaleModalities[i]] *= f;
                 }
-                console.log('Scale up!')
             }
         });
         var scaleDown = new Ext.Button({
@@ -1666,7 +1665,6 @@ AnnoJ.Navigator = function() {
                 for (var i=0; i<scaleModalities.length; i++) {
                     AnnoJ.config.scaleFactor[scaleModalities[i]] *= f;
                 }
-                console.log('Scale down!')
             }
         });
         // TODO: Create separate functions for scaleInit (called on page load) and scaleReset
@@ -1683,7 +1681,6 @@ AnnoJ.Navigator = function() {
                     track.Toolbar.setScale(f,false);
                     track.config['scaled_cumulative'] = 1;
                 }
-                console.log('Ran scaleReset!!')
             }
         });
         // EAM - end
@@ -6475,7 +6472,9 @@ var HistogramCanvas = function() {
             if (!self.groups.active(cls)) continue;
             if (cls == 'coverage') {
                 brush.strokeStyle = "rgb(0,33,33)";
-            } else brush.fillStyle = self.styles.get(cls).fill;
+            } else {
+                brush.fillStyle = self.styles.get(cls).fill;
+            }
             var track = findConf(id);
             if (id.substring(0, 4) == 'new-') {
                 var nc = nc || 0;

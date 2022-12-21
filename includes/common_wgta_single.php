@@ -16,13 +16,30 @@ if ($action == 'syndicate')
 
 if ($action == 'range')
 {
-	if ($append_assembly)
-	{
-		$table .= $assembly;
+	if (is_string($table)) {
+		if ($append_assembly)
+		{
+			$table .= $assembly;
+		}
+
+		$query = "SELECT if(strand='+',position+1,position) as start, if(strand='+',position+1,position)+1 as end, 
+			class, 10*sum(h) as coverage, sum(mc) as mcsum, sum(h) as hsum FROM $table 
+			WHERE assembly = '$assembly' AND position BETWEEN $left and $right GROUP BY class,start,end ORDER BY start ASC";
+	} else {
+		// Handle a list of tables, which will be combined
+		$tables=$table;
+		$table='';
+		$query = '';
+		foreach ($tables as $currtab) {
+			if ($append_assembly)
+			{
+				$currtab .= $assembly;
+			}
+			$query .= "SELECT if(strand='+',position+1,position) as start, if(strand='+',position+1,position)+1 as end, class, 10*sum(h) as coverage, sum(mc) as mcsum, sum(h) as hsum FROM $currtab WHERE assembly = '$assembly' AND position BETWEEN $left and $right GROUP BY class,start,end UNION ALL ";
+			};
+			$query=preg_replace('/ UNION ALL $/', '', $query) . ";";
+			$table .= $currtab;
 	}
-	$query = "SELECT if(strand='+',position+1,position) as start, if(strand='+',position+1,position)+1 as end, 
-		class, 10*sum(h) as coverage, sum(mc) as mcsum, sum(h) as hsum FROM $table 
-		WHERE assembly = '$assembly' AND position BETWEEN $left and $right GROUP BY class,start,end ORDER BY start ASC";	
 
 	if (cache_exists($query)) cache_stream($query);
 	
@@ -75,9 +92,9 @@ if ($action == 'range')
 		$counts[$class][$gpos][0] += $mc;
 		$counts[$class][$gpos][1] += $h;
 		$result[$class][$gpos][1] = max($result[$class][$gpos][1], $end-$start);
-		$result[$class][$gpos][2] = 100 * $counts[$class][$gpos][0]/$counts[$class][$gpos][1];
+		$result[$class][$gpos][2] = round(100 * $counts[$class][$gpos][0]/$counts[$class][$gpos][1]);
 		$result[$COV][$gpos][1] = max($result[$COV][$gpos][1], $end-$start);
-		$result[$COV][$gpos][2] = 10*$counts[$class][$gpos][1];
+		$result[$COV][$gpos][2] = round(10*$counts[$class][$gpos][1]);
 		if ($class == 'CGdmr') {
 			$result[$class][$gpos][1] = max($result[$COV][$gpos][1], $end-$start);
 			$result[$class][$gpos][2] = 10 * $counts[$class][$gpos][1];

@@ -44,7 +44,7 @@ for (i=0; i<scaleFactors.length; i++) {
 var scaleFactor = {'atac': scaleFactors_inv[0], 'scrna': scaleFactors_inv[1], 'snrna': scaleFactors_inv[2]};
 AnnoJ.config.scaleFactor = AnnoJ.config.scaleFactorInit = {...scaleFactor};
 
-var input_vars = ["celltype", "groupby", "colorby", "ensemble", "modalities", "cluster",'tracknames','gene'];
+var input_vars = ["celltype", "groupby", "colorby", "ensemble", "modalities", "cluster","tracknames","gene"];
 for (i=0; i<input_vars.length; i++) {
 	eval('a=getQueryVariable("'+input_vars[i]+'"); if (a) { '+input_vars[i]+'=a;} ');
 }
