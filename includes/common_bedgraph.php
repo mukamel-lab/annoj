@@ -89,8 +89,7 @@ function get_histogram($table, $assembly, $left, $right, $bases, $pixels)
 			
 			$amt = $count;
 			// $amt *= $count;
-			$amt = round($amt/($bases/$pixels));
-			
+			// $amt = round($amt/($bases/$pixels));
 
 			if ($strand == '+')
 			{

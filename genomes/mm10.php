@@ -14,7 +14,7 @@ if ($action=='syndicate')
 		),
 		'engineer' => array(
 			'name' => 'mm10',
-			'email' => 'christopher.keown@gmail.com',
+			'email' => 'emukamel@ucsd.edu',
 		),
 		'service' => array(
 			'title' => 'Mus musculus',
@@ -51,7 +51,7 @@ if ($action=='syndicate')
 	respond($genome);
 }
 
-$genome_dir = '/cndd/projects/Public_Datasets/references/mm10/aj2/genome/chr';
+// $genome_dir = '/cndd/projects/Public_Datasets/references/mm10/aj2/genome/chr';
 $ibase = 1;
 
 include_once '../includes/common_genome.php';

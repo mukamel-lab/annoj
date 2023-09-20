@@ -22,7 +22,7 @@ function getQueryVariable(variable)
 
 /*  can tell it to set assembly, position, bases, and pixels values, from upenn site  */
 var variables;
-var celltype='exc', groupby='modality', colorby='modality', ensemble=2, ens=2, modalities = 'mcg:enhancer:atac:scRNA', cluster='', tracknames='', gene='';
+var celltype='exc', groupby='modality', colorby='modality', ensemble=2, ens=2, trackgroups = 'mcg:snrna', cluster='', tracknames='', gene='';
 if (typeof(AnnoJ)=='undefined') { 
 	var AnnoJ={}, a; 
 	AnnoJ.config = {};
@@ -44,7 +44,7 @@ for (i=0; i<scaleFactors.length; i++) {
 var scaleFactor = {'atac': scaleFactors_inv[0], 'scrna': scaleFactors_inv[1], 'snrna': scaleFactors_inv[2]};
 AnnoJ.config.scaleFactor = AnnoJ.config.scaleFactorInit = {...scaleFactor};
 
-var input_vars = ["celltype", "groupby", "colorby", "ensemble", "modalities", "cluster","tracknames","gene"];
+var input_vars = ["celltype", "groupby", "colorby","ensemble", "trackgroups", "cluster","tracknames","gene","stratify","agegroups","colorby","celltype"];
 for (i=0; i<input_vars.length; i++) {
 	eval('a=getQueryVariable("'+input_vars[i]+'"); if (a) { '+input_vars[i]+'=a;} ');
 }

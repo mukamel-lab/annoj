@@ -47,7 +47,7 @@
     function buildURL()
     {
         // Get current browser location and other settings and build a URL
-        var modalities = Array.from(document.getElementById('select_modalities').selectedOptions).map(x => x['value']).join(':');
+        var trackgroups = Array.from(document.getElementById('select_trackgroups').selectedOptions).map(x => x['value']).join(':');
         src = "https://brainome.ucsd.edu/annoj/BICCN_MOp/biccn_annoj.php?";
         var annoj_frame = document.getElementById('annoj_frame');
 
@@ -63,10 +63,10 @@
             if (scaleFactor)
             {
                 var scaleFactoru = [],
-                modalitiesu = ['atac', 'scrna', 'snrna']
-                for (var i = 0; i < modalitiesu.length; i++)
+                trackgroupsu = ['atac', 'scrna', 'snrna']
+                for (var i = 0; i < trackgroupsu.length; i++)
                 {
-                    scaleFactoru[i] = scaleFactor[modalitiesu[i]].toPrecision(3);
+                    scaleFactoru[i] = scaleFactor[trackgroupsu[i]].toPrecision(3);
                 }
                 scaleFactoru = scaleFactoru.join(':');
                 src += '&scaleFactor=' + scaleFactoru;
@@ -79,10 +79,10 @@
             var loc = annoj_frame.contentWindow.AnnoJ.getLocation();
             src += 'location=' + loc.assembly + ':' + loc.position + ':' + loc.bases + ':' + loc.pixels;
             var scaleFactor = [],
-            modalitiesu = ['atac', 'scrna', 'snrna']
-            for (var i = 0; i < modalitiesu.length; i++)
+            trackgroupsu = ['atac', 'scrna', 'snrna']
+            for (var i = 0; i < trackgroupsu.length; i++)
             {
-                scaleFactor[i] = annoj_frame.contentWindow.AnnoJ.config.scaleFactor[modalitiesu[i]] * annoj_frame.contentWindow.AnnoJ.config.scaleFactorInit[modalitiesu[i]];
+                scaleFactor[i] = annoj_frame.contentWindow.AnnoJ.config.scaleFactor[trackgroupsu[i]] * annoj_frame.contentWindow.AnnoJ.config.scaleFactorInit[trackgroupsu[i]];
                 scaleFactor[i] = scaleFactor[i].toPrecision(3);
             }
             scaleFactor = scaleFactor.join(':');
@@ -98,9 +98,9 @@
                 src += '&' + params[i] + '=' + document.getElementById('select_' + params[i]).value;
             }
         }
-        if (modalities)
+        if (trackgroups)
         {
-            src += '&modalities=' + modalities;
+            src += '&trackgroups=' + trackgroups;
         }
         if (cluster)
         {
@@ -298,7 +298,7 @@
                                 </select>
                             </li>
                             <li class="nav-item track-selection">
-                                <select id="select_modalities" class="selectpicker" onchange="getLink();" data-width="auto" multiple data-width="auto" data-toggle="tooltip" data-placement="top" data-header="Modalities to show" data-actions-box="true">
+                                <select id="select_trackgroups" class="selectpicker" onchange="getLink();" data-width="auto" multiple data-width="auto" data-toggle="tooltip" data-placement="top" data-header="Modalities to show" data-actions-box="true">
                                     <option selected value="mcg" selected> mCG</option>
                                     <option value="mcac"> mCAC</option>
                                     <option value="atac" selected> ATAC</option>
@@ -347,10 +347,10 @@
             $(this).toggleClass("glyphicon-chevron-down").toggleClass("glyphicon-chevron-up");
         });
 
-        if (modalities)
+        if (trackgroups)
         {
-            $('#select_modalities').selectpicker('deselectAll');
-            $('#select_modalities').selectpicker('val', modalities.split(':'));
+            $('#select_trackgroups').selectpicker('deselectAll');
+            $('#select_trackgroups').selectpicker('val', trackgroups.split(':'));
         }
 
         setParams();

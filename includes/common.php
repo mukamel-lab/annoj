@@ -72,7 +72,7 @@ if ($action == 'syndicate')
 		(
 			'name' => 'UCSD',
 			'url'  => 'http://brainome.ucsd.edu',
-			'logo' => 'cndd_logo.png'
+			'logo' => 'annoj_cndd/img/logo_ucsd.png'
 		),
 		'engineer' => array
 		(

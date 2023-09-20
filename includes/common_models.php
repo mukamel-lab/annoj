@@ -12,7 +12,7 @@ if ($action == 'syndicate')
 
 if ($action == 'lookup')
 {
-	$limit = isset($_GET['limit']) ? clean_int($_GET['limit'])    : false;
+	$limit = isset($_GET['limit']) ? clean_int($_GET['limit'])    : 10;
 	$query = isset($_GET['query']) ? clean_string($_GET['query']) : false;
 	$start = isset($_GET['start']) ? clean_int($_GET['start'])    : false;
 
@@ -20,11 +20,13 @@ if ($action == 'lookup')
 	if ($query === false) error('Illegal query value in lookup request');
 	if ($start === false) error('Illegal start value in lookup request');
 	
-	$d = query("select id, assembly, start, end, description from $table where concat(id,description) like '%$query%'");	
+	// $d = query("select id, assembly, start, end, description from $table where concat(id,description) like '$query%'");	
+	$d = query("select id from $table where id like '$query%'");	// EAM 4/2019
 	$count = mysql_num_rows($d);
 
 	// EAM: Search only by gene id (not description)
-	$d = query("select id, assembly, start, end, concat(substring(description,1,120), '...') as description from $table where id like '$query%' order by id asc limit $start,$limit");
+	// $d = query("select id, assembly, start, end, concat(substring(description,1,120), '...') as description from $table where id like '$query%' order by id asc limit $start,$limit");
+	$d = query("select id, assembly, start, end, concat(substring(description,1,120), '...') as description, IF(strand='+',start,end) AS tss from $table where id like '$query%' order by id asc limit 5");
 //	$d = query("select id, assembly, start, end, '...' as description from $table where id like '$query%' order by id asc limit $start,$limit");
 	$list = array();
 	

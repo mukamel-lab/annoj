@@ -16,29 +16,39 @@ if ($action == 'syndicate')
 
 if ($action == 'range')
 {
+  if (! $mc_class) {
+    $mc_class='%';
+  }
 	if (is_string($table)) {
+    // Load data from a single table
 		if ($append_assembly)
 		{
 			$table .= $assembly;
 		}
-
 		$query = "SELECT if(strand='+',position+1,position) as start, if(strand='+',position+1,position)+1 as end, 
 			class, 10*sum(h) as coverage, sum(mc) as mcsum, sum(h) as hsum FROM $table 
-			WHERE assembly = '$assembly' AND position BETWEEN $left and $right GROUP BY class,start,end ORDER BY start ASC";
+			WHERE assembly = '$assembly' AND position BETWEEN $left and $right 
+      AND class LIKE '$mc_class'
+      GROUP BY class,start,end ORDER BY start ASC";
 	} else {
 		// Handle a list of tables, which will be combined
 		$tables=$table;
 		$table='';
 		$query = '';
 		foreach ($tables as $currtab) {
-			if ($append_assembly)
-			{
-				$currtab .= $assembly;
-			}
-			$query .= "SELECT if(strand='+',position+1,position) as start, if(strand='+',position+1,position)+1 as end, class, 10*sum(h) as coverage, sum(mc) as mcsum, sum(h) as hsum FROM $currtab WHERE assembly = '$assembly' AND position BETWEEN $left and $right GROUP BY class,start,end UNION ALL ";
-			};
-			$query=preg_replace('/ UNION ALL $/', '', $query) . ";";
-			$table .= $currtab;
+      if ($append_assembly)
+      {
+        $currtab .= $assembly;
+      }
+      $val = mysql_query("select 1 from $currtab LIMIT 1");
+      if($val !== FALSE) {
+        $query .= "SELECT if(strand='+',position+1,position) as start, if(strand='+',position+1,position)+1 as end, class, 10*sum(h) as coverage, sum(mc) as mcsum, sum(h) as hsum FROM $currtab WHERE assembly = '$assembly' AND position BETWEEN $left and $right 
+        AND class LIKE '$mc_class'
+        GROUP BY class,start,end UNION ALL ";
+        };
+      }
+    $query=preg_replace('/ UNION ALL $/', '', $query) . ";";
+    $table .= $currtab;
 	}
 
 	if (cache_exists($query)) cache_stream($query);

@@ -27,6 +27,7 @@
 
 
   AnnoJ.config = {
+    scaleTrackGroups: ['atac','scrna','snrna'],
     info : {
       title  : 'Mouse MOp BICCN',
       genome  : 'Genome: mm10',
@@ -65,8 +66,8 @@
     ],
 
   active : ['gene_model_mm10'],
-  genome    : './browser/fetchers/mus_musculus.php',
-  bookmarks : './browser/fetchers/mus_musculus.php',
+  genome    : 'annoj_cndd/genomes/mm10.php',
+  bookmarks : 'annoj_cndd/genomes/mm10.php',
   stylesheets : [
   {
     id   : 'css1',
@@ -100,6 +101,8 @@ for (i=0; i<tracks.length; i++) {
   var hidden = false;
   if (/^#/.test(tracks[i].ensemble)) { hidden = true; }
   tracks[i].ensemble = tracks[i].ensemble.replace('#','')
+  trackdata=tracks[i];
+  trackdata['modality']='mcg';
   track = {
     'id'   : 'mcg_ens'+tracks[i].ensemble+'_C'+tracks[i].cluster+'_CGN',
     'name' : 'mCG '+tracks[i].name+' C'+tracks[i].cluster,
@@ -112,11 +115,12 @@ for (i=0; i<tracks.length; i++) {
     'single': true,
     'showControls' : false,
     'modality' : 'mcg', 'hidden': hidden, 'cluster': tracks[i].cluster,
-    'trackdata' : tracks[i],
+    'trackdata' : trackdata,
   };
   new_tracks.push(track);
 
   // **** mCH
+  trackdata['modality']='mch';
   track = {
       'id'   : 'mcac_ens'+tracks[i].ensemble+'_C'+tracks[i].cluster+'_CAC',
       'name' : 'mCAC '+tracks[i].name+' C'+tracks[i].cluster,
@@ -129,10 +133,11 @@ for (i=0; i<tracks.length; i++) {
       'single': true,
       'showControls' : false, 
       'modality' : 'mcac','hidden': hidden, 'cluster': tracks[i].cluster,
-      'trackdata' : tracks[i],
+      'trackdata' : trackdata,
     };
   new_tracks.push(track);
 
+  trackdata['modality']='atac';
   track = {
     'id'   : 'atac_ens'+tracks[i].ensemble+'_C'+tracks[i].cluster,
     'name' : 'ATAC '+tracks[i].name+' C'+tracks[i].cluster,
@@ -143,10 +148,11 @@ for (i=0; i<tracks.length; i++) {
     'height' : track_height,
     'scale': atac_scales[tracks[i].cluster],
     'single': true,'modality' : 'atac', 'hidden': hidden, 'cluster': tracks[i].cluster,
-    'trackdata' : tracks[i],
+    'trackdata' : trackdata,
   }
   new_tracks.push(track);
 
+  trackdata['modality']='snrna';
   track = {
     'id'   : 'snRNA_ens'+tracks[i].ensemble+'_C'+tracks[i].cluster,
     'name' : 'snRNA '+tracks[i].name+' C'+tracks[i].cluster,
@@ -160,12 +166,13 @@ for (i=0; i<tracks.length; i++) {
     'color' : {count: '#ff0000'},
     'modality' : 'snrna', 
     'hidden': hidden, 
-    'trackdata' : tracks[i],
+    'trackdata' : trackdata,
     'cluster': tracks[i].cluster,
     
   };
   new_tracks.push(track);
 
+  trackdata['modality']='scrna';
   track = {
     'id'   : 'scRNA_ens'+tracks[i].ensemble+'_C'+tracks[i].cluster,
     'name' : 'scRNA '+tracks[i].name+' C'+tracks[i].cluster,
@@ -178,7 +185,7 @@ for (i=0; i<tracks.length; i++) {
     'single': true,
     'color' : {count: '#af0770'},
     'modality' : 'scrna', 'hidden': hidden, 'cluster': tracks[i].cluster,
-    'trackdata' : tracks[i],
+    'trackdata' : trackdata,
     };
   new_tracks.push(track);
 }
@@ -303,7 +310,7 @@ AnnoJ.config.tracks = AnnoJ.config.tracks.concat(new_tracks);
 var re_ens = new RegExp('_ens'+ensemble+'_');
 var re_modality, modality = [];
 var AllModalities = ['mcg','enhancer','mcac','atac','scRNA','snRNA'];
-var showModalities=modalities.replace(/:$/,'').split(':');
+var showModalities=trackgroups.replace(/:$/,'').split(':');
 
 // Select the tracks to be shown
 function myTrackFilter(track) {

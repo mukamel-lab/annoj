@@ -38,11 +38,11 @@ function get_histogram($table, $assembly, $left, $right, $bases, $pixels)
 	if ($table[0] == '+')
 	{
 		$table = substr($table,1);
-		$query = "select 'read', strand, start, end, 1, 1, end-start+1, 0 from $table where (assembly='chr$assembly' or assembly='$assembly') and start <= $right and end >= $left";
+		$query = "select 'read', strand, start, end, 1, 1, end-start+1, 0 from $table where (assembly='chr$assembly' or assembly='$assembly') and start <= $right and start >= ($left-1000)";
 	}
 	else
 	{
-		$query = "select 'read', '+', start, end, 1, 1, end-start+1, 0 from $table where (assembly='chr$assembly' or assembly='$assembly') and start <= $right and end >= $left";
+		$query = "select 'read', '+', start, end, 1, 1, end-start+1, 0 from $table where (assembly='chr$assembly' or assembly='$assembly') and start <= $right and start >= ($left-1000)";
 	}
 	
 	if (cache_exists($query)) cache_stream($query);
@@ -139,11 +139,11 @@ function get_boxes($table, $assembly, $left, $right, $seq)
 	if ($table[0] == '+')
 	{
 		$table = substr($table,1);
-		$query = "select 0, 'read', strand, start, end, end-start+1, 0, '', '' from $table where (assembly='chr$assembly' or assembly='$assembly') and start <= $right and end >= $left order by start asc, end desc";
+		$query = "select 0, 'read', strand, start, end, end-start+1, 0, '', '' from $table where (assembly='chr$assembly' or assembly='$assembly') and start <= $right and start >= ($left-1000) order by start asc, end desc";
 	}
 	else
 	{
-		$query = "select 0, 'read', '+', start, end, end-start+1, 0, '', '' from $table where (assembly='chr$assembly' or assembly='$assembly') and start <= $right and end >= $left order by start asc, end desc";
+		$query = "select 0, 'read', '+', start, end, end-start+1, 0, '', '' from $table where (assembly='chr$assembly' or assembly='$assembly') and start <= $right and start >= $($left-1000) order by start asc, end desc";
 	}
 	if (cache_exists($query)) cache_stream($query);
 	

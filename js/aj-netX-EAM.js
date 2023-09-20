@@ -568,6 +568,7 @@ var AnnoJ = (function() {
         if (!AnnoJ.config.alignX) AnnoJ.config.alignX = new Array();
         if (!AnnoJ.config.meanX) AnnoJ.config.meanX = new Array();
         if (!AnnoJ.config.infoTrack) AnnoJ.config.infoTrack = {};
+        if (!AnnoJ.config.scaleTrackGroups) AnnoJ.config.scaleTrackGroups = ['snRNA','scRNA','ATAC','mC'];
         Ext.MessageBox.updateProgress(0.15, '', 'Building GUI...');
         try {
             GUI = buildGUI()
@@ -789,9 +790,9 @@ var AnnoJ = (function() {
         }
     };
 
-    // function scaleReset() {
-    //     return GUI.NavBar.Controls.scaleReset.handler()
-    // };
+    function scaleReset() {
+        return GUI.NavBar.Controls.scaleReset.handler()
+    };
     function scaleInit() {
         var tracks = AnnoJ.getGUI().Tracks.tracks.tracks;
         tracks = tracks.filter(x => AnnoJ.getGUI().Tracks.tracks.isActive(x));
@@ -857,6 +858,7 @@ var AnnoJ = (function() {
         warning: warning,
         notice: notice,
         scaleInit: scaleInit,
+        scaleReset: scaleReset,
         getLocation: getLocation,
         setLocation: setLocation,
         pixels2bases: pixels2bases,
@@ -1478,22 +1480,39 @@ AnnoJ.Navigator = function() {
         //         AnnoJ.config.settings.multi = 1
         //     }
         // });
-        // var GlobalscaleBox = new Ext.form.TextField({
-        //     width: 32,
-        //     value: AnnoJ.config.settings.yaxis,
-        //     maskRe: /[0-9\.]/,
-        //     regex: /^[0-9\.]+$/,
-        //     selectOnFocus: true
-        // });
-        // GlobalscaleBox.on('specialKey', function(config, event) {
-        //     if (event.getKey() == event.ENTER) {
-        //         var scaler = GlobalscaleBox.getValue();
-        //         if (scaler == "") GlobalscaleBox.setValue(AnnoJ.config.settings.yaxis);
-        //         AnnoJ.config.settings.yaxis = GlobalscaleBox.getValue();
-        //         refreshControls();
-        //         self.fireEvent('browse', Navigator.getLocation())
-        //     }
-        // });
+        var GlobalscaleBox = new Ext.form.TextField({
+            width: 32,
+            value: AnnoJ.config.settings.yaxis,
+            maskRe: /[0-9\.]/,
+            regex: /^[0-9\.]+$/,
+            selectOnFocus: true
+        });
+        GlobalscaleBox.on('specialKey', function(config, event) {
+            if (event.getKey() == event.ENTER) {
+                var scaler = GlobalscaleBox.getValue();
+                if (scaler == "") GlobalscaleBox.setValue(AnnoJ.config.settings.yaxis);
+                AnnoJ.config.settings.yaxis = GlobalscaleBox.getValue();
+                AnnoJ.scaleReset();
+                refreshControls();
+                self.fireEvent('browse', Navigator.getLocation())
+            }
+        });
+        var scaleBox = new Ext.form.TextField({
+          width: 32,
+          value: AnnoJ.config.settings.yaxis,
+          maskRe: /[0-9\.]/,
+          regex: /^[0-9\.]+$/,
+          selectOnFocus: true
+        });
+        scaleBox.on('specialKey', function(config, event) {
+            if (event.getKey() == event.ENTER) {
+                var scaler = scaleBox.getValue();
+                if (scaler == "") scaleBox.setValue(AnnoJ.config.settings.yaxis);
+                AnnoJ.scaleReset();
+                refreshControls();
+                self.fireEvent('browse', Navigator.getLocation())
+            }
+        });
         var dragMode = new Ext.CycleButton({
             showText: true,
             autoWidth: false,
@@ -1605,29 +1624,12 @@ AnnoJ.Navigator = function() {
         var scaleTrackGroup = new Ext.CycleButton({
             showText: true,
             autoWidth: true,
-            // width: 110,
             prependText: '<b>Scale tracks: </b>',
             tooltip: '<nobr>Choose track group to scale</nobr>',
-            items: [{
-                text: 'ATAC, RNA',
-                checked: true,
-                value: ['scrna','snATAC','atac','snrna','rna'],
-            }, {
-                text: 'ATAC',
-                value: ['atac','snATAC'],
-            }, {
-                text: 'scRNA',
-                value: ['scrna','rna'],
-            }, {
-                text: 'snRNA',
-                value: ['snrna','rna'],
-            }, {
-                text: 'ChIP',
-                value: ['chip'],
-            }, {
-                text: 'mC',
-                value: ['mcg','mcac','mch'],
-            }],
+            items: AnnoJ.config.scaleTrackGroups.map(x=> ({'text': x, 'value': [x]})),
+            handler: function() {
+              scaleBox.setValue(AnnoJ.config.scaleFactor[scaleTrackGroup.getActiveItem().value])
+            }
         });
         var scaleUp = new Ext.Button({
             iconCls: 'silk_arrow_up narrow',
@@ -1637,6 +1639,7 @@ AnnoJ.Navigator = function() {
                 var scaleModalities = AnnoJ.getGUI().NavBar.Controls.scaleTrackGroup.activeItem.value;
                 var tracks = AnnoJ.getGUI().Tracks.tracks.tracks;
                 tracks = tracks.filter(x => AnnoJ.getGUI().Tracks.tracks.isActive(x) && scaleModalities.includes(x.config['modality']))
+                // tracks = tracks.filter(x => scaleModalities.includes(x.config['modality']))
                 if (tracks) {
                     for (var i = 0; i < tracks.length; i++) {
                         tracks[i].Toolbar.setScale(f, false); 
@@ -1646,6 +1649,7 @@ AnnoJ.Navigator = function() {
                 for (var i=0; i<scaleModalities.length; i++) {
                     AnnoJ.config.scaleFactor[scaleModalities[i]] *= f;
                 }
+                scaleBox.setValue(scaleBox.getValue()*f)
             }
         });
         var scaleDown = new Ext.Button({
@@ -1656,6 +1660,7 @@ AnnoJ.Navigator = function() {
                 var scaleModalities = AnnoJ.getGUI().NavBar.Controls.scaleTrackGroup.activeItem.value;
                 var tracks = AnnoJ.getGUI().Tracks.tracks.tracks;
                 tracks = tracks.filter(x => AnnoJ.getGUI().Tracks.tracks.isActive(x) && scaleModalities.includes(x.config['modality']))
+                // tracks = tracks.filter(x => scaleModalities.includes(x.config['modality']))
                 if (tracks) {
                     for (var i = 0; i < tracks.length; i++) {
                         tracks[i].Toolbar.setScale(f, false);
@@ -1665,6 +1670,7 @@ AnnoJ.Navigator = function() {
                 for (var i=0; i<scaleModalities.length; i++) {
                     AnnoJ.config.scaleFactor[scaleModalities[i]] *= f;
                 }
+                scaleBox.setValue(scaleBox.getValue()*f)
             }
         });
         // TODO: Create separate functions for scaleInit (called on page load) and scaleReset
@@ -1675,16 +1681,18 @@ AnnoJ.Navigator = function() {
                 var tracks = AnnoJ.getGUI().Tracks.tracks.tracks;
                 var scaleModalities = AnnoJ.getGUI().NavBar.Controls.scaleTrackGroup.activeItem.value;
                 tracks = tracks.filter(x => AnnoJ.getGUI().Tracks.tracks.isActive(x) && scaleModalities.includes(x.config['modality']))
+                // var yaxis=AnnoJ.config.settings.yaxis;
+                var yaxis=scaleBox.getValue();
+             
                 for (i=0; i<tracks.length; i++) {
                     var track=tracks[i];
-                    f = 1/track.config['scaled_cumulative'];
-                    track.Toolbar.setScale(f,false);
+                    // f = 1/track.config['scaled_cumulative'];
+                    track.Toolbar.setScale(yaxis,true);
                     track.config['scaled_cumulative'] = 1;
                 }
             }
         });
         // EAM - end
-
 
         var higher = new Ext.Button({
             iconCls: 'silk_arrow_out',
@@ -2218,7 +2226,7 @@ AnnoJ.Navigator = function() {
             }
             Ext.apply(AnnoJ.config, settings);
             // scaleBox.setValue(1);
-            // GlobalscaleBox.setValue(AnnoJ.config.settings.yaxis);
+            GlobalscaleBox.setValue(AnnoJ.config.settings.yaxis);
             ratio.setValue(AnnoJ.config.location.bases + ':' + AnnoJ.config.location.pixels);
             assembly.setValue(AnnoJ.config.location.assembly);
             if (Tracks) {
@@ -2242,7 +2250,7 @@ AnnoJ.Navigator = function() {
             title: title,
             filler: filler,
             dragMode: dragMode,
-            // scaleBox: scaleBox,
+            scaleBox: scaleBox,
             // GlobalscaleBox: GlobalscaleBox,
             ratio: ratio,
             further: further,
@@ -2280,7 +2288,7 @@ AnnoJ.Navigator = function() {
         style: 'margin: 0px; padding: 0px; font-size: 11px; border: 0px;',
         // items: [Controls.jumpLeft, ' ', ' ', ' ', '<b>Multi:</b>', Controls.scaleBox, ' ', ' ', '<b>Y-axis:</b>', Controls.GlobalscaleBox, ' ', ' ', '<b>Height:</b>', Controls.higher, Controls.lower, ' ', '-', ' ', Controls.dragMode, ' ', ' ', '<b>Zoom level:</b>', ' ', Controls.ratio, Controls.further, Controls.closer, ' ', ' ', '<b>Location:</b>', Controls.assembly, Controls.jump, ' ', ' ', Controls.go, ' ', ' ', Controls.prev, Controls.next, '->', Controls.jumpRight]
         // EAM - Simplify the scaleBox
-        items: [Controls.jumpLeft, '  ', Controls.scaleTrackGroup, Controls.scaleUp, Controls.scaleReset, Controls.scaleDown,  
+        items: [Controls.jumpLeft, '  ', Controls.scaleTrackGroup, Controls.scaleUp, Controls.scaleBox, Controls.scaleDown,  
         ' <b>Track height:</b>', 
         Controls.higher, Controls.lower, ' ', '-', ' ', Controls.dragMode, '  ',
          '<b>Zoom level:</b>', ' ', Controls.ratio, Controls.further, Controls.closer, ' ', ' ', '<b>Location:</b>', Controls.assembly, Controls.jump, ' ', ' ', Controls.go, ' ', ' ', Controls.prev, Controls.next, '->', Controls.jumpRight]
